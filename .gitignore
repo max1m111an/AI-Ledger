@@ -1,0 +1,11 @@
+__pycache__
+**/__pycache__
+venv
+.idea
+.env*
+!.env.example
+.python-version
+poetry.lock
+/config/database/*
+/database-dumps/*
+/database-dev-version/*
