@@ -1,0 +1,51 @@
+services:
+  hello:
+    build:
+      dockerfile: "Dockerfile"
+      target: "ledger"
+    env_file:
+      - ".env"
+    volumes:
+      - "./apps/backend/:/app/backend/:r"
+    expose:
+      - ${APP_PORT}
+    networks:
+      local:
+    command:
+      - "backend.main:app"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8082"
+      - "--reload"
+  frontinstaller:
+    build:
+      dockerfile: "Dockerfile"
+      target: "reactapp"
+    volumes:
+      - "./apps/frontend/:/app:rw"
+    networks:
+      local:
+    command: [ "i" ]
+  front:
+    depends_on:
+      frontinstaller:
+        condition: service_completed_successfully
+    build:
+      dockerfile: "Dockerfile"
+      target: "reactapp"
+    environment:
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
+      - PORT=${ADMIN_FRONT_PORT}
+      - REACT_ROUTING_MAIN_SITE=/
+    volumes:
+      - "./apps/frontend/:/app:r"
+    expose:
+      - ${ADMIN_FRONT_PORT}
+    ports:
+      - "${ADMIN_FRONT_PORT}:${ADMIN_FRONT_PORT}"
+    networks:
+      local:
+    command: [ "start" ]
+networks:
+  local:
