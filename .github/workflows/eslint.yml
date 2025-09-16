@@ -19,10 +19,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd apps/front-admin
+          cd apps/frontend
           npm install
 
       - name: Run ESLint
         run: |
-          cd apps/front-admin
+          cd apps/frontend
           npm run lint
