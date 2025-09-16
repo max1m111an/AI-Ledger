@@ -20,6 +20,7 @@ export default [
             globals: {
                 ...globals.browser,
                 ...globals.node,
+                React: "readonly",
             },
             parser: tseslint.parser,
             parserOptions: {
@@ -37,7 +38,9 @@ export default [
             "jsx-a11y": jsxA11y,
         },
         rules: {
-            "no-unused-vars": "warn",
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": "warn",
+
             "semi": ["error", "always"],
             "comma-dangle": ["error", "always-multiline"],
             "indent": ["error", 4],
