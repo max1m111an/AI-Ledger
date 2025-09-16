@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                       // вместо es5
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // актуальные библиотеки
+    "allowJs": true,                          // поддержка .js/.jsx
+    "checkJs": false,                         // чтобы не ругался на JS
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",                       // JSX runtime React 17+
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
+  "exclude": ["node_modules", "build", "dist"]
+}
