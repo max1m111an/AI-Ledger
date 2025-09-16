@@ -16,13 +16,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'apps/frontend/package-lock.json'
 
       - name: Install dependencies
         run: |
+          set -e  # ← выход при любой ошибке
           cd apps/frontend
-          npm install
+          npm ci --prefer-offline  # ← быстрее и надёжнее
 
       - name: Run ESLint
         run: |
+          set -e
           cd apps/frontend
           npm run lint
