@@ -26,6 +26,7 @@ services:
       - ".env"
     volumes:
       - "./apps/auth/:/app/auth/:r"
+      - "./shared:/app/shared"
     expose:
       - 8081
     networks:
