@@ -1,18 +1,23 @@
-[project]
+[tool.poetry]
 name = "ai-ledger"
 version = "0.1.0"
 description = "AI Ledger - financial tracker"
 authors = [
-    {name = "max1m111an",email = "maksimilianbegunov@inbox.ru"},
-    {name = "PewPewP",email = "na.aleksandrova2014@gmail.com"},
-    {name = "Qurlya",email = "pingvining05@mail.ru"}
+    "max1m111an <maksimilianbegunov@inbox.ru>",
+    "PewPewP <na.aleksandrova2014@gmail.com>",
+    "Qurlya <pingvining05@mail.ru>"
 ]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "fastapi (>=0.116.1,<0.117.0)",
-    "uvicorn (>=0.35.0,<0.36.0)"
-]
+packages = [{include = "apps"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.116.1"
+uvicorn = "^0.35.0"
+bcrypt = "^4.3.0"
+pydantic = "^2.11.9"
+starlette = "^0.48.0"
+fastapi-another-jwt-auth = "^0.1.11"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
