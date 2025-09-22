@@ -7,16 +7,11 @@ from starlette.responses import JSONResponse
 import bcrypt
 from fastapi_another_jwt_auth import AuthJWT
 from fastapi_another_jwt_auth.exceptions import AuthJWTException
-from pydantic import BaseModel
 
 from auth.settings import settings
+from shared.models.user import User
 
 app = FastAPI()
-
-
-class User(BaseModel):  # todo: test. make as full model
-    login: str
-    password: str
 
 
 @AuthJWT.load_config
