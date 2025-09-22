@@ -1,0 +1,28 @@
+@import "@assets/scss/consts";
+.Button {
+  display: flex;
+  width: auto;
+  align-items: center;
+  margin: 3px 0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  text-decoration: none;
+  gap: 10px;
+  border: $base_border;
+  color: $base_color;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+  &.nav{
+    width: 80%;
+
+    &.active{
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+  }
+}
