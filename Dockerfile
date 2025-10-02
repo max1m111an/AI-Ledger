@@ -10,3 +10,5 @@ FROM node:alpine AS reactapp
 
 WORKDIR "/app"
 ENTRYPOINT ["npm"]
+
+FROM nginx:alpine as reverseproxy
