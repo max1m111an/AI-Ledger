@@ -2,14 +2,12 @@ name: ESLint Check
 
 on:
   pull_request:
-  push:
-    branches: [master, main]
 
 jobs:
   eslint:
     runs-on: ubuntu-latest
     name: "Lint TypeScript"
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
