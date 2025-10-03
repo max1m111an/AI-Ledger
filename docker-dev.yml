@@ -19,6 +19,26 @@ services:
       - "--port"
       - "8082"
       - "--reload"
+  auth:
+    build:
+      dockerfile: "Dockerfile"
+      target: "ledger"
+    env_file:
+      - ".env"
+    volumes:
+      - "./apps/auth/:/app/auth/:r"
+      - "./shared:/app/shared"
+    expose:
+      - 8081
+    networks:
+      local:
+    command:
+      - "auth.main:app"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8081"
+      - "--reload"
   frontinstaller:
     build:
       dockerfile: "Dockerfile"
