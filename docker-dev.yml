@@ -19,39 +19,21 @@ services:
       - "--port"
       - "8082"
       - "--reload"
-  frontinstaller:
-    build:
-      dockerfile: "Dockerfile"
-      target: "reactapp"
-    volumes:
-      - "./apps/frontend/:/app:rw"
-    networks:
-      local:
-    command: [ "i" ]
+
   front:
-    depends_on:
-      frontinstaller:
-        condition: service_completed_successfully
     build:
-      dockerfile: "Dockerfile"
-      target: "reactapp"
-    environment:
-      - DANGEROUSLY_DISABLE_HOST_CHECK=true
-      - PORT=${ADMIN_FRONT_PORT}
-      - REACT_ROUTING_MAIN_SITE=/
+      dockerfile: Dockerfile
+      target: reactapp
     volumes:
-      - "./apps/frontend/:/app:r"
+      - "./apps/frontend/:/app:cached"
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
     expose:
-      - ${ADMIN_FRONT_PORT}
-    ports:
-      - "${ADMIN_FRONT_PORT}:${ADMIN_FRONT_PORT}"
+      - "${ADMIN_FRONT_PORT}"
     networks:
       local:
-    command: [ "start" ]
+
   reverseproxy:
     depends_on:
-      auth:
-        condition: service_started
       ledger:
         condition: service_started
     build:

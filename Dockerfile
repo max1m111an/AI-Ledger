@@ -6,9 +6,15 @@ RUN ["python3", "-m", "pip", "install", "--no-deps", "--no-cache-dir", "-r", "re
 WORKDIR "/app"
 ENTRYPOINT ["python3", "-m", "uvicorn"]
 
-FROM node:alpine AS reactapp
+FROM node:20-bullseye AS reactapp
+WORKDIR /app
 
-WORKDIR "/app"
-ENTRYPOINT ["npm"]
+COPY ./apps/frontend/package*.json ./
+
+RUN npm install
+
+COPY ./apps/frontend ./
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
 FROM nginx:alpine as reverseproxy
