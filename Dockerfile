@@ -6,10 +6,16 @@ RUN ["python3", "-m", "pip", "install", "--no-deps", "--no-cache-dir", "-r", "re
 WORKDIR "/app"
 ENTRYPOINT ["python3", "-m", "uvicorn"]
 
-FROM node:alpine AS reactapp
+FROM node:20-alpine AS reactapp
+WORKDIR /app
 
-WORKDIR "/app"
-ENTRYPOINT ["npm"]
+COPY ./apps/frontend/package*.json ./
+
+RUN rm -rf node_modules package-lock.json
+
+RUN npm install --no-cache
+
+COPY ./apps/frontend ./
 
 FROM nginx:alpine as reverseproxy
 
