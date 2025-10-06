@@ -12,3 +12,7 @@ WORKDIR "/app"
 ENTRYPOINT ["npm"]
 
 FROM nginx:alpine as reverseproxy
+
+FROM mariadb:latest as database
+
+FROM phpmyadmin:latest as dbadmin
