@@ -1,13 +1,9 @@
-export function Header() {
+import React from "react";
+import "@assets/scss/index.scss";
+
+export const Header: React.FC = () => {
     return (
-        <header className="app_header">
-            <nav>
-                <ul>
-                    <li><a href="/">Главная</a></li>
-                    <li><a href="/about">О нас</a></li>
-                    <li><a href="/contact">Контакты</a></li>
-                </ul>
-            </nav>
+        <header className="header">
         </header>
     );
-}
+};

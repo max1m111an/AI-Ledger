@@ -1,0 +1,11 @@
+@import "@assets/scss/consts";
+.header {
+  background: $base_background;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: calc(15dvw + 1px);
+  right: 0;
+  z-index: 100;
+  border: $base_border;
+}

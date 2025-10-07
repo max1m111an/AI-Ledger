@@ -8,6 +8,7 @@ import Subscriptions from "@/pages/Subscriptions.tsx";
 import Analitics from "@/pages/Analitics.tsx";
 import Login from "@/pages/Login.tsx";
 import Registration from "@/pages/Registration.tsx";
+import Profile from "@/pages/Profile.tsx";
 
 
 export const routesConfig = [
@@ -41,6 +42,10 @@ export const routesConfig = [
             {
                 path: ROUTES.REGISTRATION,
                 element: <Registration />,
+            },
+            {
+                path: ROUTES.PROFILE,
+                element: <Profile />,
             },
         ],
     },
