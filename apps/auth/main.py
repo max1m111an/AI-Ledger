@@ -5,7 +5,7 @@ import bcrypt
 from fastapi_another_jwt_auth import AuthJWT
 from fastapi_another_jwt_auth.exceptions import AuthJWTException
 from .settings import settings
-from shared.models.user import User
+from shared.models.user import UserLoginRequest
 
 
 app = FastAPI()
@@ -22,7 +22,7 @@ def authjwt_exception_handler(request: Request, exc: AuthJWTException):
 
 
 @app.post("/login")
-def login(user: User, Authorize: AuthJWT = Depends()):
+def login(user: UserLoginRequest, Authorize: AuthJWT = Depends()):
     """
     Login using username and password.
     Setting up JWT cookie if login was successful.

@@ -1,15 +1,29 @@
 from pydantic import BaseModel
+from sqlalchemy import UniqueConstraint
 from sqlmodel import SQLModel, Field
 
 
-class User(BaseModel):
+class UserRequestData(BaseModel):
     login: str
     password: str
 
 
-class DBUser(SQLModel, table=True):
-    __tablename__ = "users"
+class UserLoginRequest(BaseModel):
+    data: UserRequestData
 
-    id: int = Field(primary_key=True)
+class UserRegisterRequest(BaseModel):
+    data: UserRequestData
+    email: str
+    phone: int
+
+
+
+class UserModel(SQLModel, table=True):
+    __tablename__ = "users"
+    __table_args__ = (UniqueConstraint("email", "name", "phone"),)
+
+    id: int = Field(default=None, primary_key=True)
     name: str = Field(nullable=False)
     password: str = Field(nullable=False)
+    email: str = Field(nullable=False)
+    phone: str = Field(nullable=False)
