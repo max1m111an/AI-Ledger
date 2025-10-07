@@ -7,5 +7,6 @@ export const ROUTES = {
     SUBSCRIPTIONS: "/subscriptions",
     LOGIN: "/login",
     REGISTRATION: "/registration",
+    PROFILE: "/profile",
 };
 

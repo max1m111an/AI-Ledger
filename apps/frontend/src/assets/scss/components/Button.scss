@@ -1,16 +1,17 @@
-@import "@assets/scss/consts";
+@use "@assets/scss/consts" as *;
 .Button {
+  box-sizing: border-box;
   display: flex;
   width: auto;
   align-items: center;
   margin: 3px 0;
-  padding: 10px;
   text-align: center;
   border-radius: 6px;
   text-decoration: none;
   gap: 10px;
-  border: $base_border;
-  color: $base_color;
+  border: $sidebar_border;
+  color: $base_color_text_1;
+  font-family: $base_font_family;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
@@ -18,7 +19,12 @@
     transform: translateY(-1px);
   }
   &.nav{
-    width: 80%;
+    box-sizing: border-box;
+    width: 90%;
+    padding: 10px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &.active{
       background-color: rgba(255, 255, 255, 0.1);
