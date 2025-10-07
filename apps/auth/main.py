@@ -5,7 +5,7 @@ import bcrypt
 from fastapi_another_jwt_auth import AuthJWT
 from fastapi_another_jwt_auth.exceptions import AuthJWTException
 from .settings import settings
-from shared.models.user import UserLoginRequest
+from shared.models.request.user import UserLoginRequest
 
 
 app = FastAPI()

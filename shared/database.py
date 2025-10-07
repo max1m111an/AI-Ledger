@@ -33,8 +33,3 @@ async def get_session() -> AsyncSession:
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
-
-
-async def exe_q(select_q, session, return_scalar=False):
-    temp = await session.execute(select_q)
-    return temp.scalar() if return_scalar else temp.scalars().all()

@@ -1,21 +1,5 @@
-from pydantic import BaseModel
 from sqlalchemy import UniqueConstraint
 from sqlmodel import SQLModel, Field
-
-
-class UserRequestData(BaseModel):
-    login: str
-    password: str
-
-
-class UserLoginRequest(BaseModel):
-    data: UserRequestData
-
-class UserRegisterRequest(BaseModel):
-    data: UserRequestData
-    email: str
-    phone: int
-
 
 
 class UserModel(SQLModel, table=True):
