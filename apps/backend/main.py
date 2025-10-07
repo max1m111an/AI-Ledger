@@ -1,8 +1,10 @@
 from fastapi import FastAPI, Depends
-from sqlmodel import select
+from sqlalchemy import delete
+from sqlmodel import select, and_
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from shared.models.user import UserRegisterRequest, UserModel
+from shared.models.models import UserModel
+from shared.models.request.user import UserRegisterRequest, UserLoginRequest
 from shared.database import get_session, init_db, exe_q
 
 app = FastAPI()
@@ -21,7 +23,7 @@ async def initDb():
     await init_db()
 
 
-@app.post("/add")
+@app.post("/register")
 async def addUser(new_user: UserRegisterRequest, session: AsyncSession = Depends(get_session)):
     new_db_user: UserModel = UserModel(
         name=new_user.data.login,
@@ -33,6 +35,23 @@ async def addUser(new_user: UserRegisterRequest, session: AsyncSession = Depends
     await session.commit()
     await session.refresh(new_db_user)
     return new_db_user
+
+
+@app.delete("/remove")
+async def deleteUser(user_to_delete: UserLoginRequest, session: AsyncSession = Depends(get_session)):
+    del_user_stmt = delete(
+        UserModel,
+    ).where(
+        and_(UserModel.name == user_to_delete.data.login,
+        UserModel.password == user_to_delete.data.password),
+    )
+
+    await session.execute(del_user_stmt)
+    await session.commit()
+    return {
+        "status": "200"
+    }
+
 
 @app.post("/id")
 async def getUserByID(user_id: int, session: AsyncSession = Depends(get_session)):
