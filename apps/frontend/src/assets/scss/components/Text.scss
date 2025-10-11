@@ -1,0 +1,30 @@
+@use "@assets/scss/consts" as *;
+
+.text{
+  font-family: $base_font_family;
+  color: $base_color_text_1;
+
+  &.logo_title{
+    color: $base_color_text_1;
+    font-size: 16px;
+    margin: 5px 0 0 0;
+    box-sizing: border-box;
+    padding: 0 calc(15% + 15px); //todo Временное решение
+  }
+
+  &.logo_describtion{
+    color: $base_color_text_2;
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    padding: 0 calc(15% + 15px); //todo Временное решение
+  }
+  &.title{
+    color: $base_color_text_1;
+    font-size: 18px;
+
+  }
+  &.addition{
+    color: $base_color_text_2;
+    font-size: 14px;
+  }
+}

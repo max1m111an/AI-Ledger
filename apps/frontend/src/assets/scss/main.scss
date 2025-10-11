@@ -1,4 +1,4 @@
-@import "@assets/scss/consts";
+@use "@assets/scss/consts" as *;
 body, html, #root, .app-container {
   margin: 0;
   padding: 0;

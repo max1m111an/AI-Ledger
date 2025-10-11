@@ -1,4 +1,4 @@
-@import "@assets/scss/consts";
+@use "@assets/scss/consts" as *;
 .header {
   background: $base_background;
   height: 50px;
@@ -7,5 +7,5 @@
   left: calc(15dvw + 1px);
   right: 0;
   z-index: 100;
-  border: $base_border;
+  border: $sidebar_border;
 }
