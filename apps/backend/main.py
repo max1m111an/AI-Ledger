@@ -3,8 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from shared.models.models import UserModel
-from shared.models.request.user import UserRegisterRequest
+from shared.models.models import UserModel, UserCreate
 from shared.database import get_session, init_db
 
 app = FastAPI()
@@ -24,18 +23,13 @@ def getUser(name: str):
 
 
 @app.post("/register")
-async def addUser(new_user: UserRegisterRequest, session: AsyncSession = Depends(get_session)):
+async def addUser(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
     try:
-        new_db_user: UserModel = UserModel(
-            name=new_user.data.login,
-            password=new_user.data.password,
-            email=new_user.email,
-            phone=new_user.phone,
-        )
+        new_db_user: UserModel = UserModel(**user_data.model_dump())
         session.add(new_db_user)
         await session.commit()
 
-    except IntegrityError as e:
+    except IntegrityError as e:  # check if duplicate data was input
         return HTTPException(
             status_code=400,
             detail=e.args,
@@ -72,6 +66,14 @@ async def getUserByID(user_id: int, session: AsyncSession = Depends(get_session)
         detail=f"No user found by id={user_id}"
     )
 
+
+@app.patch("/edit")
+async def editUser(session: AsyncSession = Depends(get_session)):
+
+    return {
+        "status": 200,
+
+    }
 
 @app.get("/")
 async def getUsers(session: AsyncSession = Depends(get_session)):
