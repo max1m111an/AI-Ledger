@@ -9,9 +9,10 @@ ALLOWED_DOMAINS: list[str] = ["inbox.ru", "gmail.com", "mail.ru", "mail.com", "l
 
 
 class UserCreate(SQLModel):
-    name: str
-    password: str
-    email: str
+    name: str | None = None
+    password: str | None = None
+    email: str | None = None
+
 
     @field_validator('email')
     @classmethod
@@ -24,6 +25,7 @@ class UserCreate(SQLModel):
             raise ValueError(f'Only emails from {ALLOWED_DOMAINS} are allowed')
 
         return v.lower()
+
 
     @field_validator('password')
     @classmethod
