@@ -26,7 +26,11 @@ def getUser(name: str):
 @app.post("/register")
 async def addUser(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
     try:
-        new_db_user: UserModel = UserModel(**user_data.model_dump())
+        user_dict = user_data.model_dump()
+        password = user_dict.pop("hash_password")
+        new_db_user = UserModel(**user_dict)
+        new_db_user.set_password(password)
+
         session.add(new_db_user)
         await session.commit()
 
@@ -36,7 +40,10 @@ async def addUser(user_data: UserCreate, session: AsyncSession = Depends(get_ses
             detail=e.args,
         )
     await session.refresh(new_db_user)
-    return new_db_user
+    return {
+        "status": 200,
+        "user": new_db_user,
+    }
 
 
 @app.delete("/remove")
@@ -46,7 +53,7 @@ async def deleteUser(del_user_id: int, session: AsyncSession = Depends(get_sessi
         await session.delete(del_user)
         await session.commit()
         return {
-            "status": 200
+            "status": 200,
         }
     raise HTTPException(
         status_code=404,
@@ -77,30 +84,37 @@ async def editUser(edit_user_data: EditUserRequest, session: AsyncSession = Depe
             detail=f"No user found by id={edit_user_data.edit_user_id}"
         )
 
-    update_values = {}
-    fields_to_check = ['email', 'name', 'password']
+    if edit_user_data.password:
+        user_this_id.set_password(edit_user_data.password)
 
-    for field in fields_to_check:
-        value = getattr(edit_user_data, field, None)
-        if value:
-            update_values[field] = value
+    if edit_user_data.email or edit_user_data.name:
+        update_values = {}
+        fields_to_check = ['email', 'name']
 
-    edit_user_stmt = update(
-        UserModel,
-    ).where(
-        UserModel.id == edit_user_data.edit_user_id,
-    ).values(**update_values)
+        for field in fields_to_check:
+            value = getattr(edit_user_data, field, None)
+            if value:
+                update_values[field] = value
 
-    await session.execute(edit_user_stmt)
+        edit_user_stmt = update(
+            UserModel,
+        ).where(
+            UserModel.id == edit_user_data.edit_user_id,
+        ).values(**update_values)
+
+        await session.execute(edit_user_stmt)
     await session.commit()
-    result = await session.get(UserModel, edit_user_data.edit_user_id)
+    await session.refresh(user_this_id)
 
     return {
         "status": 200,
-        "user": result,
+        "user": user_this_id,
     }
 
 @app.get("/")
 async def getUsers(session: AsyncSession = Depends(get_session)):
     result = await session.execute(select(UserModel))
-    return result.scalars().all()
+    return {
+        "status": 200,
+        "users": result.scalars().all(),
+    }

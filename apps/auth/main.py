@@ -1,13 +1,18 @@
 from fastapi import Depends, FastAPI, HTTPException
+from passlib.context import CryptContext
+from sqlmodel import select, or_
+from sqlmodel.ext.asyncio.session import AsyncSession
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-import bcrypt
 from fastapi_another_jwt_auth import AuthJWT
 from fastapi_another_jwt_auth.exceptions import AuthJWTException
+
+from shared.database import get_session
+from shared.models.models import UserModel
 from .settings import settings
 from shared.models.request.user import UserLoginRequest
 
-
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app = FastAPI()
 
 
@@ -22,29 +27,31 @@ def authjwt_exception_handler(request: Request, exc: AuthJWTException):
 
 
 @app.post("/login")
-def login(user: UserLoginRequest, Authorize: AuthJWT = Depends()):
+async def login(user: UserLoginRequest, Authorize: AuthJWT = Depends(), session: AsyncSession = Depends(get_session)):
     """
-    Login using username and password.
+    Login using username and hash_password.
     Setting up JWT cookie if login was successful.
     """
+    result = await session.execute(
+        select(
+            UserModel,
+        ).where(or_(
+            UserModel.email == user.enter_data,
+            UserModel.name == user.enter_data,
+        ))
+    )
+    db_user = result.scalar_one_or_none()
 
-    admin_pass_bytes = settings.admin_password.encode("utf-8")
-    pass_salt = bcrypt.gensalt()
-    admin_password_hash = bcrypt.hashpw(admin_pass_bytes, pass_salt)
+    if not db_user or not db_user.verify_password(user.password):
+        raise HTTPException(status_code=401, detail="Incorrect email|login or password")
 
-    user_pass_bytes = user.password.encode("utf-8")
-    user_password_hash = bcrypt.hashpw(user_pass_bytes, pass_salt)
-
-    if user.login != settings.admin_login or user_password_hash != admin_password_hash:
-        raise HTTPException(status_code=401, detail="Incorrect login or password")
-
-    access_token = Authorize.create_access_token(subject=user.login)
-    refresh_token = Authorize.create_refresh_token(subject=user.login)
+    access_token = Authorize.create_access_token(subject=db_user.name)
+    refresh_token = Authorize.create_refresh_token(subject=db_user.name)
 
     # Set the JWT and CSRF double submit cookies in the response
     Authorize.set_access_cookies(access_token)
     Authorize.set_refresh_cookies(refresh_token)
-    return {"status": "OK"}
+    return {"status": 200}
 
 
 @app.post("/token/refresh")
@@ -57,7 +64,7 @@ def refresh(Authorize: AuthJWT = Depends()):
 
     # Set the JWT and CSRF double submit cookies in the response
     Authorize.set_access_cookies(new_access_token)
-    return {"status": "OK"}
+    return {"status": 200}
 
 
 @app.delete("/logout")
@@ -70,7 +77,7 @@ def logout(Authorize: AuthJWT = Depends()):
 
     Authorize.jwt_required()
     Authorize.unset_jwt_cookies()
-    return {"status": "OK"}
+    return {"status": 200}
 
 
 @app.get("/me")
@@ -80,4 +87,4 @@ def hello(Authorize: AuthJWT = Depends()):
     Authorize.jwt_required()
     current_user = Authorize.get_jwt_subject()
 
-    return {"username": current_user}
+    return {"user_data": current_user}

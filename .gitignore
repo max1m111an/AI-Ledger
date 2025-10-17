@@ -7,5 +7,3 @@ venv
 .python-version
 poetry.lock
 /config/database/*
-/database-dumps/*
-/database-dev-version/*

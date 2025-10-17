@@ -9,8 +9,6 @@ if find_spec("dotenv") is not None:
     load_dotenv()
 
 class Settings(BaseModel):
-    admin_login: str
-    admin_password: str
     jwt_algorithm: str
     authjwt_secret_key: str
     access_token_expire_minutes: int
@@ -24,8 +22,6 @@ class Settings(BaseModel):
 
 
 settings = Settings(
-    admin_login=os.environ["ADMIN_LOGIN"],
-    admin_password=os.environ["ADMIN_PASSWORD"],
     jwt_algorithm=os.environ["JWT_ALGORITHM"],
     authjwt_secret_key=os.environ["AUTHJWT_SECRET_KEY"],
     access_token_expire_minutes=int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 0)),
