@@ -1,11 +1,11 @@
 from sqlalchemy.exc import IntegrityError
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import select, update
+from sqlmodel import update
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from shared.models.models import UserModel, UserCreate
 from shared.database import get_session, init_db
-from shared.models.request.user import EditUserRequest
+from shared.models.request.user import EditUserRequest, parse_user, UserIDRequest
 
 app = FastAPI()
 
@@ -16,7 +16,7 @@ async def initDb():
 
 
 @app.post("/hello")
-def getUser(name: str):
+def getName(name: str):
     return {
         "status": 200,
         "name": name,
@@ -24,7 +24,7 @@ def getUser(name: str):
 
 
 @app.post("/register")
-async def addUser(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
+async def createUser(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
     try:
         user_dict = user_data.model_dump()
         password = user_dict.pop("hash_password")
@@ -42,13 +42,13 @@ async def addUser(user_data: UserCreate, session: AsyncSession = Depends(get_ses
     await session.refresh(new_db_user)
     return {
         "status": 200,
-        "user": new_db_user,
+        "user": parse_user(new_db_user),
     }
 
 
 @app.delete("/remove")
-async def deleteUser(del_user_id: int, session: AsyncSession = Depends(get_session)):
-    del_user = await session.get(UserModel, del_user_id)
+async def deleteUser(del_user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
+    del_user = await session.get(UserModel, del_user_id.id)
     if del_user:
         await session.delete(del_user)
         await session.commit()
@@ -57,31 +57,31 @@ async def deleteUser(del_user_id: int, session: AsyncSession = Depends(get_sessi
         }
     raise HTTPException(
         status_code=404,
-        detail=f"No user found by id={del_user_id}"
+        detail=f"No user found by id={del_user_id.id}"
     )
 
 
-@app.post("/id")
-async def getUserByID(user_id: int, session: AsyncSession = Depends(get_session)):
-    result = await session.get(UserModel, user_id)
+@app.post("/")
+async def getUser(user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
+    result = await session.get(UserModel, user_id.id)
     if result:
         return {
             "status": 200,
-            "user": result,
+            "user": parse_user(result),
         }
     raise HTTPException(
         status_code=404,
-        detail=f"No user found by id={user_id}"
+        detail=f"No user found by id={user_id.id}"
     )
 
 
 @app.patch("/edit")
-async def editUser(edit_user_data: EditUserRequest, session: AsyncSession = Depends(get_session)):
-    user_this_id = await session.get(UserModel, edit_user_data.edit_user_id)
+async def updateUser(edit_user_data: EditUserRequest, session: AsyncSession = Depends(get_session)):
+    user_this_id = await session.get(UserModel, edit_user_data.id)
     if not user_this_id:
         raise HTTPException(
             status_code=404,
-            detail=f"No user found by id={edit_user_data.edit_user_id}"
+            detail=f"No user found by id={edit_user_data.id}"
         )
 
     if edit_user_data.password:
@@ -108,13 +108,5 @@ async def editUser(edit_user_data: EditUserRequest, session: AsyncSession = Depe
 
     return {
         "status": 200,
-        "user": user_this_id,
-    }
-
-@app.get("/")
-async def getUsers(session: AsyncSession = Depends(get_session)):
-    result = await session.execute(select(UserModel))
-    return {
-        "status": 200,
-        "users": result.scalars().all(),
+        "user": parse_user(user_this_id),
     }

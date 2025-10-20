@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from shared.models.models import UserCreate
+from shared.models.models import UserCreate, UserModel
 
 
 class UserLoginRequest(BaseModel):
@@ -9,4 +9,15 @@ class UserLoginRequest(BaseModel):
 
 
 class EditUserRequest(UserCreate):
-    edit_user_id: int
+    id: int
+
+
+class UserIDRequest(BaseModel):
+    id: int
+
+
+def parse_user(user: UserModel) -> dict:
+    return {
+        "name": user.name,
+        "email": user.email,
+    }
