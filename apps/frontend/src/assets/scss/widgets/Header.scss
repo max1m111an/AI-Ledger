@@ -1,11 +1,11 @@
 @use "@assets/scss/consts" as *;
 .header {
-  background: $base_background;
+  background: $block_background_1;
   height: 50px;
   position: fixed;
   top: 0;
   left: calc(15dvw + 1px);
   right: 0;
   z-index: 100;
-  border: $sidebar_border;
+  border: $base_color_border;
 }

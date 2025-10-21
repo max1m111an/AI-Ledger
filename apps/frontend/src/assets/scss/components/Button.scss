@@ -9,12 +9,14 @@
   border-radius: 6px;
   text-decoration: none;
   gap: 10px;
-  border: $sidebar_border;
+  border: $base_color_border;
   color: $base_color_text_1;
   font-family: $base_font_family;
 
   .Icon {
     flex-shrink: 0;
+    width: 1.2em;
+    height: 1.2em;
   }
 
   &:hover {
@@ -30,8 +32,8 @@
     text-overflow: ellipsis;
 
     &.active{
-      background-color: rgba(255, 255, 255, 0.1);
-      border-color: rgba(99, 102, 241, 0.3);
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(99, 102, 241, 0.4);
     }
   }
 }
