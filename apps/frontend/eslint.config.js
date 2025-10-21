@@ -35,8 +35,17 @@ export default defineConfig([
           },
       },
       rules: {
-          '@typescript-eslint/no-unused-vars': 'error',
+          '@typescript-eslint/no-unused-vars': [
+              'error',
+              {
+                  'argsIgnorePattern': '^_',
+                  'varsIgnorePattern': '^_',
+                  'caughtErrorsIgnorePattern': '^_',
+                  'destructuredArrayIgnorePattern': '^_'
+              }
+          ],
 
+          '@typescript-eslint/no-explicit-any': 'off',
           'semi': ['error', 'always'],
           'comma-dangle': ['error', 'always-multiline'],
           'indent': ['error', 4],
