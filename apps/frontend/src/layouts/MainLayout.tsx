@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "../widgets/Sidebar.tsx";
+import { Sidebar } from "@/widgets/Sidebar";
 import { Header } from "@/widgets/Header.tsx";
 import sprite from "@/assets/scss/components/Icons.svg?raw";
 
-export default function PublicLayout() {
+
+export default function MainLayout() {
     return (
         <div className="app-container">
             <div style={ { display: "none" } } dangerouslySetInnerHTML={ { __html: sprite } } />
