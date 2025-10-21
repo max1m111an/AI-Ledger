@@ -62,6 +62,8 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
+      auth:
+        condition: service_started
       ledger:
         condition: service_started
     build:
