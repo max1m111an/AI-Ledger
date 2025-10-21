@@ -3,11 +3,21 @@ $base_font_family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Rob
 
 $base_color_text_1: #f1f5f9;
 $base_color_text_2: #9ca3af;
+$base_color_text_3: #64748b;
 
+$link_color: #a5b4fc;
+$expenses_color: #fda4af;
+$revenue_color: #6ee7b7;
+$progress_bar_color: rgba(16, 185, 129, 0.7);
 
-$sidebar_border: rgba(255, 255, 255, 0.1) 1px solid ;
-$action_border: rgb(46, 49, 51) solid 1px;
-$action_background: rgb(22, 24, 27);
+$base_color_icon: #cbd5e1;
+
+$base_color_border: rgba(255, 255, 255, 0.1) solid 1px;
+
+$action_background: rgba(255, 255, 255, 0.04);
+
+$block_background_1: rgba(0, 0, 0, 0.2);
+$block_background_2: rgba(0, 0, 0, 0.3);
 
 $blue_background: rgb(26, 27, 44);
 $blue_border: rgb(58, 61, 103) solid 1px;
