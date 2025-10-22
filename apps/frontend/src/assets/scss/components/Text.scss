@@ -12,19 +12,49 @@
     padding: 0 calc(15% + 15px); //todo Временное решение
   }
 
-  &.logo_describtion{
+  &.logo_description{
     color: $base_color_text_2;
-    font-size: 14px;
+    font-size: 12px;
     margin: 0 0 5px 0;
     padding: 0 calc(15% + 15px); //todo Временное решение
   }
   &.title{
     color: $base_color_text_1;
     font-size: 18px;
+    box-sizing: border-box;
+    font-weight: 500;
+
+    &.login{
+      font-size: 24px;
+      margin: 10px 0 0 0;
+    }
+  }
+  &.addition_1{
+    color: $base_color_text_2;
+    font-size: 14px;
+
+    &.auth_name{
+      font-size: 12px;
+      font-weight: 500;
+      margin: 15px 0 5px 0;
+    }
+
+    &.auth_note{
+      font-weight: 500;
+      margin: 10px 0 10px 0;
+    }
+
+    &.links{
+      font-size: 12px;
+
+      &:hover{
+        color: $link_color;
+      }
+    }
 
   }
-  &.addition{
-    color: $base_color_text_2;
+  &.addition_2{
+    color: $base_color_text_3;
     font-size: 14px;
   }
 }
