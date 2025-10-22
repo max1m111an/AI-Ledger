@@ -1,0 +1,69 @@
+@use "@assets/scss/consts" as *;
+
+
+.icon {
+  flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+
+  &.magic_mint{
+    color: $magic_mint_color_icon;
+  }
+
+  &.pastel_pink{
+    color: $pastel_pink_color_icon;
+  }
+
+  &.sweet_pink{
+    color: $sweet_pink_color_icon;
+  }
+
+  &.riptide{
+    color: $riptide_color_icon;
+  }
+
+  &.melrose{
+    color: $melrose_color_icon;
+  }
+
+  &.malibu{
+    color: $malibu_color_icon;
+  }
+
+  &.blue{
+    color: $blue_color_icon;
+  }
+
+  &.sweet_corn{
+    color: $sweet_corn_color_icon;
+  }
+
+  &.melrose_shop{
+    color: $melrose_shop_color_icon;
+  }
+
+  &.mustard{
+    color: $mustard_color_icon;
+  }
+
+  &.golden{
+    color: $golden_color_icon;
+  }
+
+  &.green{
+    color: $green_color_icon;
+  }
+
+  &.red{
+    color: $red_color_icon;
+  }
+
+  &.periwinkle{
+    color: $periwinkle_color_icon;
+  }
+
+  &.orange{
+    color: $orange_color_icon;
+  }
+}
+
