@@ -48,24 +48,33 @@ export default function LoginWidget() {
     return (
         <>
             <form onSubmit={ handleSubmit } className="form">
+                <p className="text addition_1 auth_name">Логин</p>
                 <input
                     type="text"
                     name="login"
                     value={ loginData.login }
-                    placeholder="Пользователь"
+                    placeholder="Введите логин"
                     onChange={ handleChangeField }
                     required />
+                <p className="text addition_1 auth_name">Пароль</p>
                 <input
                     type="password"
                     name="password"
                     value={ loginData.password }
-                    placeholder="Пароль"
+                    placeholder="Введите пароль"
                     onChange={ handleChangeField }
                     required />
-                <button
+                <div className="links">
+                    <p className="text addition_1 links">Забыли пароль?</p>
+                    <p className="text addition_1 links">Создать аккаунт</p>
+                </div>
+                <button className="Button auth"
                     disabled={ loading }
                     type="submit"
                 >
+                    <svg className="icon">
+                        <use href="#Login" />
+                    </svg>
                     Войти
                 </button>
             </form>
