@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "@/widgets/Sidebar";
 import { Header } from "@/widgets/Header.tsx";
-import sprite from "@/assets/scss/components/Icons.svg?raw";
+import sprite from "@assets/image/Icons.svg?raw";
 
 
 export default function MainLayout() {

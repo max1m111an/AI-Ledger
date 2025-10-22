@@ -13,12 +13,6 @@
   color: $base_color_text_1;
   font-family: $base_font_family;
 
-  .Icon {
-    flex-shrink: 0;
-    width: 1.2em;
-    height: 1.2em;
-  }
-
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
@@ -34,6 +28,21 @@
     &.active{
       background-color: rgba(255, 255, 255, 0.05);
       border-color: rgba(99, 102, 241, 0.4);
+    }
+  }
+  &.auth{
+    width: 100%;
+    padding: 10px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #C7D2FE;
+    font-size: 16px;
+
+    &:hover{
+      background-color: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
     }
   }
 }
