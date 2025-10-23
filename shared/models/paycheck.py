@@ -18,7 +18,7 @@ class PaycheckCategory(Enum):
     UTILITIES = "Utilities"
     HEALTHCARE = "Healthcare"
     MARKETPLACE = "Marketplace"
-    ENTERTAINMENT  = "Entertainment"
+    ENTERTAINMENT = "Entertainment"
 
 
 class PaycheckCreate(SQLModel):
@@ -36,7 +36,7 @@ class PaycheckCreate(SQLModel):
         return v
 
 
-class PaycheckModel(PaycheckCreate, table=True):
+class PaycheckModel(PaycheckCreate, table=True):  # type: ignore
     __tablename__ = "paychecks"
 
     id: int = Field(default=None, primary_key=True)  # noqa: A003

@@ -13,10 +13,10 @@ class EditUserRequest(UserCreate):
 
 
 class IDRequest(BaseModel):
-    id: int  # noqa: A003
+    id: list[int]  # noqa: A003
 
 
-def parse_user(user: UserModel) -> dict:
+def parse_user(user: UserModel | type[UserModel]) -> dict:
     return {
         "name": user.name,
         "email": user.email,

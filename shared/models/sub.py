@@ -26,7 +26,7 @@ class SubCreate(SQLModel):
         return v
 
 
-class SubscriptionModel(SubCreate, table=True):
+class SubscriptionModel(SubCreate, table=True):  # type: ignore
     __tablename__ = "subs"
     __table_args__ = (UniqueConstraint("name", "period"),)
 
