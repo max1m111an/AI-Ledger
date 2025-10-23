@@ -9,11 +9,11 @@ class UserLoginRequest(BaseModel):
 
 
 class EditUserRequest(UserCreate):
-    id: int
+    id: int  # noqa: A003
 
 
 class UserIDRequest(BaseModel):
-    id: int
+    id: int  # noqa: A003
 
 
 def parse_user(user: UserModel) -> dict:

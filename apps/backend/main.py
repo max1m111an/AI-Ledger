@@ -1,22 +1,23 @@
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.exc import IntegrityError
-from fastapi import FastAPI, Depends, HTTPException
 from sqlmodel import update
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from shared.models.models import UserModel, UserCreate
 from shared.database import get_session, init_db
-from shared.models.request.user import EditUserRequest, parse_user, UserIDRequest
+from shared.models.models import UserCreate, UserModel
+from shared.models.request.user import (EditUserRequest, UserIDRequest,
+                                        parse_user)
 
 app = FastAPI()
 
 
 @app.on_event("startup")
-async def initDb():
+async def init_database():
     await init_db()
 
 
 @app.post("/hello")
-def getName(name: str):
+def get_name(name: str):
     return {
         "status": 200,
         "name": name,
@@ -24,7 +25,7 @@ def getName(name: str):
 
 
 @app.post("/register")
-async def createUser(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
+async def create_user(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
     try:
         user_dict = user_data.model_dump()
         password = user_dict.pop("hash_password")
@@ -47,7 +48,7 @@ async def createUser(user_data: UserCreate, session: AsyncSession = Depends(get_
 
 
 @app.delete("/remove")
-async def deleteUser(del_user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
+async def delete_user(del_user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
     del_user = await session.get(UserModel, del_user_id.id)
     if del_user:
         await session.delete(del_user)
@@ -62,7 +63,7 @@ async def deleteUser(del_user_id: UserIDRequest, session: AsyncSession = Depends
 
 
 @app.post("/")
-async def getUser(user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
+async def get_user(user_id: UserIDRequest, session: AsyncSession = Depends(get_session)):
     result = await session.get(UserModel, user_id.id)
     if result:
         return {
@@ -76,7 +77,7 @@ async def getUser(user_id: UserIDRequest, session: AsyncSession = Depends(get_se
 
 
 @app.patch("/edit")
-async def updateUser(edit_user_data: EditUserRequest, session: AsyncSession = Depends(get_session)):
+async def update_user(edit_user_data: EditUserRequest, session: AsyncSession = Depends(get_session)):
     user_this_id = await session.get(UserModel, edit_user_data.id)
     if not user_this_id:
         raise HTTPException(

@@ -1,10 +1,7 @@
-from typing import Optional
-
 from passlib.context import CryptContext
 from pydantic import field_validator
 from sqlalchemy import UniqueConstraint
-from sqlmodel import SQLModel, Field
-
+from sqlmodel import Field, SQLModel
 
 ALLOWED_DOMAINS: list[str] = ["inbox.ru", "gmail.com", "mail.ru", "mail.com", "list.ru"]
 
@@ -13,11 +10,11 @@ pwd_context = CryptContext(
     deprecated="auto",
 )
 
+
 class UserCreate(SQLModel):
     name: str | None = None
     password: str | None = None
     email: str | None = None
-
 
     @field_validator('email')
     @classmethod
@@ -31,7 +28,6 @@ class UserCreate(SQLModel):
 
         return v.lower()
 
-
     @field_validator('password')
     @classmethod
     def validate_password_strength(cls, v: str) -> str:
@@ -44,11 +40,11 @@ class UserCreate(SQLModel):
         return v
 
 
-class UserModel(UserCreate, table=True):
+class UserModel(UserCreate, table=True):  # type: ignore
     __tablename__ = "users"
     __table_args__ = (UniqueConstraint("email", "name"),)
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)  # noqa: A003
 
     def set_password(self, password: str) -> None:
         self.password = pwd_context.hash(password)
