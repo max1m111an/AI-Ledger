@@ -3,6 +3,7 @@ from importlib import import_module
 
 dir_name: str = "backend.api"
 
+
 def api_discover() -> list:
     routers = []
     pkg = import_module(dir_name)
