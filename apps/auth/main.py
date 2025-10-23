@@ -8,7 +8,7 @@ from fastapi_another_jwt_auth import AuthJWT
 from fastapi_another_jwt_auth.exceptions import AuthJWTException
 
 from shared.database import get_session
-from shared.models.models import UserModel
+from shared.models.user import UserModel
 from .settings import settings
 from shared.models.request.user import UserLoginRequest
 
