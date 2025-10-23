@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from shared.models.models import UserCreate, UserModel
+from shared.models.user import UserCreate, UserModel
 
 
 class UserLoginRequest(BaseModel):
@@ -12,7 +12,7 @@ class EditUserRequest(UserCreate):
     id: int
 
 
-class UserIDRequest(BaseModel):
+class IDRequest(BaseModel):
     id: int
 
 
