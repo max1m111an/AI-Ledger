@@ -1,0 +1,96 @@
+files: '.*\.(py|toml|html|yaml|yml)$'
+exclude: '(^app/tasks/__init__\.py$|^compose/notebook/config.py$)'
+repos:
+  # pre-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-ast
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: check-toml
+      - id: check-yaml
+      - id: fix-byte-order-marker
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-docstring-first
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: debug-statements
+      - id: mixed-line-ending
+      - id: detect-private-key
+      - id: requirements-txt-fixer
+      - id: fix-encoding-pragma
+        args: [
+          --remove,
+        ]
+      - id: check-docstring-first
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: no-commit-to-branch
+        args: [
+          --branch,
+          master,
+        ]
+  # pygrep
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-no-eval
+      - id: python-no-log-warn
+      - id: python-use-type-annotations
+      - id: python-check-mock-methods
+      - id: text-unicode-replacement-char
+  # pyupgrade
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.1
+    hooks:
+      - id: pyupgrade
+        args: [
+          --py312-plus,
+        ]
+  # autoflake
+  - repo: https://github.com/myint/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        args: [
+          --in-place,
+          --remove-all-unused-imports,
+          --expand-star-imports,
+          --ignore-init-module-imports,
+        ]
+  # flake8
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        args:
+          - --ignore=B008,E501
+        additional_dependencies:
+          - flake8-builtins
+          - flake8-comprehensions
+          - flake8-eradicate
+          - flake8-expression-complexity
+          - flake8-simplify
+          - flake8-bugbear
+          - flake8-pie
+          - flake8-print
+          - flake8-noqa
+          - flake8-broken-line
+  # mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        args: [
+          --install-types,
+          --non-interactive,
+          --no-warn-no-return,
+          --ignore-missing-imports,
+          --implicit-optional,
+        ]

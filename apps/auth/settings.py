@@ -8,6 +8,7 @@ if find_spec("dotenv") is not None:
 
     load_dotenv()
 
+
 class Settings(BaseModel):
     jwt_algorithm: str
     authjwt_secret_key: str
