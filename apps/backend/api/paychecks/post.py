@@ -23,32 +23,26 @@ async def create_paycheck(paycheck_data: PaycheckCreate, session: AsyncSession =
 
 
 @router.delete("/remove")
-async def delete_paycheck(del_check_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    del_paycheck = await session.get(PaycheckModel, del_check_id.id)
-    if del_paycheck:
+async def delete_paychecks(del_check_id: IDRequest, session: AsyncSession = Depends(get_session)):
+    for del_check in del_check_id.id:
+        del_paycheck = await session.get(PaycheckModel, del_check)
         await session.delete(del_paycheck)
-        await session.commit()
-        return {
-            "status": 200,
-        }
-    raise HTTPException(
-        status_code=404,
-        detail=f"No paycheck found by id={del_check_id.id}"
-    )
+    await session.commit()
+    return {
+        "status": 200,
+    }
 
 
 @router.post("/")
-async def get_paycheck(check_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    result = await session.get(PaycheckModel, check_id.id)
-    if result:
-        return {
-            "status": 200,
-            "paycheck": result,
-        }
-    raise HTTPException(
-        status_code=404,
-        detail=f"No paycheck found by id={check_id.id}"
-    )
+async def get_paychecks(checks_id: IDRequest, session: AsyncSession = Depends(get_session)):
+    paycheck_arr = []
+    for check in checks_id.id:
+        result = await session.get(PaycheckModel, check)
+        paycheck_arr.append(result)
+    return {
+        "status": 200,
+        "paychecks": paycheck_arr,
+    }
 
 
 @router.patch("/edit")

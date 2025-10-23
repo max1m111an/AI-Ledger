@@ -25,32 +25,26 @@ async def create_sub(sub_data: SubCreate, session: AsyncSession = Depends(get_se
 
 
 @router.delete("/remove")
-async def delete_sub(del_sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    del_sub = await session.get(SubscriptionModel, del_sub_id.id)
-    if del_sub:
+async def delete_subs(del_sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
+    for del_sub in del_sub_id.id:
+        del_sub = await session.get(SubscriptionModel, del_sub)
         await session.delete(del_sub)
-        await session.commit()
-        return {
-            "status": 200,
-        }
-    raise HTTPException(
-        status_code=404,
-        detail=f"No sub found by id={del_sub_id.id}"
-    )
+    await session.commit()
+    return {
+        "status": 200,
+    }
 
 
 @router.post("/")
-async def get_sub(sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    result = await session.get(SubscriptionModel, sub_id.id)
-    if result:
-        return {
-            "status": 200,
-            "sub": result,
-        }
-    raise HTTPException(
-        status_code=404,
-        detail=f"No sub found by id={sub_id.id}"
-    )
+async def get_subs(sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
+    subs_arr = []
+    for sub in sub_id:
+        result = await session.get(SubscriptionModel, sub)
+        subs_arr.append(result)
+    return {
+        "status": 200,
+        "subs": subs_arr,
+    }
 
 
 @router.patch("/edit")

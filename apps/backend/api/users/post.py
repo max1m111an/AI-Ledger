@@ -49,17 +49,15 @@ async def delete_user(del_user_id: IDRequest, session: AsyncSession = Depends(ge
 
 
 @router.post("/")
-async def get_user(user_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    result = await session.get(UserModel, user_id.id)
-    if result:
-        return {
-            "status": 200,
-            "user": parse_user(result),
-        }
-    raise HTTPException(
-        status_code=404,
-        detail=f"No user found by id={user_id.id}"
-    )
+async def get_users(user_id: IDRequest, session: AsyncSession = Depends(get_session)):
+    users_arr = []
+    for user in user_id:
+        result = await session.get(UserModel, user)
+        users_arr.append(parse_user(result))
+    return {
+        "status": 200,
+        "users": users_arr,
+    }
 
 
 @router.patch("/edit")
