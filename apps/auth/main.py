@@ -1,16 +1,17 @@
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi_another_jwt_auth import AuthJWT
+from fastapi_another_jwt_auth.exceptions import AuthJWTException
 from passlib.context import CryptContext
-from sqlmodel import select, or_
+from sqlmodel import or_, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from fastapi_another_jwt_auth import AuthJWT
-from fastapi_another_jwt_auth.exceptions import AuthJWTException
 
 from shared.database import get_session
 from shared.models.models import UserModel
-from .settings import settings
 from shared.models.request.user import UserLoginRequest
+
+from .settings import settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app = FastAPI()
@@ -23,7 +24,8 @@ def get_config():
 
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request: Request, exc: AuthJWTException):
-    return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
+    return JSONResponse(status_code=exc.status_code,
+                        content={"detail": exc.message})
 
 
 @app.post("/login")

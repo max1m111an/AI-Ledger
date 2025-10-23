@@ -24,6 +24,7 @@ aiomysql = "^0.2.0"
 passlib = "^1.7.4"
 platformdirs = "^4.2.0"
 virtualenv = "^20.35.3"
+pre-commit = "^4.3.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
