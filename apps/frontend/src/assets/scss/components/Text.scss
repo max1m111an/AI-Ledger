@@ -52,9 +52,32 @@
       }
     }
 
+    &.subtext{
+      margin: 0;
+      padding: 0;
+    }
+    &.spent_money{
+      margin: 0;
+      padding: 0;
+      color: $expenses_color;
+      font-size: 30px;
+    }
+    &.rest_money{
+      padding: 0;
+      color: $revenue_color;
+      font-size: 30px;
+      margin: 0 0 5px;
+    }
+
   }
   &.addition_2{
     color: $base_color_text_3;
     font-size: 14px;
+
+    &.subtext{
+      margin: 0;
+      padding: 0;
+    }
   }
+
 }

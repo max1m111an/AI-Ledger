@@ -19,19 +19,19 @@ $block_background_2: rgba(0, 0, 0, 0.3);
 
 $blue_background: rgb(26, 27, 44);
 $blue_border: rgb(58, 61, 103) solid 1px;
-$blue_text_color: rgb(201, 210, 250) solid 1px;
+$blue_text_color: rgb(201, 210, 250);
 
 $red_background: rgb(39, 25, 30);
-$red_border: rgb(98, 54, 62);
-$red_text_color: rgb(238, 200, 204) solid 1px;
+$red_border: rgb(98, 54, 62) solid 1px;
+$red_text_color: rgb(238, 200, 204);
 
 $yellow_background: rgb(40, 34, 26);
 $yellow_border: rgb(101, 82, 41) solid 1px;
-$yellow_text_color: rgb(249, 231, 150) solid 1px;
+$yellow_text_color: rgb(249, 231, 150);
 
 $green_background: rgb(25, 36, 33);
 $green_border: rgb(49,88, 71) solid 1px;
-$green_text_color: rgb(184, 241, 210) solid 1px;
+$green_text_color: rgb(184, 241, 210);
 
 $base_color_icon: #cbd5e1;
 $magic_mint_color_icon: #a7f3d0;
@@ -49,3 +49,8 @@ $green_color_icon: #45ffa9;
 $red_color_icon: #ff122f;
 $periwinkle_color_icon: #c7d2fe;
 $orange_color_icon: #f59e0b;
+
+$progress_bg: #e0e0de;
+$progress_color_red: #ff4444;
+$progress_color_yellow: #ffaa00;
+$progress_color_green: #44ff44;
