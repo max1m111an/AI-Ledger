@@ -7,13 +7,17 @@ from shared.database import get_session
 from shared.models.request.sub import EditSubRequest
 from shared.models.request.user import IDRequest
 
-
 router = APIRouter(prefix="/subs", tags=["subs"])
 
 
 @router.post("/add")
 async def create_sub(sub_data: SubCreate, session: AsyncSession = Depends(get_session)):
     new_db_sub = SubscriptionModel(**sub_data.model_dump())
+    """this_user_name = get_username()["user_data"]
+    user_id_stmt = select(UserModel.id).where(UserModel.name == this_user_name)
+    temp = await session.execute(user_id_stmt)
+    result = temp.scalar()"""
+    new_db_sub.user_id = 1
     session.add(new_db_sub)
     await session.commit()
 
@@ -38,7 +42,7 @@ async def delete_subs(del_sub_id: IDRequest, session: AsyncSession = Depends(get
 @router.post("/")
 async def get_subs(sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
     subs_arr = []
-    for sub in sub_id:
+    for sub in sub_id.id:
         result = await session.get(SubscriptionModel, sub)
         subs_arr.append(result)
     return {

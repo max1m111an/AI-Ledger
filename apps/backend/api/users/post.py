@@ -51,7 +51,7 @@ async def delete_user(del_user_id: IDRequest, session: AsyncSession = Depends(ge
 @router.post("/")
 async def get_users(user_id: IDRequest, session: AsyncSession = Depends(get_session)):
     users_arr = []
-    for user in user_id:
+    for user in user_id.id:
         result = await session.get(UserModel, user)
         users_arr.append(parse_user(result))
     return {
