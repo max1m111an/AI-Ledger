@@ -1,32 +1,18 @@
 import React from "react";
 import "@assets/scss/index.scss";
-import { getToday } from "@utils/Date";
+import LastOperations from "@/widgets/main/LastOperations.tsx";
+import TodayStatistics from "@/widgets/main/todayStatistics/TodayStatistics.tsx";
+import UpcomingSubscriptions from "@/widgets/main/UpcomingSubscriptions.tsx";
+import CategoriesChart from "@/widgets/main/CategoriesСhart.tsx";
 
 
 export default function Main() {
     return (
         <div className="main_div">
-            <div className="action_div big">
-                <div className="today title_div">
-                    <p className="text title">Сегодня</p>
-                    <p className="text addition">{getToday()}</p>
-                </div>
-                <div className="today statistics_div">
-
-                </div>
-                <div className="today reminder_div">
-
-                </div>
-                <div className="today write_downs_div">
-
-                </div>
-            </div>
-            <div className="action_div small">
-            </div>
-            <div className="action_div big">
-            </div>
-            <div className="action_div small">
-            </div>
+            <TodayStatistics className="action_div big" />
+            <CategoriesChart className="action_div small" />
+            <LastOperations className="action_div big" />
+            <UpcomingSubscriptions className="action_div small" />
         </div>
     );
 }

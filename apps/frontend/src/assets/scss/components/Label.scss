@@ -1,0 +1,35 @@
+@use "@assets/scss/consts" as *;
+
+.label{
+  box-sizing: border-box;
+  display: inline-flex;
+  width: auto;
+  padding: 4px 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border-radius: 6px;
+  gap: 10px;
+  font-family: $base_font_family;
+
+  &.yellow{
+    background-color: $yellow_background;
+    border: $yellow_border;
+    color: $yellow_text_color;
+  }
+  &.red{
+    background-color: $red_background;
+    border: $red_border;
+    color: $red_text_color;
+  }
+  &.green{
+    background-color: $green_background;
+    border: $green_border;
+    color: $green_text_color;
+  }
+  &.blue{
+    background-color: $blue_background;
+    border: $blue_border;
+    color: $blue_text_color;
+  }
+}
