@@ -8,8 +8,8 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from shared.database import get_session
-from shared.models.models import UserModel
 from shared.models.request.user import UserLoginRequest
+from shared.models.user import UserModel
 
 from .settings import settings
 

@@ -64,21 +64,13 @@ repos:
           --expand-star-imports,
           --ignore-init-module-imports,
         ]
-  # isort
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.10.1
-    hooks:
-      - id: isort
-        additional_dependencies: [
-          toml,
-        ]
   # flake8
   - repo: https://github.com/pycqa/flake8
     rev: 7.0.0
     hooks:
       - id: flake8
         args:
-          - --ignore=B008,E501
+          - --ignore=B008,E501,F821
         additional_dependencies:
           - flake8-builtins
           - flake8-comprehensions

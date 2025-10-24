@@ -1,10 +1,13 @@
+> Pipeline documentation for effective communication between
+> front and back programmers on the project.
+
 1. **Endpoint description**
 
-> __addUser__ - method to add user to DB by _name_, _email_ and _pass_
+> __create_user__ - method to add user to DB by _name_, _email_ and _pass_
 >
 > ***POST***
 > 
-> ***/register***
+> ***/users/register***
 2. **Request body**
 
 > {
@@ -22,7 +25,7 @@
 4. **Response body**
 
 > {
-> "status": 200 | int
+> "status": 200
 > }
 
 5. **Comms**
