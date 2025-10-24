@@ -11,7 +11,7 @@
 > {
 > "store_name": "string",
 > "price": 0,
-> "category": "enum",  (Cafe, Transfer, Transport, Utilities, Healthcare, Marketplace, Entertainment, Other)
+> "category": "enum",  (Cafe, Transfer, Transport, Utilities, Healthcare, Marketplace, Entertainment, Shop, Other)
 > "payment_form": "enum",  (Cash, Non_cash)
 > "paydate": "yyyy-mm-dd"
 > }
@@ -99,7 +99,7 @@
 # update_paycheck
 1. **Endpoint description**
 
-> __update_paycheck__ - method to update paycheck fields such as _name_, _price_ _period_ and _payday_
+> __update_paycheck__ - method to update paycheck fields such as _category_, _price_, _payment_form_, _store\_name_ and _paydate_
 >
 > ***PATCH***
 >

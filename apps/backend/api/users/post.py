@@ -11,9 +11,9 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.post("/register")
-async def create_user(user_data: UserCreate, session: AsyncSession = Depends(get_session)):
+async def create_user(user_to_create: UserCreate, session: AsyncSession = Depends(get_session)):
     try:
-        user_dict = user_data.model_dump()
+        user_dict = user_to_create.model_dump()
         password = user_dict.pop("password")
         new_db_user = UserModel(**user_dict)
         new_db_user.set_password(password)
@@ -27,9 +27,11 @@ async def create_user(user_data: UserCreate, session: AsyncSession = Depends(get
             detail=e.args,
         )
     await session.refresh(new_db_user)
+    user_data = await parse_user(new_db_user, session)
+
     return {
         "status": 200,
-        "user": parse_user(new_db_user),
+        "user": user_data,
     }
 
 
@@ -53,7 +55,8 @@ async def get_users(user_id: IDRequest, session: AsyncSession = Depends(get_sess
     users_arr = []
     for user in user_id.id:
         result = await session.get(UserModel, user)
-        users_arr.append(parse_user(result))
+        user_data = await parse_user(result, session)
+        users_arr.append(user_data)
     return {
         "status": 200,
         "users": users_arr,
@@ -83,8 +86,9 @@ async def update_user(edit_user_data: EditUserRequest, session: AsyncSession = D
         session.add(user_this_id)
     await session.commit()
     await session.refresh(user_this_id)
+    user_data = await parse_user(user_this_id, session)
 
     return {
         "status": 200,
-        "user": parse_user(user_this_id),
+        "user": user_data,
     }

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
-
+from sqlalchemy.exc import IntegrityError
 from shared.models.sub import SubCreate
 from shared.models.sub import SubscriptionModel
 from shared.database import get_session
@@ -12,14 +12,20 @@ router = APIRouter(prefix="/subs", tags=["subs"])
 
 @router.post("/add")
 async def create_sub(sub_data: SubCreate, session: AsyncSession = Depends(get_session)):
-    new_db_sub = SubscriptionModel(**sub_data.model_dump())
-    """this_user_name = get_username()["user_data"]
-    user_id_stmt = select(UserModel.id).where(UserModel.name == this_user_name)
-    temp = await session.execute(user_id_stmt)
-    result = temp.scalar()"""
-    new_db_sub.user_id = 1
-    session.add(new_db_sub)
-    await session.commit()
+    try:
+        new_db_sub = SubscriptionModel(**sub_data.model_dump())
+        """this_user_name = get_username()["user_data"]
+        user_id_stmt = select(UserModel.id).where(UserModel.name == this_user_name)
+        temp = await session.execute(user_id_stmt)
+        result = temp.scalar()"""
+        new_db_sub.user_id = 1
+        session.add(new_db_sub)
+        await session.commit()
+    except IntegrityError as e:
+        raise HTTPException(
+            status_code=400,
+            detail=e.args,
+        )
 
     await session.refresh(new_db_sub)
     return {

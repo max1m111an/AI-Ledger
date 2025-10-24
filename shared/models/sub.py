@@ -2,7 +2,9 @@ from datetime import date
 
 from pydantic import field_validator
 from sqlalchemy import UniqueConstraint
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+
+from shared.models.user import UserModel
 
 
 class SubCreate(SQLModel):
@@ -32,3 +34,4 @@ class SubscriptionModel(SubCreate, table=True):  # type: ignore
 
     id: int = Field(default=None, primary_key=True)  # noqa: A003
     user_id: int = Field(nullable=False, foreign_key="users.id")
+    sub_user: UserModel | None = Relationship(back_populates="user_subs")

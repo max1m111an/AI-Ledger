@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+from sqlmodel.ext.asyncio.session import AsyncSession
 
-from shared.models.user import UserCreate, UserModel
+from shared.models.user import UserCreate
 
 
 class UserLoginRequest(BaseModel):
@@ -16,8 +17,11 @@ class IDRequest(BaseModel):
     id: list[int]  # noqa: A003
 
 
-def parse_user(user: UserModel | type[UserModel]) -> dict:
+async def parse_user(user, session: AsyncSession) -> dict:
+    await session.refresh(user, ["user_subs", "user_paychecks"])
     return {
         "name": user.name,
         "email": user.email,
+        "subs": user.user_subs,
+        "paychecks": user.user_paychecks,
     }
