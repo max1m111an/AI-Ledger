@@ -46,4 +46,22 @@
       border-color: rgba(99, 102, 241, 0.5);
     }
   }
+  &.uploadReceipt{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #C7D2FE;
+    font-size: 16px;
+    border-radius: 15px;
+
+
+    &:hover{
+      background-color: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+  }
 }

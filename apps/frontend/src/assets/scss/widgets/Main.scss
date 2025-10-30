@@ -153,3 +153,37 @@
     flex-grow: 1;
   }
 }
+
+.upcomingSubscriptions{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  &.title_div{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  &.upcomingSubscription_list {
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+  }
+
+  &.upcomingSubscription_div{
+    background-color: $block_background_1;
+    border: $base_color_border;
+    width: calc(100% - 5px);
+    height: auto;
+    border-radius: 15px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
