@@ -72,28 +72,44 @@
   }
 
   &.subscription_div_1{
+    box-sizing: border-box;
     width: 100%;
     margin-top: 10px;
     height: auto;
     flex-direction: column;
     border-top: $base_color_border;
+    overflow-x: auto
   }
   &.subscription_div_2{
+    box-sizing: border-box;
     width: 100%;
     height: auto;
     flex-direction: row;
     gap: 10px;
     flex-wrap: wrap;
+    overflow-y: auto;
   }
 
   &.subscription_div_3{
     background-color: $block_background_1;
     border: $base_color_border;
-    justify-content: center;
     width: calc(100%/2 - 5px);
     height: auto;
     border-radius: 15px;
     padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
-
+  &.subscription_info_div{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    flex-grow: 1;
+  }
+  .title_div{
+    display: flex;
+    flex-direction: row;
+  }
 }
