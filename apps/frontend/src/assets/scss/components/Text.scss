@@ -23,6 +23,9 @@
     font-size: 18px;
     box-sizing: border-box;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
     &.login{
       font-size: 24px;
@@ -32,6 +35,9 @@
   &.addition_1{
     color: $base_color_text_2;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
     &.auth_name{
       font-size: 12px;
@@ -79,5 +85,8 @@
       padding: 0;
     }
   }
-
+  &.links{
+    font-size: 14px;
+    color: $link_color;
+  }
 }
