@@ -23,6 +23,11 @@
   &.big{
     width: calc(70% - 15px);
 
+    &.lastOperations{
+      padding: 0;
+
+    }
+
   }
   &.small{
     width: calc(30% - 15px);
@@ -111,5 +116,40 @@
   .title_div{
     display: flex;
     flex-direction: row;
+  }
+}
+
+.lastOperations{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  &.title_div{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    gap: 10px;
+    padding: 0 20px;
+    flex-shrink: 0;
+  }
+
+  &.operations_list {
+    flex-direction: column;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  &.listOperation_div{
+    border-top: $base_color_border;
+    width: 100%;
+    height: auto;
+    padding: 0 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    flex-grow: 1;
   }
 }

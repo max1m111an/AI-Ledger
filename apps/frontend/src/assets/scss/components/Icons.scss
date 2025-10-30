@@ -67,3 +67,14 @@
   }
 }
 
+.categoriaIcon{ //todo временно, нет пока что полностью цветовой палитры
+  flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+  border: $red_border;
+  background: $red_background;
+  color: $red_text_color;
+  padding: 10px;
+  border-radius: 10px;
+}
+
