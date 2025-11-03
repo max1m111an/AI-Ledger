@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from auth.main import get_current_user
 from shared.models.paycheck import PaycheckCreate, PaycheckModel
 from shared.database import get_session
 from shared.models.request.paycheck import EditPaycheckRequest
@@ -10,9 +11,11 @@ router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 
 
 @router.post("/add")
-async def create_paycheck(paycheck_data: PaycheckCreate, session: AsyncSession = Depends(get_session)):
+async def create_paycheck(paycheck_data: PaycheckCreate,
+                          session: AsyncSession = Depends(get_session),
+                          current_user: dict = Depends(get_current_user)):
     new_db_paycheck = PaycheckModel(**paycheck_data.model_dump())
-    new_db_paycheck.user_id = 1
+    new_db_paycheck.user_id = current_user["id"]
     session.add(new_db_paycheck)
     await session.commit()
 
@@ -34,15 +37,11 @@ async def delete_paychecks(del_check_id: IDRequest, session: AsyncSession = Depe
     }
 
 
-@router.post("/")
-async def get_paychecks(checks_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    paycheck_arr = []
-    for check in checks_id.id:
-        result = await session.get(PaycheckModel, check)
-        paycheck_arr.append(result)
+@router.get("/")
+async def get_paychecks(current_user: dict = Depends(get_current_user)):
     return {
         "status": 200,
-        "paychecks": paycheck_arr,
+        "paychecks": current_user["paychecks"],
     }
 
 

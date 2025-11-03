@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.exc import IntegrityError
+
+from auth.main import get_current_user
 from shared.models.sub import SubCreate
 from shared.models.sub import SubscriptionModel
 from shared.database import get_session
@@ -11,14 +13,12 @@ router = APIRouter(prefix="/subs", tags=["subs"])
 
 
 @router.post("/add")
-async def create_sub(sub_data: SubCreate, session: AsyncSession = Depends(get_session)):
+async def create_sub(sub_data: SubCreate,
+                     session: AsyncSession = Depends(get_session),
+                     current_user: dict = Depends(get_current_user)):
     try:
         new_db_sub = SubscriptionModel(**sub_data.model_dump())
-        """this_user_name = get_username()["user_data"]
-        user_id_stmt = select(UserModel.id).where(UserModel.name == this_user_name)
-        temp = await session.execute(user_id_stmt)
-        result = temp.scalar()"""
-        new_db_sub.user_id = 1
+        new_db_sub.user_id = current_user["id"]
         session.add(new_db_sub)
         await session.commit()
     except IntegrityError as e:
@@ -45,15 +45,11 @@ async def delete_subs(del_sub_id: IDRequest, session: AsyncSession = Depends(get
     }
 
 
-@router.post("/")
-async def get_subs(sub_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    subs_arr = []
-    for sub in sub_id.id:
-        result = await session.get(SubscriptionModel, sub)
-        subs_arr.append(result)
+@router.get("/")
+async def get_subs(current_user: dict = Depends(get_current_user)):
     return {
         "status": 200,
-        "subs": subs_arr,
+        "subs": current_user["subs"],
     }
 
 
