@@ -1,0 +1,13 @@
+@use "@assets/scss/consts" as *;
+
+.action_div{
+  display: flex;
+  flex-direction: column;
+  width: calc(70% - 15px);
+  height: calc(50% - 15px);
+  border: $base_color_border;
+  background-color: $action_background;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 0 20px;
+}

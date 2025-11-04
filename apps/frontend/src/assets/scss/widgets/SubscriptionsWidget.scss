@@ -1,0 +1,66 @@
+@use "@assets/scss/consts" as *;
+
+.subscriptions_widget{
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.sub_block{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.table_action_div{
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 70%;
+  height: auto;
+  border: $base_color_border;
+  background-color: $action_background;
+  border-radius: 15px;
+}
+.sub_action_div{
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 30%;
+  height: auto;
+  border: $base_color_border;
+  background-color: $action_background;
+  border-radius: 15px;
+  padding: 0 20px;
+}
+.sub_table{
+  border-collapse: collapse;
+  border-top: 2px solid $base_color_border;
+  border-bottom: 2px solid $base_color_border;
+  border-left: none;
+  border-right: none;
+
+}
+.cell_title {
+  color: $base_color_text_2;
+  font-family: $base_font_family;
+  font-size: 14px;
+  padding: 8px 20px;
+  text-align: left;
+  width: auto;
+  font-weight: normal;
+  text-transform: none;
+  font-style: normal;
+  text-decoration: none;
+}
+.cell_value {
+  color: $base_color_text_1;
+  font-family: $base_font_family;
+  font-size: 14px;
+  padding: 8px 20px;
+  text-align: left;
+  width: auto;
+}
+
+td, th{
+  border-bottom: $base_color_border;
+  padding: 10px;
+}
