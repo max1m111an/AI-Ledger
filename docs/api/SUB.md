@@ -38,21 +38,17 @@
 # get_subs
 1. **Endpoint description**
 
-> __get_subs__ - method to get subs from DB by _list of ids_
+> __get_subs__ - method to get subs from DB for current user
 >
-> ***POST***
+> ***GET***
 >
 > ***/subs/***
 2. **Request body**
 
-> {
-> "id": \[0\]
-> }
+> -
 3. **Test request**
+> -
 
-> {
-> "id": \[1\]
-> }
 4. **Response body**
 > {
 > "status": 200,

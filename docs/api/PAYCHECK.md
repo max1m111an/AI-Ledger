@@ -41,21 +41,17 @@
 # get_paychecks
 1. **Endpoint description**
 
-> __get_paychecks__ - method to get paychecks from DB by _list of ids_
+> __get_paychecks__ - method to get paychecks from DB for current user
 >
-> ***POST***
+> ***GET***
 >
 > ***/paychecks/***
 2. **Request body**
 
-> {
-> "id": \[0\]
-> }
+> -
 3. **Test request**
 
-> {
-> "id": \[1\]
-> }
+> -
 4. **Response body**
 > {
 > "status": 200,
