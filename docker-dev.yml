@@ -10,6 +10,7 @@ services:
       - ".env"
     volumes:
       - "./apps/backend/:/app/backend/:r"
+      - "./apps/auth/:/app/auth/:r"
       - "./shared/:/app/shared"
     expose:
       - ${APP_PORT}

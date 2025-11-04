@@ -8,8 +8,8 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from shared.database import get_session
-from shared.models.models import UserModel
-from shared.models.request.user import UserLoginRequest
+from shared.models.request.user import UserLoginRequest, parse_user
+from shared.models.user import UserModel
 
 from .settings import settings
 
@@ -90,3 +90,26 @@ def hello(Authorize: AuthJWT = Depends()):
     current_user = Authorize.get_jwt_subject()
 
     return {"user_data": current_user}
+
+
+async def get_current_user(
+        Authorize: AuthJWT = Depends(),
+        session: AsyncSession = Depends(get_session)
+):
+    """Get current user from JWT token."""
+    try:
+        Authorize.jwt_required()
+        username = Authorize.get_jwt_subject()
+
+        result = await session.execute(
+            select(UserModel).where(UserModel.name == username)
+        )
+        user = result.scalar_one_or_none()
+        user = await parse_user(user, session)
+
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        return user
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=str(e))
