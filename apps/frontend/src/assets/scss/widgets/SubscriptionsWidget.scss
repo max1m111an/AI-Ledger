@@ -1,0 +1,122 @@
+@use "@assets/scss/consts" as *;
+
+.sub_div{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.table_action_div{
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 70%;
+  height: 70vh;
+  border: $base_color_border;
+  background-color: $action_background;
+  border-radius: 15px;
+  overflow: hidden;
+  &.w-100{
+    width: 100%;
+  }
+}
+
+.table_scroll_wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  border-radius: 0 0 15px 15px;
+}
+
+.sub_table{
+  border-collapse: collapse;
+  border-top: 2px solid $base_color_border;
+  border-bottom: 2px solid $base_color_border;
+  border-left: none;
+  border-right: none;
+  width: 100%;
+}
+
+.cell_title {
+  color: $base_color_text_2;
+  font-family: $base_font_family;
+  font-size: 14px;
+  padding: 12px 20px;
+  text-align: left;
+  width: auto;
+  font-weight: normal;
+  text-transform: none;
+  font-style: normal;
+  text-decoration: none;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background-color: $action_background;
+  z-index: 1;
+  border-bottom: 2px solid $base_color_border;
+}
+
+.cell_value {
+  color: $base_color_text_1;
+  font-family: $base_font_family;
+  font-size: 16px;
+  padding: 12px 20px;
+  text-align: left;
+  width: auto;
+  gap: 10px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+td, th{
+  border-bottom: $base_color_border;
+  padding: 10px;
+}
+
+.test{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.sub_every_div{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+/* Стили для скроллбара */
+.table_scroll_wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table_scroll_wrapper::-webkit-scrollbar-track {
+  background: lighten($action_background, 5%);
+  border-radius: 4px;
+}
+
+.table_scroll_wrapper::-webkit-scrollbar-thumb {
+  background: darken($action_background, 15%);
+  border-radius: 4px;
+}
+
+.table_scroll_wrapper::-webkit-scrollbar-thumb:hover {
+  background: darken($action_background, 25%);
+}
+
+/* Для Firefox */
+.table_scroll_wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: darken($action_background, 15%) lighten($action_background, 5%);
+}
+
+/* Если таблица слишком узкая для контента - добавь минимальную ширину */
+.sub_table {
+  min-width: 600px;
+}

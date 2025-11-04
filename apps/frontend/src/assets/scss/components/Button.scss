@@ -63,5 +63,32 @@
       background-color: rgba(99, 102, 241, 0.2);
       border-color: rgba(99, 102, 241, 0.5);
     }
+    &.w-a{
+      width: auto;
+      padding: 10px 15px;
+      border-radius: 10px;
+
+    }
+  }
+  &.oper{
+    background-color: transparent;
+    color: $base_color_text_1;
+    border: $base_color_border;
+    margin: 0;
+    padding: 8px 20px;
   }
 }
+.line{
+  padding: 7px 13px;
+  border: none;
+  background: $base_background;
+  color: $base_color_text_1;
+  font-family: $base_font_family;
+
+  &.active{
+    background: $base_background_2;
+    border-radius: 5px;
+    border: $base_color_border;
+  }
+}
+

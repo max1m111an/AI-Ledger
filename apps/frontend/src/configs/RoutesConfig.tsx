@@ -5,12 +5,13 @@ import Operations from "@/pages/Operations.tsx";
 import UploadingReceipts from "@/pages/UploadingReceipts.tsx";
 import Subscriptions from "@/pages/Subscriptions.tsx";
 import Analitics from "@/pages/Analitics.tsx";
-import Login from "@/pages/Login.tsx";
+import LoginPage from "@/pages/LoginPage.tsx";
 import Profile from "@/pages/Profile.tsx";
 
 import RequireAuth from "@/providers/RequireAuth.tsx";
 import EmptyLayout from "@/layouts/EmptyLayout.tsx";
 import MainLayout from "@/layouts/MainLayout.tsx";
+import RegistrationPage from "@/pages/RegistrationPage.tsx";
 
 
 export const routesConfig = [
@@ -19,7 +20,11 @@ export const routesConfig = [
         children: [
             {
                 path: ROUTES.LOGIN,
-                element: <Login />,
+                element: <LoginPage />,
+            },
+            {
+                path: ROUTES.REGISTRATION,
+                element: <RegistrationPage />,
             },
         ],
     },

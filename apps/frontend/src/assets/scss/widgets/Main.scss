@@ -1,52 +1,17 @@
 @use "@assets/scss/consts" as *;
 
-.main_div{
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: calc(100vh - 50px);
-  box-sizing: border-box;
-  gap: 15px;
-  padding: 20px;
-}
-.action_div {
-  display: flex;
-  flex-direction: column;
-  width: calc(70% - 15px);
-  height: calc(50% - 15px);
-  border: $base_color_border;
-  background-color: $action_background;
-  box-sizing: border-box;
-  border-radius: 15px;
-  padding: 0 20px;
-
-  &.big{
-    width: calc(70% - 15px);
-
-    &.lastOperations{
-      padding: 0;
-
-    }
-
-  }
-  &.small{
-    width: calc(30% - 15px);
-  }
-}
-
 .today{
   box-sizing: border-box;
   display: flex;
 
   &.title_div{
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     height: auto;
+    margin-bottom: 20px;
   }
 
-  &.money_info{
+  &.money_info_div{
     width: 100%;
     height: auto;
     gap: 10px;
@@ -61,7 +26,6 @@
     border-radius: 15px;
     border: $base_color_border;
     padding: 10px;
-    justify-content: flex-start;
   }
 
   &.categories_div{
@@ -71,7 +35,7 @@
     height: auto;
     gap: 8px;
     flex-wrap: wrap;
-    overflow-y: auto;
+    overflow-y: auto; // Уже есть
     padding-right: 5px;
     align-content: flex-start;
   }
@@ -85,6 +49,7 @@
     border-top: $base_color_border;
     overflow-x: auto
   }
+
   &.subscription_div_2{
     box-sizing: border-box;
     width: 100%;
@@ -92,7 +57,9 @@
     flex-direction: row;
     gap: 10px;
     flex-wrap: wrap;
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: auto; // Добавить вертикальный скролл
+    max-height: 200px; // Задать максимальную высоту для скролла
   }
 
   &.subscription_div_3{
@@ -107,15 +74,19 @@
     align-items: center;
     justify-content: space-between;
   }
+
   &.subscription_info_div{
     display: flex;
     flex-direction: column;
     margin-left: 10px;
     flex-grow: 1;
   }
+
   .title_div{
     display: flex;
     flex-direction: row;
+    margin: 0;
+    padding: 0;
   }
 }
 
@@ -126,19 +97,20 @@
 
   &.title_div{
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     width: 100%;
     height: auto;
     gap: 10px;
-    padding: 0 20px;
+    padding: 20px;
     flex-shrink: 0;
   }
 
   &.operations_list {
     flex-direction: column;
-    overflow-y: auto;
+    overflow-y: auto; // Уже есть
     flex-grow: 1;
+    max-height: 400px; // Добавить максимальную высоту
   }
 
   &.listOperation_div{
@@ -161,17 +133,19 @@
 
   &.title_div{
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    width: 100%;
     height: auto;
     gap: 6px;
     flex-shrink: 0;
+    margin-bottom: 20px;
   }
+
   &.upcomingSubscription_list {
     flex-direction: column;
     gap: 5px;
-    overflow-y: auto;
+    overflow-y: auto; // Добавить вертикальный скролл
+    max-height: 300px; // Добавить максимальную высоту
   }
 
   &.upcomingSubscription_div{
@@ -186,4 +160,23 @@
     align-items: center;
     justify-content: space-between;
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }

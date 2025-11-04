@@ -3,14 +3,16 @@ import React, {
 } from "react";
 import "@assets/scss/index.scss";
 import type { LoginRequest } from "@interfaces/request/AuthRequest.ts";
-import { useNavigate } from "react-router-dom";
+import {
+    NavLink, useNavigate,
+} from "react-router-dom";
 import { ROUTES } from "@/configs/RoutesConst.ts";
 import { login } from "@/services/AuthService.ts";
 
 
 export default function LoginWidget() {
     const [ loginData, setLoginData ] = useState<LoginRequest>({
-        login: "",
+        enter_data: "",
         password: "",
     });
     const [ _error, setError ] = useState<string | null>(null);
@@ -31,6 +33,7 @@ export default function LoginWidget() {
     const handleSubmit = async(e: FormEvent) => {
         e.preventDefault();
         setError(null);
+        console.log(343434334);
         setLoading(true);
         try {
             if (await login(loginData)) {
@@ -48,15 +51,15 @@ export default function LoginWidget() {
     return (
         <>
             <form onSubmit={ handleSubmit } className="form">
-                <p className="text addition_1 auth_name">Логин</p>
+                <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Логин</div>
                 <input
                     type="text"
-                    name="login"
-                    value={ loginData.login }
+                    name="enter_data"
+                    value={ loginData.enter_data }
                     placeholder="Введите логин"
                     onChange={ handleChangeField }
                     required />
-                <p className="text addition_1 auth_name">Пароль</p>
+                <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Пароль</div>
                 <input
                     type="password"
                     name="password"
@@ -65,15 +68,15 @@ export default function LoginWidget() {
                     onChange={ handleChangeField }
                     required />
                 <div className="links">
-                    <p className="text addition_1 links">Забыли пароль?</p>
-                    <p className="text addition_1 links">Создать аккаунт</p>
+                    <p className="links fs-12">Забыли пароль?</p>
+                    <NavLink to={ ROUTES.REGISTRATION } className="links fs-12">Создать аккаунт</NavLink>
                 </div>
                 <button className="Button auth"
                     disabled={ loading }
                     type="submit"
                 >
                     <svg className="icon">
-                        <use href="#Login" />
+                        <use href="#LoginPage" />
                     </svg>
                     Войти
                 </button>

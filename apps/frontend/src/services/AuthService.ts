@@ -1,9 +1,11 @@
-import * as AuthAPI from "@/api/Auth.mock.ts";
 import type { LoginRequest } from "@interfaces/request/AuthRequest.ts";
-import { router } from "@/configs/RoutesConfig.tsx";
 import {
     LOGIN_CHECK_INTERVAL, ROUTES,
 } from "@/configs/RoutesConst.ts";
+import {
+    loginApi, logoutApi,
+} from "@/api/AuthApi.ts";
+import { me } from "@/api/Auth.mock.ts";
 
 let updateUserInfoIntervalId: number | undefined;
 
@@ -13,7 +15,7 @@ export const isAuth = () => !!getUserName();
 
 async function updateUserInfo() {
     try {
-        const response = await AuthAPI.me();
+        const response = await me();
 
         if (getUserName() !== response.username) {
             localStorage.setItem("username", response.username);
@@ -25,7 +27,7 @@ async function updateUserInfo() {
 
 export async function login(data: LoginRequest) {
     try {
-        const response = await AuthAPI.login(data);
+        const response = await loginApi(data);
 
         if (response.status !== 200) {
             return false;
@@ -52,17 +54,23 @@ export async function login(data: LoginRequest) {
 
 export async function logout() {
     try {
-        await AuthAPI.logout();
-        console.log("Success");
+        await logoutApi();
+        console.log("Success logout");
     } catch (_e) {
-        //@suppress
+        console.error("Logout error:", _e);
     } finally {
+        // Очищаем все данные авторизации
         localStorage.removeItem("username");
-        await router.navigate(ROUTES.LOGIN);
 
+        // Останавливаем интервал
         if (updateUserInfoIntervalId !== undefined) {
             clearInterval(updateUserInfoIntervalId);
             updateUserInfoIntervalId = undefined;
         }
+
+        // Перенаправляем на логин
+        window.location.href = ROUTES.LOGIN;
+        // Или через router, если он доступен
+        // await router.navigate(ROUTES.LOGIN);
     }
 }

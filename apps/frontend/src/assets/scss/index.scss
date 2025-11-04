@@ -2,10 +2,21 @@
 @use "components/Button";
 @use "components/Icons";
 @use "components/Text";
+@use "components/Page";
 @use "components/ProgressBar";
 @use "components/Label";
+@use "components/Block";
+@use "components/Input";
+@use "components/Modifications";
 @use "widgets/Sidebar";
+@use "widgets/SubscriptionsWidget";
 @use "widgets/Header";
 @use "widgets/Main";
 @use "widgets/Login";
+@use "widgets/Operations";
+@use "widgets/UploadFile";
 @use "main";
+@use "temp";
+@use "temp2";
+@use "components/Modal";
+

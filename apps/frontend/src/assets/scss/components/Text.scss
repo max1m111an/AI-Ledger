@@ -1,99 +1,50 @@
 @use "@assets/scss/consts" as *;
 
-.text{
+@mixin base-flex {
+  display: flex;
+  align-items: center;
   font-family: $base_font_family;
+  gap: 5px;
+  box-sizing: border-box;
+}
+
+.title{
+  @include base-flex;
   color: $base_color_text_1;
+  font-size: 24px;
+  padding: 0;
+  line-height: 1;
+}
 
-  &.logo_title{
-    color: $base_color_text_1;
-    font-size: 16px;
-    margin: 5px 0 0 0;
-    box-sizing: border-box;
-    padding: 0 calc(15% + 15px); //todo Временное решение
-  }
+.addition_1{
+  @include base-flex;
+  color: $base_color_text_1;
+  font-size: 14px;
+}
 
-  &.logo_description{
-    color: $base_color_text_2;
-    font-size: 12px;
-    margin: 0 0 5px 0;
-    padding: 0 calc(15% + 15px); //todo Временное решение
-  }
-  &.title{
-    color: $base_color_text_1;
-    font-size: 18px;
-    box-sizing: border-box;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.addition_2{
+  @include base-flex;
+  color: $base_color_text_2;
+  font-size: 14px;
+}
 
-    &.login{
-      font-size: 24px;
-      margin: 10px 0 0 0;
-    }
-  }
-  &.addition_1{
-    color: $base_color_text_2;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.addition_3{
+  @include base-flex;
+  color: $base_color_text_3;
+  font-size: 14px;
+}
 
-    &.auth_name{
-      font-size: 12px;
-      font-weight: 500;
-      margin: 15px 0 5px 0;
-    }
+.spent_money{
+  @include base-flex;
+  color: $expenses_color;
+}
+.rest_money{
+  @include base-flex;
+  color: $revenue_color;
+}
 
-    &.auth_note{
-      font-weight: 500;
-      margin: 10px 0 10px 0;
-    }
-
-    &.links{
-      font-size: 12px;
-
-      &:hover{
-        color: $link_color;
-      }
-    }
-
-    &.subtext{
-      margin: 0;
-      padding: 0;
-    }
-    &.spent_money{
-      margin: 0;
-      padding: 0;
-      color: $expenses_color;
-      font-size: 30px;
-    }
-    &.rest_money{
-      padding: 0;
-      color: $revenue_color;
-      font-size: 30px;
-      margin: 0 0 5px;
-    }
-
-  }
-  &.addition_2{
-    color: $base_color_text_3;
-    font-size: 14px;
-
-    &.subtext{
-      margin: 0;
-      padding: 0;
-    }
-  }
-  &.links{
-    font-size: 14px;
-    color: $link_color;
-  }
-  &.subaddition{
-    color: $base_color_text_3;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-  }
+.links{
+  @include base-flex;
+  color: $link_color;
+  font-size: 14px;
 }

@@ -1,5 +1,5 @@
 const PUBLIC_URL = ""; // eslint-disable-line
-export const LOGIN_CHECK_INTERVAL = 60 * 1000;
+export const LOGIN_CHECK_INTERVAL = 6000 * 1000;
 
 export const ROUTES = {
     MAIN: "/",

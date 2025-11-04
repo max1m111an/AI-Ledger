@@ -1,0 +1,24 @@
+@use "@assets/scss/consts" as *;
+
+.oper_head_div{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.oper_title_div{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.oper_button_div{
+  display: flex;
+  flex-direction: row;
+  gap: 10px
+}
+.line_div{
+  border: $base_color_border;
+  border-radius: 6.5px;
+  padding: 2px;
+}

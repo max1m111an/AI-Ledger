@@ -1,25 +1,60 @@
-import axios from "axios";
-import type { AxiosResponse } from "axios";
 import { refresh } from "@/api/AuthApi.ts";
 import { logout } from "@/services/AuthService.ts";
+import axios, { type AxiosResponse } from "axios";
 
-export default async function ExecuteProtectedRequest<T = any>(requestCoro: (...args: any[]) => Promise<AxiosResponse<T>>, ...args: any[]): Promise<AxiosResponse<T>> {
+let isRefreshing = false;
+let failedQueue: Array<{
+    resolve: (value: AxiosResponse<any>) => void;
+    reject: (reason?: any) => void;
+}> = [];
+
+const processQueue = (error: any = null) => {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(prom as any);
+        }
+    });
+    failedQueue = [];
+};
+
+export default async function ExecuteProtectedRequest<T = any>(
+    requestCoro: (...args: any[]) => Promise<AxiosResponse<T>>,
+    ...args: any[]
+): Promise<AxiosResponse<T>> {
     try {
         return await requestCoro(...args);
-    } catch (e) {
-        if (!axios.isAxiosError(e) || e.response?.status !== 401) {
-            throw e;
+    } catch (error) {
+        if (!axios.isAxiosError(error) || error.response?.status !== 401) {
+            throw error;
         }
 
-        await refresh();
+
+        if (isRefreshing) {
+            return new Promise((resolve, reject) => {
+                failedQueue.push({
+                    resolve,
+                    reject,
+                });
+            }).then(() => requestCoro(...args))
+                .catch((err) => Promise.reject(err));
+        }
+
+        isRefreshing = true;
 
         try {
-            return await requestCoro(...args);
-        } catch (e) {
-            if (!axios.isAxiosError(e) || e.response?.status !== 401) {
-                throw e;
-            }
+            await refresh();
+            isRefreshing = false;
+            processQueue();
 
+            // Повторяем оригинальный запрос
+            return await requestCoro(...args);
+        } catch (refreshError) {
+            isRefreshing = false;
+            processQueue(refreshError);
+
+            // Если refresh не удался - делаем логаут
             await logout();
             throw new Error("Unauthorized");
         }
