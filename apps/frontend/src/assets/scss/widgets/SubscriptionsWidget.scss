@@ -1,11 +1,6 @@
 @use "@assets/scss/consts" as *;
 
-.subscriptions_widget{
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-.sub_block{
+.sub_div{
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -15,22 +10,16 @@
   box-sizing: border-box;
   flex-direction: column;
   width: 70%;
-  height: auto;
+  height: 70vh;
   border: $base_color_border;
   background-color: $action_background;
   border-radius: 15px;
+
+  &.w-100{
+    width: 100%;
+  }
 }
-.sub_action_div{
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: column;
-  width: 30%;
-  height: auto;
-  border: $base_color_border;
-  background-color: $action_background;
-  border-radius: 15px;
-  padding: 0 20px;
-}
+
 .sub_table{
   border-collapse: collapse;
   border-top: 2px solid $base_color_border;
@@ -54,13 +43,32 @@
 .cell_value {
   color: $base_color_text_1;
   font-family: $base_font_family;
-  font-size: 14px;
-  padding: 8px 20px;
+  font-size: 16px;
+  padding: 10px 20px;
   text-align: left;
   width: auto;
+  gap: 10px;
+  align-items: baseline;
 }
 
 td, th{
   border-bottom: $base_color_border;
   padding: 10px;
+}
+.test{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.sub_every_div{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }

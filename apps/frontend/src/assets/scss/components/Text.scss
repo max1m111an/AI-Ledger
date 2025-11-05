@@ -31,7 +31,7 @@
       font-size: 24px;
       margin: 10px 0 0 0;
     }
-    &.sub{
+    &.fs-20{
       margin: 20px;
       font-size: 24px;
     }
@@ -88,7 +88,7 @@
       margin: 0;
       padding: 0;
     }
-    &.sub{
+    &.fs-20{
       margin: 10px 20px;
     }
   }
@@ -102,16 +102,5 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
-  }
-}
-.sub{
-  font-family: $base_font_family;
-
-  &.title{
-    color: $base_color_text_1;
-    font-size: 24px;
-  }
-  &.addition_2{
-    color: $base_color_text_3;
   }
 }

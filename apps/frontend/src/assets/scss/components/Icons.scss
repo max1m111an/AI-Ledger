@@ -65,6 +65,11 @@
   &.orange{
     color: $orange_color_icon;
   }
+
+  &.upload{
+    width: 3.2em;
+    height: 3.2em;
+  }
 }
 
 .categoriaIcon{ //todo временно, нет пока что полностью цветовой палитры

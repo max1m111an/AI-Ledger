@@ -1,0 +1,23 @@
+.page{
+  display: flex;
+  box-sizing: border-box;
+  padding: 20px;
+  height: calc(100vh - 50px);
+
+  &.gap-15{
+    gap: 15px;
+  }
+  &.fd-c{
+    flex-direction: column;
+  }
+  &.fw-w{
+    flex-wrap: wrap;
+  }
+  &.jc-c{
+    justify-content: center;
+  }
+  &.ac-c{
+    align-items: center;
+  }
+}
+

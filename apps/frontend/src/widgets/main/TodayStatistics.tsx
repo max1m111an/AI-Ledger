@@ -14,7 +14,7 @@ export default function TodayStatistics({ className }: TodayStatisticsProps) {
     return (
         <div className={ className }>
             <div className="today title_div">
-                <p className="text title">Сегодня</p>
+                <span className="title">Сегодня</span>
                 <p className="text addition_1">
                     <svg className="icon">
                         <use href="#Data" />
@@ -22,7 +22,7 @@ export default function TodayStatistics({ className }: TodayStatisticsProps) {
                     {getToday()}
                 </p>
             </div>
-            <div className="today money_info">
+            <div className="today money_info_div">
                 <SpentMoney />
                 <RestMoney />
                 <Categories />

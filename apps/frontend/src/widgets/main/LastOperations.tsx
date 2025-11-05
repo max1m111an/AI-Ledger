@@ -44,8 +44,8 @@ export default function LastOperations({ className }: LastOperationsProps) {
     return (
         <div className={ className }>
             <div className="lastOperations title_div">
-                <p className="text title">Последние операции</p>
-                <p className="text subaddition">5 последних</p>
+                <span className="title">Последние операции</span>
+                <span className="addition_3 fg-1">5 последних</span>
                 <NavLink to={ ROUTES.SUBSCRIPTIONS } className="text links">Все операции</NavLink>
             </div>
             <div className="lastOperations operations_list">

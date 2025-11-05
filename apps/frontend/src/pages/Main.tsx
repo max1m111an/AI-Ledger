@@ -8,11 +8,11 @@ import CategoriesChart from "@/widgets/main/CategoriesСhart.tsx";
 
 export default function Main() {
     return (
-        <div className="main_div">
-            <TodayStatistics className="action_div big" />
-            <CategoriesChart className="action_div small" />
-            <LastOperations className="action_div big lastOperations" />
-            <UpcomingSubscriptions className="action_div small" />
+        <div className="page gap-15 fw-w jc-c">
+            <TodayStatistics className="action_block_1 w_g70" />
+            <CategoriesChart className="action_block_1 w_g30" />
+            <LastOperations className="action_block_1 w_g70 p-0" />
+            <UpcomingSubscriptions className="action_block_1 w_g30" />
         </div>
     );
 }

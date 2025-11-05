@@ -1,0 +1,47 @@
+@use "@assets/scss/consts" as *;
+
+.title{
+  font-family: $base_font_family;
+  color: $base_color_text_1;
+  font-size: 24px;
+  padding: 0;
+  line-height: 1;
+  display: inline-block;
+  margin-bottom: 8px;
+
+  &.fs-20{
+    font-size: 20px;
+  }
+}
+
+.addition_1{
+  color: $base_color_text_1;
+  font-family: $base_font_family;
+
+  font-size: 16px;
+
+  &.mb-5{
+    margin-bottom: 5px;
+  }
+}
+.addition_2{
+  color: $base_color_text_2;
+  font-family: $base_font_family;
+
+
+  &.mb-5{
+    margin-bottom: 5px;
+  }
+}
+.addition_3{
+  color: $base_color_text_3;
+  font-family: $base_font_family;
+
+
+  &.mb-7{
+    margin-bottom: 7px;
+  }
+  &.fg-1{
+    flex-grow: 1;
+  }
+}
