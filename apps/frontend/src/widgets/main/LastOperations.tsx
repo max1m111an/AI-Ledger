@@ -51,7 +51,7 @@ export default function LastOperations({ className }: LastOperationsProps) {
             <div className="lastOperations operations_list">
                 {operations.map((operation, index) => (
                     <div key={ index } className="lastOperations listOperation_div">
-                        <svg className="categoriaIcon">
+                        <svg className="categoriaIcon yellow">
                             <use href="#Subscription" />
                         </svg>
                         <div className="today subscription_info_div">

@@ -49,19 +49,15 @@ export default function OperationsWidget() {
                     <tbody>
                         <tr>
                             <td className="cell_value">
-                                <span className="test">
-                                    <svg className="icon">
-                                        <use href="#Reminder" />
-                                    </svg>
-                                    Пятерочка
-                                </span>
+
+                                Пятерочка
                             </td>
                             <td className="cell_value">Еда</td>
-                            <td className="cell_value">08.09</td>
-                            <td className="cell_value">-653</td>
+                            <td className="cell_value">08.09, 11:13</td>
+                            <td className="cell_value">- 653</td>
                         </tr>
                         <tr>
-                            <td className="cell_value">Пятерочка, 19:43</td>
+                            <td className="cell_value">Пятерочка</td>
                             <td className="cell_value">Быт</td>
                             <td className="cell_value">08.09, 19:43</td>
                             <td className="cell_value">- 587</td>
@@ -81,7 +77,7 @@ export default function OperationsWidget() {
                         <tr>
                             <td className="cell_value">Зарплата</td>
                             <td className="cell_value">Доход</td>
-                            <td className="cell_value">07.09</td>
+                            <td className="cell_value">07.09, 19:42</td>
                             <td className="cell_value">+ 120 000</td>
                         </tr>
                     </tbody>

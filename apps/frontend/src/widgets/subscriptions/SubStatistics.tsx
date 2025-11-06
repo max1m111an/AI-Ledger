@@ -4,7 +4,7 @@ export const SubStatistics: React.FC = () => {
     return (
         <div className="action_block_1 w30">
             <span className="title fs-20">Итоги</span>
-            <span className="addition_3 mb-7">Ежемесячные и годовые расходы на подписки</span>
+            <span className="addition_3 mb-20">Ежемесячные и годовые расходы на подписки</span>
             <div className="action_block_2 fd-r b-r mb">
                 <div className="sub_every_div">
                     <span className="text addition_1">Ежемесячно</span>

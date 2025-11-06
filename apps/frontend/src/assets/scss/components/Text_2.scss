@@ -7,10 +7,12 @@
   padding: 0;
   line-height: 1;
   display: inline-block;
-  margin-bottom: 8px;
 
   &.fs-20{
     font-size: 20px;
+  }
+  &.mb-20{
+    margin-bottom: 20px;
   }
 }
 
@@ -38,7 +40,7 @@
   font-family: $base_font_family;
 
 
-  &.mb-7{
+  &.mb-20{
     margin-bottom: 7px;
   }
   &.fg-1{

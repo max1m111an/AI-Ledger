@@ -15,12 +15,12 @@ export default function TodayStatistics({ className }: TodayStatisticsProps) {
         <div className={ className }>
             <div className="today title_div">
                 <span className="title">Сегодня</span>
-                <p className="text addition_1">
+                <span className="text addition_1">
                     <svg className="icon">
                         <use href="#Data" />
                     </svg>
                     {getToday()}
-                </p>
+                </span>
             </div>
             <div className="today money_info_div">
                 <SpentMoney />

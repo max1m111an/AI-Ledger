@@ -7,7 +7,7 @@ export const SubscriptionsWidget: React.FC = () => {
     return (
         <div className="page fd-c">
             <span className="title">Подписки</span>
-            <span className="addition_3 mb-7">Активные подписки и ближайшие списания</span>
+            <span className="addition_3 mb-20">Активные подписки и ближайшие списания</span>
             <div className="sub_div">
                 <SubList />
                 <SubStatistics />

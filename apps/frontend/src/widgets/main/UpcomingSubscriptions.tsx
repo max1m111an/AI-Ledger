@@ -30,8 +30,8 @@ export default function UpcomingSubscriptions({ className }: LastWritedownsProps
     return (
         <div className={ className }>
             <div className="upcomingSubscriptions title_div">
-                <p className="text title">Списания</p>
-                <p className="text subaddition">(7 дней)</p>
+                <span className="title">Списания</span>
+                <span className="text subaddition">(7 дней)</span>
                 <NavLink to={ ROUTES.SUBSCRIPTIONS } className="text links">Все</NavLink>
             </div>
             <div className="upcomingSubscriptions upcomingSubscription_list">

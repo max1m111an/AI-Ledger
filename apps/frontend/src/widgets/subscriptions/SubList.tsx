@@ -27,25 +27,54 @@ export const SubList: React.FC = () => {
                         <td className="cell_value">-299</td>
                     </tr>
                     <tr>
-                        <td className="cell_value">Яндекс плюс</td>
+                        <td className="cell_value">
+                            <span className="test">
+                                <svg className="icon">
+                                    <use href="#Reminder" />
+                                </svg>
+                                Яндекс плюс
+                            </span>
+                        </td>
                         <td className="cell_value">Месяц</td>
                         <td className="cell_value">20.10</td>
                         <td className="cell_value">- 299</td>
                     </tr>
                     <tr>
-                        <td className="cell_value">Youtube Premium</td>
+                        <td className="cell_value">
+                            <span className="test">
+                                <svg className="icon">
+                                    <use href="#Reminder" />
+                                </svg>
+                                Youtube Premium
+                            </span>
+                        </td>
                         <td className="cell_value">Месяц</td>
                         <td className="cell_value">22.10</td>
                         <td className="cell_value">- 199</td>
                     </tr>
                     <tr>
-                        <td className="cell_value">Adobe</td>
+                        <td className="cell_value">
+                            <span className="test">
+                                <svg className="icon">
+                                    <use href="#Reminder" />
+                                </svg>
+
+                                Adobe
+                            </span>
+                        </td>
                         <td className="cell_value">Год</td>
                         <td className="cell_value">25.10</td>
                         <td className="cell_value">-1399</td>
                     </tr>
                     <tr>
-                        <td className="cell_value">Netflix</td>
+                        <td className="cell_value">
+                            <span className="test">
+                                <svg className="icon">
+                                    <use href="#Reminder" />
+                                </svg>
+                                Netflix
+                            </span>
+                        </td>
                         <td className="cell_value">Месяц</td>
                         <td className="cell_value">17.11</td>
                         <td className="cell_value">-999</td>

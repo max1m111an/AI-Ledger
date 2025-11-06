@@ -8,8 +8,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     height: auto;
+    margin-bottom: 20px;
   }
 
   &.money_info_div{
@@ -94,12 +94,12 @@
 
   &.title_div{
     flex-direction: row;
-    align-content: center;
+    align-items: baseline;
     justify-content: space-between;
     width: 100%;
     height: auto;
     gap: 10px;
-    padding: 20px 20px;
+    padding: 20px;
     flex-shrink: 0;
   }
 
@@ -129,12 +129,12 @@
 
   &.title_div{
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    width: 100%;
     height: auto;
     gap: 6px;
     flex-shrink: 0;
+    margin-bottom: 20px;
   }
   &.upcomingSubscription_list {
     flex-direction: column;

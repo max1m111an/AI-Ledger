@@ -76,10 +76,29 @@
   flex-shrink: 0;
   width: 1.2em;
   height: 1.2em;
-  border: $red_border;
-  background: $red_background;
-  color: $red_text_color;
+
   padding: 10px;
   border-radius: 10px;
+
+  &.red{
+    border: $red_border;
+    background: $red_background;
+    color: $red_text_color;
+  }
+  &.blue{
+    border: $blue_border;
+    background: $blue_background;
+    color: $blue_text_color;
+  }
+  &.green{
+    border: $green_border;
+    background: $green_background;
+    color: $green_text_color;
+  }
+  &.yellow{
+    border: $yellow_border;
+    background: $yellow_background;
+    color: $yellow_text_color;
+  }
 }
 

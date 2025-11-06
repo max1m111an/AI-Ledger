@@ -1,5 +1,5 @@
 import React, {
-    useState, useEffect,
+    useState, useEffect, useCallback, useMemo,
 } from "react";
 
 export function UploadFile() {
@@ -9,14 +9,25 @@ export function UploadFile() {
     const [ progress, setProgress ] = useState<number>(0);
     const [ error, setError ] = useState<string | null>(null);
 
-    const allowedTypes = [
+    const allowedTypes = useMemo(() => [
         "image/jpeg",
         "image/png",
         "image/gif",
         "image/webp",
         "image/svg+xml",
         "image/bmp",
-    ];
+    ], []);
+
+    const handleFile = useCallback((file: File) => {
+        if (!allowedTypes.includes(file.type)) {
+            setError("Неверный тип файла. Допустимы: png, jpeg, webp, gif, svg+xml, bmp");
+
+            return;
+        }
+        setFile(file);
+        setError(null);
+        setProgress(0);
+    }, [ allowedTypes ]);
 
     useEffect(() => {
         const handlePaste = (e: ClipboardEvent) => {
@@ -25,10 +36,11 @@ export function UploadFile() {
                 handleFile(pastedFile);
             }
         };
+
         document.addEventListener("paste", handlePaste);
 
         return () => document.removeEventListener("paste", handlePaste);
-    }, []);
+    }, [ handleFile ]);
 
     const handleUpload = async() => {
         console.log("Upload file uploaded");
@@ -61,17 +73,6 @@ export function UploadFile() {
         }
     };
 
-    const handleFile = (file: File) => {
-        if (!allowedTypes.includes(file.type)) {
-            setError("Неверный тип файла. Допустимы: png, jpeg, webp, gif, svg+xml, bmp");
-
-            return;
-        }
-        setFile(file);
-        setError(null);
-        setProgress(0);
-    };
-
     const handleReset = () => {
         setFile(null);
         setProgress(0);
@@ -81,8 +82,10 @@ export function UploadFile() {
 
     return (
         <>
-            <span className={ "title" }>Загрузка чека</span>
-            <span className={ "addition_3 mb-7" }>Загрузите фото, проверьте распознавание и сохраните операцию</span>
+            <span className="title">Загрузка чека</span>
+            <span className="addition_3 mb-20">
+                Загрузите фото, проверьте распознавание и сохраните операцию
+            </span>
             <div
                 className={ `upload-dropzone ${dragActive ? "active" : ""}` }
                 onDragEnter={ handleDrag }
@@ -92,7 +95,9 @@ export function UploadFile() {
             >
                 {file ? (
                     <div className="file-info">
-                        <span className="addition_2">Выбран файл: <strong>{file.name}</strong></span>
+                        <span className="addition_2">
+                            Выбран файл: <strong>{file.name}</strong>
+                        </span>
 
                         <div className="actions">
                             {!uploading ? (
@@ -120,8 +125,12 @@ export function UploadFile() {
                         <svg className="icon upload">
                             <use href="#UploadingReceipts" />
                         </svg>
-                        <span className="addition_1">Перетащите сюда изображение или нажмите для выбора</span>
-                        <span className="addition_3">Поддерживаются фото и скриншоты</span>
+                        <span className="addition_1">
+                            Перетащите сюда изображение или нажмите для выбора
+                        </span>
+                        <span className="addition_3">
+                            Поддерживаются фото и скриншоты
+                        </span>
 
                         <label className="Button uploadReceipt w-a">
                             Загрузить
@@ -137,6 +146,5 @@ export function UploadFile() {
                 {error && <p className="error">{error}</p>}
             </div>
         </>
-
     );
 }
