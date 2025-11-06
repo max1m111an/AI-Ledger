@@ -5,9 +5,9 @@ import "@assets/scss/index.scss";
 export default function SpentMoney() {
     return (
         <div className="today money_block">
-            <p className="text addition_1 subtext">Потрачено</p>
-            <p className="text addition_1 spent_money">-378</p>
-            <p className="text addition_2 subtext">в 2 операциях</p>
+            <span className="addition_2">Потрачено</span>
+            <span className="spent_money fs-30">-378</span>
+            <span className="addition_3">в 2 операциях</span>
         </div>
     );
 }

@@ -25,13 +25,13 @@ export default function Subscription() {
     return (
         <div className="today subscription_div_1">
             <div className="today title_div">
-                <p className="text title">
+                <p className="title fw-500 fs-18">
                     <svg className="icon">
                         <use href="#Reminder" />
                     </svg>
                     Сегодняшние напоминания
                 </p>
-                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="text links">К подпискам</NavLink>
+                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="links fs-14">К подпискам</NavLink>
             </div>
             <div className="today subscription_div_2">
                 {subscriptions.map((subscription, index) => (
@@ -40,10 +40,10 @@ export default function Subscription() {
                             <use href="#Subscriptions" />
                         </svg>
                         <div className="today subscription_info_div">
-                            <span className="text">{subscription.name}</span>
-                            <span className="text addition_2">{subscription.period}</span>
+                            <span className="addition_1">{subscription.name}</span>
+                            <span className="addition_3">{subscription.period}</span>
                         </div>
-                        <p className="text">- 299</p>
+                        <p className="addition_1">- 299</p>
                     </div>
                 ))}
             </div>

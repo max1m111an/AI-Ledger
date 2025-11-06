@@ -9,33 +9,8 @@
   border-radius: 15px;
   padding: 20px;
 
-  &.w30{
-    width: 30%;
-  }
-  &.w70{
-    width: 70%;
-  }
-  &.h50{
-    height: 50%;
-  }
-  &.w_g70{
-    width: calc(70% - 15px);
-  }
-  &.w_g30{
-    width: calc(30% - 15px);
-  }
-  &.p-0{
-    padding: 0;
-  }
-  &.fd-r{
-    flex-direction: row;
-  }
-  &.g-10{
-    gap: 10px;
-  }
-  &.mb-15{
-    margin-bottom: 15px;
-  }
+  &.w_g70{ width: calc(70% - 15px); }
+  &.w_g30{ width: calc(30% - 15px); }
 }
 
 .action_block_2{
@@ -48,14 +23,4 @@
   border: $base_color_border;
   padding: 10px;
   justify-content: flex-start;
-
-  &.fd-r{
-    flex-direction: row;
-  }
-  &.fg-1{
-    flex-grow: 1;
-  }
-  &.mb{
-    margin-bottom: 10px;
-  }
 }

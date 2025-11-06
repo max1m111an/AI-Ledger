@@ -31,8 +31,8 @@ export default function UpcomingSubscriptions({ className }: LastWritedownsProps
         <div className={ className }>
             <div className="upcomingSubscriptions title_div">
                 <span className="title">Списания</span>
-                <span className="text subaddition">(7 дней)</span>
-                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="text links">Все</NavLink>
+                <span className="addition_3 fg-1">(7 дней)</span>
+                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="links">Все</NavLink>
             </div>
             <div className="upcomingSubscriptions upcomingSubscription_list">
                 {writeDowns.map((writeDown, index) => (
@@ -41,10 +41,10 @@ export default function UpcomingSubscriptions({ className }: LastWritedownsProps
                             <use href="#Subscriptions" />
                         </svg>
                         <div className="today subscription_info_div">
-                            <span className="text">{writeDown.name}</span>
-                            <span className="text addition_2">{writeDown.date}</span>
+                            <span className="addition_1">{writeDown.name}</span>
+                            <span className="addition_3">{writeDown.date}</span>
                         </div>
-                        <p className="text">{writeDown.value}</p>
+                        <p className="addition_1">{writeDown.value}</p>
                     </div>
                 ))}
                 <button className="Button uploadReceipt">Загрузить чек</button>

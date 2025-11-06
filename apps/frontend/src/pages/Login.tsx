@@ -9,16 +9,15 @@ export default function Login() {
         <div className="login_div">
             <div className="text_login">
                 <div className="login_logo_div">
-                    <p className="text logo_title">AI-Ledger</p>
-                    <p className="text logo_description">Финансовый трекер</p>
+                    <span className="addition_1 u-pl-15">AI-Ledger</span>
+                    <span className="addition_2 u-pl-15 fs-12">Финансовый трекер</span>
                 </div>
-                <p className="text title login">Вход в аккаунт</p>
-                <p className="text addition_1 auth_note">Введите свои данные для входа</p>
+                <span className="title fs-24 mt-10">Вход в аккаунт</span>
+                <div className="addition_2 fw-500 mt-10 mb-10">Введите свои данные для входа</div>
             </div>
             <div className="login">
                 <LoginWidget />
             </div>
-
         </div>
     );
 }

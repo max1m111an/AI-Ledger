@@ -7,8 +7,8 @@ export const Sidebar: React.FC = () => {
     return (
         <aside className="sidebar">
             <div className="sidebar_logo_div">
-                <p className="text logo_title">AI-Ledger</p>
-                <p className="text logo_description">Финансовый трекер</p>
+                <div className="addition_1 u-pl-15">AI-Ledger</div>
+                <div className="addition_2 u-pl-15 fs-12">Финансовый трекер</div>
             </div>
             <nav className="sidebar_nav_div">
                 <NavLink to={ ROUTES.MAIN } className="Button nav">

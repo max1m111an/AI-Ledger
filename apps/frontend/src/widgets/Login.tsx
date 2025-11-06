@@ -48,7 +48,7 @@ export default function LoginWidget() {
     return (
         <>
             <form onSubmit={ handleSubmit } className="form">
-                <p className="text addition_1 auth_name">Логин</p>
+                <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Логин</div>
                 <input
                     type="text"
                     name="login"
@@ -56,7 +56,7 @@ export default function LoginWidget() {
                     placeholder="Введите логин"
                     onChange={ handleChangeField }
                     required />
-                <p className="text addition_1 auth_name">Пароль</p>
+                <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Пароль</div>
                 <input
                     type="password"
                     name="password"
@@ -65,8 +65,8 @@ export default function LoginWidget() {
                     onChange={ handleChangeField }
                     required />
                 <div className="links">
-                    <p className="text addition_1 links">Забыли пароль?</p>
-                    <p className="text addition_1 links">Создать аккаунт</p>
+                    <p className="links fs-12">Забыли пароль?</p>
+                    <p className="links fs-12">Создать аккаунт</p>
                 </div>
                 <button className="Button auth"
                     disabled={ loading }

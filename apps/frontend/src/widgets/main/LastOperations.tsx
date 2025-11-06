@@ -46,7 +46,7 @@ export default function LastOperations({ className }: LastOperationsProps) {
             <div className="lastOperations title_div">
                 <span className="title">Последние операции</span>
                 <span className="addition_3 fg-1">5 последних</span>
-                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="text links">Все операции</NavLink>
+                <NavLink to={ ROUTES.SUBSCRIPTIONS } className="links">Все операции</NavLink>
             </div>
             <div className="lastOperations operations_list">
                 {operations.map((operation, index) => (
@@ -55,10 +55,10 @@ export default function LastOperations({ className }: LastOperationsProps) {
                             <use href="#Subscription" />
                         </svg>
                         <div className="today subscription_info_div">
-                            <span className="text">{operation.categoria}</span>
-                            <span className="text addition_2">{operation.subcategoria} • {operation.date}</span>
+                            <span className="addition_1">{operation.categoria}</span>
+                            <span className="addition_3">{operation.subcategoria} • {operation.date}</span>
                         </div>
-                        <p className="text">{operation.value}</p>
+                        <p className="addition_1">{operation.value}</p>
                     </div>
                 ))}
             </div>

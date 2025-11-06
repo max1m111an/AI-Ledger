@@ -5,12 +5,12 @@ import "@assets/scss/index.scss";
 export default function Categories() {
     return (
         <div className="today money_block">
-            <p className="text addition_1 subtext">Категории сегодня</p>
+            <span className="addition_2">Категории сегодня</span>
             <div className="today categories_div">
-                <p className="label yellow">Транспорт</p>
-                <p className="label red">Кафе</p>
-                <p className="label green">Донат</p>
-                <p className="label blue">Еда</p>
+                <span className="label yellow">Транспорт</span>
+                <span className="label red">Кафе</span>
+                <span className="label green">Донат</span>
+                <span className="label blue">Еда</span>
             </div>
         </div>
     );
