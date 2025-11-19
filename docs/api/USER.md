@@ -5,7 +5,7 @@
 >
 > ***POST***
 >
-> ***/register***
+> ***/users/register***
 2. **Request body**
 
 > {
@@ -23,36 +23,36 @@
 4. **Response body**
 
 > {
-> "status": 200 | int
+> "status": 200
 > }
 
 ---
 
-# get_user
+# get_users
 1. **Endpoint description**
 
-> __get_user__ - method to get user from DB by id
+> __get_users__ - method to get users from DB by _list of ids_
 >
 > ***POST***
 >
-> ***/***
+> ***/users/***
 2. **Request body**
 
 > {
-> "id": int
+> "id": \[0\]
 > }
 3. **Test request**
 
 > {
-> "id": 1
+> "id": \[1\]
 > }
 4. **Response body**
 > {
 > "status": 200,
-> "user":{
-> "name": "ADMIN",
-> "email": "maksimilianbegunov@inbox.ru"
-> }
+> "users": \[{
+> "name": "Gantz",
+> "email": "gantzzer@gmail.com"
+> }\]
 > }
 
 ---
@@ -64,11 +64,11 @@
 >
 > ***DELETE***
 >
-> ***/remove***
+> ***/users/remove***
 2. **Request body**
 
 > {
-> "user_id": int
+> "user_id": 0
 > }
 3. **Test request**
 
@@ -78,7 +78,7 @@
 4. **Response body**
 
 > {
-> "status": 200 | int
+> "status": 200 
 > }
 
 ---
@@ -90,20 +90,20 @@
 >
 > ***PATCH***
 >
-> ***/edit***
+> ***/users/edit***
 2. **Request body**
 
 > {
 > "name": "string",
 > "email": "string",
 > "password": "string",  | those conditions are still effect
-> "id": 0 | int
+> "id": 0
 > }
 3. **Test request**
 
 > {
-> "name": "Admin",
-> "email": "maksimilianbegunov@inbox.ru",
+> "name": "Gantz",
+> "email": "gantzzer@gmail.com",
 > "password": "qwerty.1"
 > "id": 1
 > }
@@ -112,8 +112,8 @@
 > {
 > "status": 200,
 > "user": {
-> "name": "Admin",
-> "email": "maksimilianbegunov@inbox.ru"
+> "name": "Gantz",
+> "email": "gantzzer@gmail.com"
 > }
 > }
 

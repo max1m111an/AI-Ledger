@@ -74,5 +74,21 @@ When the PR is approved and you sure that all the work has done -
 Now, notify your team about that, so they can pull update from main to their branches.
 
 ---
+# REBASE
+1. ***Rebase itself***
+
+To rebase old commits, click on them with RMB and in menu choose the _Interactively Rebase from here_.
+This will start the process of making changes to commits.
+
+If you need some commits to rebase, then choose them and _Stop_. Next change the files for commit and
+_Add_ them. After that you can _Continue Rebase_ and push the changes.
+
+2. ***Squash***
+
+Also, you're able to union commits in one by _Squash_.
+It's possible in that menu, or you can do it in _Git_, by choose commits and _Squash Commits_.
+Don't forget to push your changes then.
+
+---
 # CONSOLE
-I'm so *** lazy to write this, so I just put it there [Cheat sheet on console commands](https://github.com/Oxana-S/Git-Help/blob/main/Шпаргалка%20по%20консольным%20командам%20Git.md) and [Git origin docs](https://git-scm.com/docs)
+I'm so *** lazy to write this, so I just put it here [Cheat sheet on console commands](https://github.com/Oxana-S/Git-Help/blob/main/Шпаргалка%20по%20консольным%20командам%20Git.md) and [Git origin docs](https://git-scm.com/docs)
