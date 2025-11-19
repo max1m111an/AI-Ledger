@@ -135,3 +135,30 @@
 > }
 
 ---
+# add_paycheck_by_photo
+1. **Endpoint description**
+
+> __add_paycheck_by_photo__ - method to read paycheck info from photo and add it to DB 
+>
+> ***POST***
+>
+> ***/paychecks/photo***
+2. **Request body**
+
+> \<photo\>
+3. **Test request**
+
+> \<"image.png"\>
+4. **Response body**
+
+> {
+> "status": 200,
+> "data": {
+> "found_qr_codes": 1,
+> "results": \[
+> "t=20251004T1614&s=139.99&fn=7384440800606653&i=8763&fp=3861407333&n=1"
+> \]
+> }
+> }
+
+---
