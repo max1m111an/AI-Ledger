@@ -1,4 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+import io
+
+from PIL import Image
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+import pyzbar.pyzbar as pyzbar
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from auth.main import get_current_user
@@ -54,7 +58,7 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
             detail=f"No paycheck found by id={edit_check_data.id}"
         )
 
-    fields_to_check = ["price", "pay_date", "store_name", "category", "payment_form"]
+    fields_to_check = ["price", "pay_date", "category", "payment_form"]
 
     for field in fields_to_check:
         value = getattr(edit_check_data, field, None)
@@ -68,3 +72,76 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
         "status": 200,
         "paycheck": check_this_id,
     }
+
+
+async def parse_paycheck_photo(photo: File[...]):
+    try:
+        contents = await photo.read()
+        image = Image.open(io.BytesIO(contents))
+        decoded_objects = pyzbar.decode(image)
+
+        results = []
+        for obj in decoded_objects:
+            try:
+                rect = obj.rect
+
+                margin = 10
+                left = max(0, rect.left - margin)
+                top = max(0, rect.top - margin)
+                right = min(image.width, rect.left + rect.width + margin)
+                bottom = min(image.height, rect.top + rect.height + margin)
+
+                qr_cropped = image.crop((left, top, right, bottom))
+                cropped_decoded = pyzbar.decode(qr_cropped)
+
+                if cropped_decoded:
+                    qr_data = cropped_decoded[0].data.decode('utf-8')
+                    results.append(qr_data)
+
+            except Exception:
+                continue
+
+        return {
+            "found_qr_codes": len(results),
+            "results": results
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+
+
+@router.post("/photo")
+async def add_paycheck_by_photo(paycheck_photo: UploadFile = File(...),
+                                session: AsyncSession = Depends(get_session),
+                                ):
+    data_list = await parse_paycheck_photo(paycheck_photo)
+    """result_list = []
+    for data in data_list["results"]:
+        print(data)
+        params = {
+            "qrraw": data,
+            "token": "",
+        }
+        url = "https://proverkacheka.com/api/v1/check/get/"
+        response = requests.post(url, params=params)
+        temp_data = response
+        result_list.append(temp_data)"""
+    return {
+        "status": 200,
+        "data": data_list
+    }
+    """new_db_paycheck = PaycheckModel(
+        price=data["s"],
+        pay_date=data["t"],
+        category="",
+        payment_form="",
+    )
+    new_db_paycheck.user_id = current_user["id"]
+    session.add(new_db_paycheck)
+    await session.commit()
+
+    await session.refresh(new_db_paycheck)
+    return {
+        "status": 200,
+        "paycheck": new_db_paycheck,
+    }"""
