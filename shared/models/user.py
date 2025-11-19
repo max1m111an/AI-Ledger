@@ -34,9 +34,6 @@ class UserCreate(SQLModel):
         if len(v) < 8:
             raise ValueError('Password must be at least 8 characters long')
 
-        if not any(c in '!@#$%^&*()_+-=[]{}|;:\'",.<>?`~' for c in v):
-            raise ValueError('Password must contain at least one special character')
-
         return v
 
 

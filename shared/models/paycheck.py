@@ -27,14 +27,13 @@ class PaycheckCategory(Enum):
 class PaycheckCreate(SQLModel):
     price: int | None = None
     pay_date: date | None = None
-    store_name: str | None = None
     category: PaycheckCategory | None = None
     payment_form: PaymentForm | None = None
 
     @field_validator('price')
     @classmethod
     def validate_price(cls, v: int) -> int:
-        if v < 1:
+        if v < 0:
             raise ValueError('Invalid price value')
         return v
 
