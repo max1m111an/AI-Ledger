@@ -46,35 +46,6 @@ services:
       - "--port"
       - "8081"
       - "--reload"
-  frontinstaller:
-    build:
-      dockerfile: "Dockerfile"
-      target: "reactapp"
-    volumes:
-      - "./apps/frontend/:/app:rw"
-    networks:
-      local:
-    command: [ "i" ]
-  front:
-    depends_on:
-      frontinstaller:
-        condition: service_completed_successfully
-    build:
-      dockerfile: "Dockerfile"
-      target: "reactapp"
-    environment:
-      - DANGEROUSLY_DISABLE_HOST_CHECK=true
-      - PORT=${ADMIN_FRONT_PORT}
-      - REACT_ROUTING_MAIN_SITE=/
-    volumes:
-      - "./apps/frontend/:/app:r"
-    expose:
-      - ${ADMIN_FRONT_PORT}
-    ports:
-      - "${ADMIN_FRONT_PORT}:${ADMIN_FRONT_PORT}"
-    networks:
-      local:
-    command: [ "start" ]
   database:
     build:
       dockerfile: "Dockerfile"
@@ -104,13 +75,10 @@ services:
     build:
       dockerfile: "Dockerfile"
       target: "dbadmin"
-    environment:
-      - PMA_HOST=database
-      - PMA_PORT=3306
-      - PMA_USER=${DB_USER}
-      - PMA_PASSWORD=${DB_PASS}
+    expose:
+      - 8080
     ports:
-      - "${ADMINER_PORT}:80"
+      - "${ADMINER_PORT}:8080"
     networks:
       local:
   reverseproxy:
