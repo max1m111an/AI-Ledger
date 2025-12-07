@@ -1,8 +1,9 @@
 import io
 
+import numpy as np
 from PIL import Image
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-import pyzbar.pyzbar as pyzbar
+from paddleocr import PaddleOCR
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from auth.main import get_current_user
@@ -74,61 +75,62 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
     }
 
 
-async def parse_paycheck_photo(photo: File[...]):
-    try:
-        contents = await photo.read()
-        image = Image.open(io.BytesIO(contents))
-        decoded_objects = pyzbar.decode(image)
+ocr = PaddleOCR(
+    use_angle_cls=True,
+    lang='ru',
+)
 
-        results = []
-        for obj in decoded_objects:
-            try:
-                rect = obj.rect
 
-                margin = 10
-                left = max(0, rect.left - margin)
-                top = max(0, rect.top - margin)
-                right = min(image.width, rect.left + rect.width + margin)
-                bottom = min(image.height, rect.top + rect.height + margin)
+def ocr_pdf_paddle(image):
+    print("START COMPRESSING...")  # noqa: T201
+    COMPRESS_SCALE = 0.5
+    width, height = image.size
+    new_size = (int(width * COMPRESS_SCALE), int(height * COMPRESS_SCALE))
+    img_resized = image.resize(new_size, Image.LANCZOS)
+    image_array = np.array(img_resized)
 
-                qr_cropped = image.crop((left, top, right, bottom))
-                cropped_decoded = pyzbar.decode(qr_cropped)
+    return ocr.predict(image_array)
 
-                if cropped_decoded:
-                    qr_data = cropped_decoded[0].data.decode('utf-8')
-                    results.append(qr_data)
 
-            except Exception:
-                continue
+async def perform_ocr(file: UploadFile):
+    print("IMAGE READING...")  # noqa: T201
 
-        return {
-            "found_qr_codes": len(results),
-            "results": results
-        }
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents)).convert("RGB")  # Ensure RGB
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+    # Perform OCR
+    result = ocr_pdf_paddle(image)
+    print("FILE PREDICTION ENDED")  # noqa: T201
+
+    if isinstance(result, list) and len(result) > 0:
+        rec_texts = result[0].get("rec_texts", [])
+    elif isinstance(result, dict):
+        rec_texts = result.get("rec_texts", [])
+    else:
+        rec_texts = []
+
+    print("SENDING RESPONSE...")  # noqa: T201
+    return rec_texts
+
+
+valid_ext: list[str] = ['jpg', 'png']
 
 
 @router.post("/photo")
-async def add_paycheck_by_photo(paycheck_photo: UploadFile = File(...),
-                                session: AsyncSession = Depends(get_session),
-                                ):
-    data_list = await parse_paycheck_photo(paycheck_photo)
-    """result_list = []
-    for data in data_list["results"]:
-        print(data)
-        params = {
-            "qrraw": data,
-            "token": "",
-        }
-        url = "https://proverkacheka.com/api/v1/check/get/"
-        response = requests.post(url, params=params)
-        temp_data = response
-        result_list.append(temp_data)"""
+async def add_paycheck_by_photo(paycheck_photo: UploadFile = File(...), session: AsyncSession = Depends(get_session)):
+    name_: str = paycheck_photo.filename
+    photo_ext: str = name_[name_.find('.') + 1:]
+    if photo_ext not in valid_ext:
+        raise HTTPException(
+            status_code=400,
+            detail=f'File has invalid extension {photo_ext}. Allowed only {valid_ext[:]}.'
+        )
+
+    photo_data = await perform_ocr(paycheck_photo)
+
     return {
         "status": 200,
-        "data": data_list
+        "data": photo_data
     }
     """new_db_paycheck = PaycheckModel(
         price=data["s"],
