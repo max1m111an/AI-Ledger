@@ -75,8 +75,8 @@ async def update_user(edit_user_data: EditUserRequest, session: AsyncSession = D
     if edit_user_data.password:
         user_this_id.set_password(edit_user_data.password)
 
-    if edit_user_data.email or edit_user_data.name:
-        fields_to_check = ["email", "name"]
+    if edit_user_data.email or edit_user_data.name or edit_user_data.daily_limit:
+        fields_to_check = ["email", "name", "daily_limit"]
 
         for field in fields_to_check:
             value = getattr(edit_user_data, field, None)

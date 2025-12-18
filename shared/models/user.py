@@ -42,6 +42,7 @@ class UserModel(UserCreate, table=True):  # type: ignore
     __table_args__ = (UniqueConstraint("email", "name"),)
 
     id: int | None = Field(default=None, primary_key=True)  # noqa: A003
+    daily_limit: int | None = Field(default=None)
     user_paychecks: list["PaycheckModel"] | None = Relationship(back_populates="paycheck_user", sa_relationship_kwargs={"lazy": "selectin", "cascade": "all, delete-orphan"})  # type: ignore
     user_subs: list["SubscriptionModel"] | None = Relationship(back_populates="sub_user", sa_relationship_kwargs={"lazy": "selectin", "cascade": "all, delete-orphan"})  # type: ignore
 
