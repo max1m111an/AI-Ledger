@@ -1,15 +1,10 @@
-from datetime import date
+from datetime import datetime
 from enum import Enum
 
 from pydantic import field_validator
 from sqlmodel import SQLModel, Field, Relationship
 
 from shared.models.user import UserModel
-
-
-class PaymentForm(Enum):
-    CASH = "Cash"
-    NON_CASH = "Non_cash"
 
 
 class PaycheckCategory(Enum):
@@ -26,9 +21,8 @@ class PaycheckCategory(Enum):
 
 class PaycheckCreate(SQLModel):
     price: int | None = None
-    pay_date: date | None = None
+    pay_date: datetime | None = None
     category: PaycheckCategory | None = None
-    payment_form: PaymentForm | None = None
 
     @field_validator('price')
     @classmethod
@@ -38,9 +32,39 @@ class PaycheckCreate(SQLModel):
         return v
 
 
+class Product(SQLModel, table=True):  # type: ignore
+    tablename = "products"
+
+    id: int | None = Field(default=None, primary_key=True)  # noqa: A003
+    name: str = Field(index=True, nullable=False)
+    price: float | None = Field(default=None)
+    category: str | None = Field(default=None)
+
+    paychecks: list["Paycheck"] = Relationship(  # type: ignore
+        back_populates="products",
+        link_model="PaycheckProduct",
+    )
+
+
 class PaycheckModel(PaycheckCreate, table=True):  # type: ignore
     __tablename__ = "paychecks"
 
     id: int = Field(default=None, primary_key=True)  # noqa: A003
-    user_id: int = Field(nullable=False, foreign_key="users.id")
-    paycheck_user: UserModel | None = Relationship(back_populates="user_paychecks")
+    user_id: int = Field(foreign_key="users.id", nullable=False)
+
+    paycheck_user: UserModel | None = Relationship(
+        back_populates="user_paychecks",
+    )
+    products: list["Product"] = Relationship(  # type: ignore
+        back_populates="paychecks",
+        link_model="PaycheckProduct",
+    )
+
+
+class PaycheckProduct(SQLModel, table=True):  # type: ignore
+    tablename = "paycheck_products"
+
+    id: int = Field(default=None, primary_key=True)  # noqa: A003
+    paycheck_id: int = Field(foreign_key="paychecks.id", nullable=False)
+    product_id: int = Field(foreign_key="products.id", nullable=False)
+    quantity: int = Field(default=1)
