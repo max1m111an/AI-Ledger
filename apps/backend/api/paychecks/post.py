@@ -13,7 +13,7 @@ router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 @router.post("/add")
 async def create_paycheck(paycheck_data: PaycheckCreate,
                           session: AsyncSession = Depends(get_session),
-                          current_user: dict = Depends(get_current_user)):
+                          current_user = Depends(get_current_user)):
     new_db_paycheck = PaycheckModel(**paycheck_data.model_dump())
     new_db_paycheck.user_id = current_user["id"]
     session.add(new_db_paycheck)

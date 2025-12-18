@@ -20,6 +20,7 @@ class IDRequest(BaseModel):
 async def parse_user(user, session: AsyncSession) -> dict:
     await session.refresh(user, ["user_subs", "user_paychecks"])
     return {
+        "id": user.id,
         "name": user.name,
         "email": user.email,
         "subs": user.user_subs,
