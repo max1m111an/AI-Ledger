@@ -7,11 +7,6 @@ from sqlmodel import SQLModel, Field, Relationship
 from shared.models.user import UserModel
 
 
-class PaymentForm(Enum):
-    CASH = "Cash"
-    NON_CASH = "Non_cash"
-
-
 class PaycheckCategory(Enum):
     CAFE = "Cafe"
     SHOP = "Shop"
@@ -25,10 +20,10 @@ class PaycheckCategory(Enum):
 
 
 class PaycheckCreate(SQLModel):
+    name: str | None = None
     price: int | None = None
     pay_date: date | None = None
     category: PaycheckCategory | None = None
-    payment_form: PaymentForm | None = None
 
     @field_validator('price')
     @classmethod

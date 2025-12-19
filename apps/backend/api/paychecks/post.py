@@ -54,7 +54,7 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
             detail=f"No paycheck found by id={edit_check_data.id}"
         )
 
-    fields_to_check = ["price", "pay_date", "store_name", "category", "payment_form"]
+    fields_to_check = ["price", "pay_date", "category", "name"]
 
     for field in fields_to_check:
         value = getattr(edit_check_data, field, None)
