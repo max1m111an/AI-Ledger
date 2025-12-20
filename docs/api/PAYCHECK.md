@@ -9,31 +9,28 @@
 2. **Request body**
 
 > {
-> "store_name": "string",
-> "price": 0,
+> "name": "string",
+> "price": 0.0,
 > "category": "enum",  (Cafe, Transfer, Transport, Utilities, Healthcare, Marketplace, Entertainment, Shop, Other)
-> "payment_form": "enum",  (Cash, Non_cash)
-> "paydate": "yyyy-mm-dd"
+> "pay_date": "1766238001"
 > }
 3. **Test request**
 
 > {
-> "store_name": "Burger King",
-> "price": 159,
+> "name": "Burger King",
+> "price": 159.9,
 > "category": "Cafe",
-> "payment_form": "Cash",
-> "paydate": "2025-10-24"
+> "pay_date": "1766238001"
 > }
 4. **Response body**
 
 > {
 > "status": 200,
 > "paycheck": {
-> "store_name": "Burger King",
-> "price": 159,
+> "name": "Burger King",
+> "price": 159.9,
 > "category": "Cafe",
-> "payment_form": "Cash",
-> "paydate": "2025-10-24"
+> "pay_date": "1766238001"
 > }
 > }
 ---
@@ -48,19 +45,18 @@
 > ***/paychecks/***
 2. **Request body**
 
-> -
+> \<empty\>
 3. **Test request**
 
-> -
+> \<empty\>
 4. **Response body**
 > {
 > "status": 200,
 > "paychecks": \[{
-> "store_name": "Burger King",
-> "price": 159,
+> "name": "Burger King",
+> "price": 159.9
 > "category": "Cafe",
-> "payment_form": "Cash",
-> "paydate": "2025-10-24"
+> "pay_date": "1766238001"
 > }\]
 > }
 
@@ -104,21 +100,19 @@
 
 > {
 > "id": 0,
-> "store_name": "string",
-> "price": 0,
+> "name": "string",
+> "price": 0.0,
 > "category": "enum",
-> "payment_form": "enum",
-> "paydate": "yyyy-mm-dd"
+> "pay_date": "timestamp"
 > }
 3. **Test request**
 
 > {
 > "id": 1,
-> "store_name": "Burger King",
-> "price": 159,
+> "name": "Burger King",
+> "price": 179.9,
 > "category": "Cafe",
-> "payment_form": "Cash",
-> "paydate": "2025-10-24"
+> "pay_date": "1766238001"
 > }
 4. **Response body**
 
@@ -126,11 +120,10 @@
 > "status": 200,
 > "paycheck": {
 > "id": 1,
-> "store_name": "Tokyo city",
-> "price": 269,
+> "name": "Tokyo city",
+> "price": 269.9,
 > "category": "Cafe",
-> "payment_form": "Non_cash",
-> "paydate": "2025-10-24"
+> "pay_date": "1766238002"
 > }
 > }
 
