@@ -68,3 +68,36 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
         "status": 200,
         "paycheck": check_this_id,
     }
+
+
+@router.post("/photo")
+async def add_paycheck_by_photo_stub(
+        paycheck_photo: UploadFile = File(...),  # type: ignore
+        session: AsyncSession = Depends(get_session),
+        current_user: dict = Depends(get_current_user),
+):
+    fake_result = {
+        "metadata": {
+            "name": "Папаша",
+            "price": 566,
+            "pay_date": "1766407500",
+        },
+        "category": "Cafe",
+    }
+
+    new_paycheck = PaycheckModel(
+        name=fake_result["metadata"]["name"],  # type: ignore
+        price=fake_result["metadata"]["price"],  # type: ignore
+        pay_date=fake_result["metadata"]["pay_date"],  # type: ignore
+        category=fake_result["category"],
+        user_id=current_user["id"],
+    )
+
+    session.add(new_paycheck)
+    await session.commit()
+    await session.refresh(new_paycheck)
+
+    return {
+        "status": 200,
+        "paycheck": new_paycheck,
+    }
