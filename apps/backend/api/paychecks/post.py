@@ -6,6 +6,7 @@ from shared.models.paycheck import PaycheckCreate, PaycheckModel
 from shared.database import get_session
 from shared.models.request.paycheck import EditPaycheckRequest
 from shared.models.request.user import IDRequest
+from fastapi import UploadFile, File
 
 router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 
