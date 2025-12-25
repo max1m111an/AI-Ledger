@@ -1,0 +1,50 @@
+@use "@assets/scss/consts" as *;
+
+@mixin base-flex {
+  display: flex;
+  align-items: center;
+  font-family: $base_font_family;
+  gap: 5px;
+  box-sizing: border-box;
+}
+
+.title{
+  @include base-flex;
+  color: $base_color_text_1;
+  font-size: 24px;
+  padding: 0;
+  line-height: 1;
+}
+
+.addition_1{
+  @include base-flex;
+  color: $base_color_text_1;
+  font-size: 14px;
+}
+
+.addition_2{
+  @include base-flex;
+  color: $base_color_text_2;
+  font-size: 14px;
+}
+
+.addition_3{
+  @include base-flex;
+  color: $base_color_text_3;
+  font-size: 14px;
+}
+
+.spent_money{
+  @include base-flex;
+  color: $expenses_color;
+}
+.rest_money{
+  @include base-flex;
+  color: $revenue_color;
+}
+
+.links{
+  @include base-flex;
+  color: $link_color;
+  font-size: 14px;
+}

@@ -11,6 +11,7 @@ class UserLoginRequest(BaseModel):
 
 class EditUserRequest(UserCreate):
     id: int  # noqa: A003
+    daily_limit: int | None = None
 
 
 class IDRequest(BaseModel):
@@ -20,7 +21,9 @@ class IDRequest(BaseModel):
 async def parse_user(user, session: AsyncSession) -> dict:
     await session.refresh(user, ["user_subs", "user_paychecks"])
     return {
+        "id": user.id,
         "name": user.name,
+        "daily_limit": user.daily_limit,
         "email": user.email,
         "subs": user.user_subs,
         "paychecks": user.user_paychecks,

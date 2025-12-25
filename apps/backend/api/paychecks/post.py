@@ -6,6 +6,7 @@ from shared.models.paycheck import PaycheckCreate, PaycheckModel
 from shared.database import get_session
 from shared.models.request.paycheck import EditPaycheckRequest
 from shared.models.request.user import IDRequest
+from fastapi import UploadFile, File
 
 router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 @router.post("/add")
 async def create_paycheck(paycheck_data: PaycheckCreate,
                           session: AsyncSession = Depends(get_session),
-                          current_user: dict = Depends(get_current_user)):
+                          current_user = Depends(get_current_user)):
     new_db_paycheck = PaycheckModel(**paycheck_data.model_dump())
     new_db_paycheck.user_id = current_user["id"]
     session.add(new_db_paycheck)
@@ -54,7 +55,7 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
             detail=f"No paycheck found by id={edit_check_data.id}"
         )
 
-    fields_to_check = ["price", "pay_date", "store_name", "category", "payment_form"]
+    fields_to_check = ["price", "pay_date", "category", "name"]
 
     for field in fields_to_check:
         value = getattr(edit_check_data, field, None)
@@ -67,4 +68,37 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
     return {
         "status": 200,
         "paycheck": check_this_id,
+    }
+
+
+@router.post("/photo")
+async def add_paycheck_by_photo_stub(
+        paycheck_photo: UploadFile = File(...),  # type: ignore
+        session: AsyncSession = Depends(get_session),
+        current_user: dict = Depends(get_current_user),
+):
+    fake_result = {
+        "metadata": {
+            "name": "Папаша",
+            "price": 566,
+            "pay_date": "1766407500",
+        },
+        "category": "Cafe",
+    }
+
+    new_paycheck = PaycheckModel(
+        name=fake_result["metadata"]["name"],  # type: ignore
+        price=fake_result["metadata"]["price"],  # type: ignore
+        pay_date=fake_result["metadata"]["pay_date"],  # type: ignore
+        category=fake_result["category"],
+        user_id=current_user["id"],
+    )
+
+    session.add(new_paycheck)
+    await session.commit()
+    await session.refresh(new_paycheck)
+
+    return {
+        "status": 200,
+        "paycheck": new_paycheck,
     }

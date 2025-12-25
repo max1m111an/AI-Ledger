@@ -6,13 +6,20 @@ RUN ["python3", "-m", "pip", "install", "--no-deps", "--no-cache-dir", "-r", "re
 WORKDIR "/app"
 ENTRYPOINT ["python3", "-m", "uvicorn"]
 
-FROM node:alpine AS reactapp
+FROM node:20-alpine AS reactapp
+WORKDIR /app
 
-WORKDIR "/app"
-ENTRYPOINT ["npm"]
+COPY ./apps/frontend/package*.json ./
 
-FROM nginx:alpine as reverseproxy
+RUN rm -rf node_modules package-lock.json
 
-FROM mariadb:latest as database
+RUN npm install --no-cache --legacy-peer-deps esbuild@0.25.10
+RUN npm install --no-cache --legacy-peer-deps
 
-FROM phpmyadmin:latest as dbadmin
+COPY ./apps/frontend ./
+
+FROM nginx:alpine AS reverseproxy
+
+FROM mariadb:latest AS database
+
+FROM adminer:latest AS dbadmin

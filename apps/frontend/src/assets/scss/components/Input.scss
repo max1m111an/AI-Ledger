@@ -1,0 +1,44 @@
+@use "@assets/scss/consts" as *;
+
+.input {
+  padding: 10px 10px;
+  border: $base_color_border;
+  background: $block_background_2;
+  border-radius: 6px;
+  font-size: 13px;
+  color: $base_color_text_1;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: $base_color_text_3;
+}
+
+.input:focus {
+  outline: rgba(99, 102, 241, 0.3) solid 3px;
+}
+
+.input:-webkit-autofill {
+  -webkit-text-fill-color: $base_color_text_1;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.select {
+  padding: 10px 30px 10px 10px;
+  border: $base_color_border;
+  background: $block_background_2;
+  border-radius: 6px;
+  font-size: 13px;
+  color: $base_color_text_1;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: rgba(99, 102, 241, 0.3) solid 3px;
+}
+
+.select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

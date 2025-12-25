@@ -2,6 +2,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from auth.main import get_current_user
 from shared.models.user import UserModel, UserCreate
 from shared.database import get_session
 from shared.models.request.user import EditUserRequest, parse_user, IDRequest
@@ -50,16 +51,11 @@ async def delete_user(del_user_id: IDRequest, session: AsyncSession = Depends(ge
     )
 
 
-@router.post("/")
-async def get_users(user_id: IDRequest, session: AsyncSession = Depends(get_session)):
-    users_arr = []
-    for user in user_id.id:
-        result = await session.get(UserModel, user)
-        user_data = await parse_user(result, session)
-        users_arr.append(user_data)
+@router.get("/")
+async def get_user(current_user = Depends(get_current_user)):
     return {
         "status": 200,
-        "users": users_arr,
+        "user": current_user,
     }
 
 
@@ -75,8 +71,8 @@ async def update_user(edit_user_data: EditUserRequest, session: AsyncSession = D
     if edit_user_data.password:
         user_this_id.set_password(edit_user_data.password)
 
-    if edit_user_data.email or edit_user_data.name:
-        fields_to_check = ["email", "name"]
+    if edit_user_data.email or edit_user_data.name or edit_user_data.daily_limit:
+        fields_to_check = ["email", "name", "daily_limit"]
 
         for field in fields_to_check:
             value = getattr(edit_user_data, field, None)

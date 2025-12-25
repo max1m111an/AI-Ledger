@@ -1,0 +1,224 @@
+@use "@assets/scss/consts" as *;
+
+
+.period-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input.small {
+  width: 120px;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+.Button.small {
+  padding: 5px 10px;
+  font-size: 14px;
+  height: auto;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.scrollable-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+}
+
+.settingsProfile {
+  padding: 20px;
+  color: $base_color_text_1;
+}
+
+.settingsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.settingsSubtitle {
+  font-size: 14px;
+  color: $base_color_text_2;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.profileSection {
+  margin-bottom: 24px;
+}
+
+.profileField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid $base_color_border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.totalLimitField {
+    padding: 16px 0;
+    border-bottom: 2px solid $base_color_border;
+  }
+}
+
+.fieldLabel {
+  font-size: 16px;
+  color: $base_color_text_1;
+}
+
+.fieldValue {
+  font-size: 16px;
+  color: $base_color_text_2;
+}
+
+.limitControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.limitButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: $block_background_2;
+  border: 1px solid $base_color_border;
+  color: $base_color_text_1;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: $action_background;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.limitValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: $base_color_text_1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.divider {
+  height: 1px;
+  background: $base_color_border;
+  margin: 24px 0;
+}
+
+.settingsProfile {
+  &.action_block_1 {
+    background: $block_background_1;
+    border-radius: 16px;
+    padding: 20px;
+  }
+}
+
+.profileSection {
+  margin-top: 20px;
+}
+
+.profileField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid $base_color_border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.totalLimitField {
+    padding: 16px 0;
+    border-bottom: none;
+    margin-top: 8px;
+  }
+}
+
+.fieldLabel {
+  color: $base_color_text_2;
+}
+
+.fieldValue {
+  color: $base_color_text_3;
+}
+
+.limitControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.limitButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: $block_background_2;
+  border: 1px solid $base_color_border;
+  color: $base_color_text_1;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: $action_background;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.limitValue {
+  font-weight: 500;
+  color: $base_color_text_1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin-bottom: 16px;
+  color: $base_color_text_1;
+}
+

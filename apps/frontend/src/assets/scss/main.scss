@@ -1,0 +1,14 @@
+@use "@assets/scss/consts" as *;
+body, html, #root, .app-container {
+  margin: 0;
+  padding: 0;
+  width: 100dvw;
+  overflow-x: hidden;
+  min-height: 100dvh;
+  background: $base_background;
+}
+.main-content {
+  flex: 1;
+  margin-left: 15dvw;
+  margin-top: 50px;
+}

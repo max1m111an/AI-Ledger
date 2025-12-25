@@ -1,0 +1,15 @@
+@use "@assets/scss/consts" as *;
+.header {
+  background: $block_background_1;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: calc(15dvw + 1px);
+  right: 0;
+  z-index: 100;
+  border: $base_color_border;
+
+  & > div {
+    height: 100%;
+  }
+}

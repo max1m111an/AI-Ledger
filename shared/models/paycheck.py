@@ -1,15 +1,10 @@
-from datetime import date
+import datetime
 from enum import Enum
 
 from pydantic import field_validator
 from sqlmodel import SQLModel, Field, Relationship
 
 from shared.models.user import UserModel
-
-
-class PaymentForm(Enum):
-    CASH = "Cash"
-    NON_CASH = "Non_cash"
 
 
 class PaycheckCategory(Enum):
@@ -25,10 +20,10 @@ class PaycheckCategory(Enum):
 
 
 class PaycheckCreate(SQLModel):
-    price: int | None = None
-    pay_date: date | None = None
+    name: str | None = None
+    price: float | None = None
+    pay_date: float | None = datetime.datetime.now(datetime.UTC).timestamp()
     category: PaycheckCategory | None = None
-    payment_form: PaymentForm | None = None
 
     @field_validator('price')
     @classmethod
@@ -43,4 +38,6 @@ class PaycheckModel(PaycheckCreate, table=True):  # type: ignore
 
     id: int = Field(default=None, primary_key=True)  # noqa: A003
     user_id: int = Field(nullable=False, foreign_key="users.id")
-    paycheck_user: UserModel | None = Relationship(back_populates="user_paychecks")
+    paycheck_user: UserModel | None = Relationship(
+        back_populates="user_paychecks",
+    )
