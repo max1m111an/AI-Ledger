@@ -22,4 +22,14 @@ export default defineConfig({
             },
         },
     },
+    // Добавь эту настройку:
+    build: {
+        sourcemap: false, // отключит source maps в production сборке
+    },
+    // Для разработки можно тоже отключить:
+    server: {
+        fs: {
+            strict: false,
+        },
+    },
 });
