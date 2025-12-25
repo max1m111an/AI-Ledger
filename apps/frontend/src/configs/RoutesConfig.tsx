@@ -1,18 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTES } from "./RoutesConst";
-import Main from "@/pages/Main.tsx";
-import Operations from "@/pages/Operations.tsx";
-import UploadingReceipts from "@/pages/UploadingReceipts.tsx";
-import Subscriptions from "@/pages/Subscriptions.tsx";
-import Analitics from "@/pages/Analitics.tsx";
-import LoginPage from "@/pages/LoginPage.tsx";
-import Profile from "@/pages/Profile.tsx";
 
-import RequireAuth from "@/providers/RequireAuth.tsx";
-import EmptyLayout from "@/layouts/EmptyLayout.tsx";
-import MainLayout from "@/layouts/MainLayout.tsx";
-import RegistrationPage from "@/pages/RegistrationPage.tsx";
+import Main from "@/pages/Main";
+import Operations from "@/pages/Operations";
+import UploadingReceipts from "@/pages/UploadingReceipts";
+import Subscriptions from "@/pages/Subscriptions";
+import Analitics from "@/pages/Analitics";
+import LoginPage from "@/pages/LoginPage";
+import Profile from "@/pages/Profile";
+import RegistrationPage from "@/pages/RegistrationPage";
 
+import EmptyLayout from "@/layouts/EmptyLayout";
+import MainLayout from "@/layouts/MainLayout";
 
 export const routesConfig = [
     {
@@ -29,7 +28,7 @@ export const routesConfig = [
         ],
     },
     {
-        element: <RequireAuth fallbackURL={ ROUTES.LOGIN }><MainLayout /></RequireAuth>,
+        element: <MainLayout />,
         children: [
             {
                 path: ROUTES.MAIN,
@@ -58,6 +57,5 @@ export const routesConfig = [
         ],
     },
 ];
-
 
 export const router = createBrowserRouter(routesConfig);

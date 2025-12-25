@@ -158,7 +158,7 @@ export default function LastOperations({
                                     {categoryNames[paycheck.category] || paycheck.category} • {formatDate(paycheck.pay_date)}
                                 </span>
                             </div>
-                            <p className={ `addition_1 ${paycheck.category === "Transfer" ? "positive" : "negative"}` }>
+                            <p className={ `addition_1 ${paycheck.category === "Transfer" ? "rest_money" : "spent_money"}` }>
                                 {getPriceDisplay(paycheck.price, paycheck.category)}
                             </p>
                         </div>

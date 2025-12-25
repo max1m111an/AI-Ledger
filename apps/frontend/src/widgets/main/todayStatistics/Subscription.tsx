@@ -17,7 +17,12 @@ export default function Subscription({ subs }: { subs: Sub[] }) {
         return `Каждые ${period} месяца`;
     };
 
-    if (!subs || !Array.isArray(subs)) {
+    const today = new Date().toISOString().split("T")[0];
+    const todaysSubs = subs.filter((sub) =>
+        sub.payday && String(sub.payday) === today,
+    );
+
+    if (!subs || !Array.isArray(subs) || todaysSubs.length === 0) {
         return (
             <div className="today subscription_div_1">
                 <div className="today title_div">
@@ -30,7 +35,7 @@ export default function Subscription({ subs }: { subs: Sub[] }) {
                     <NavLink to={ ROUTES.SUBSCRIPTIONS } className="links fs-14">К подпискам</NavLink>
                 </div>
                 <div className="today subscription_div_2">
-                    <span className="addition_3">Нет подписок</span>
+                    <span className="addition_3">Сегодня списаний по подпискам нет</span>
                 </div>
             </div>
         );
@@ -48,7 +53,7 @@ export default function Subscription({ subs }: { subs: Sub[] }) {
                 <NavLink to={ ROUTES.SUBSCRIPTIONS } className="links fs-14">К подпискам</NavLink>
             </div>
             <div className="today subscription_div_2">
-                {subs.map((sub, index) => (
+                {todaysSubs.map((sub, index) => (
                     <div key={ index } className="today subscription_div_3">
                         <svg className="icon magic_mint">
                             <use href="#Subscriptions" />
@@ -57,7 +62,7 @@ export default function Subscription({ subs }: { subs: Sub[] }) {
                             <span className="addition_1">{sub.name}</span>
                             <span className="addition_3">{getPeriodText(sub.period)}</span>
                         </div>
-                        <p className="addition_1">- {sub.price}</p>
+                        <p className="addition_1">- {sub.price} ₽</p>
                     </div>
                 ))}
             </div>

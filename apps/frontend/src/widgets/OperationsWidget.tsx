@@ -3,6 +3,7 @@ import React, {
 } from "react";
 import { paychecksApi } from "@/api/PaychecksApi.ts";
 import type { Paycheck } from "@interfaces/models/PaychecksModel.ts";
+import classNames from "classnames";
 
 type TimeFilter = "all" | "day" | "week" | "month" | "year" | "period";
 type TypeFilter = "all" | "expense" | "income";
@@ -47,9 +48,9 @@ export default function OperationsWidget() {
 
     const handleSelectPaycheck = (id: number) => {
         if (selectedIds.includes(id)) {
-            setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
+            setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
         } else {
-            setSelectedIds([...selectedIds, id]);
+            setSelectedIds([ ...selectedIds, id ]);
         }
     };
 
@@ -57,15 +58,20 @@ export default function OperationsWidget() {
         if (selectedIds.length === filteredPaychecks.length) {
             setSelectedIds([]);
         } else {
-            setSelectedIds(filteredPaychecks.map(p => p.id).filter(id => id !== undefined));
+            setSelectedIds(filteredPaychecks.map((p) => p.id).filter((id) => id !== undefined));
         }
     };
 
-    const handleDeleteSelected = async () => {
-        if (selectedIds.length === 0) return;
+    const handleDeleteSelected = async() => {
+        if (selectedIds.length === 0) {
+            return;
+        }
 
         const confirmed = window.confirm(`Вы уверены, что хотите удалить ${selectedIds.length} операций?`);
-        if (!confirmed) return;
+
+        if (!confirmed) {
+            return;
+        }
 
         setIsDeleting(true);
         try {
@@ -167,22 +173,62 @@ export default function OperationsWidget() {
         setSelectedIds([]);
     };
 
+    const getIconForCategory = (category: string | null | undefined) => {
+        if (!category) {
+            return "#Subscription";
+        }
+
+        const iconMap: Record<string, string> = {
+            "Cafe": "#Cafe",
+            "Transport": "#Transport",
+            "Transfer": "#Finance",
+            "Utilities": "#Utilities",
+            "Healthcare": "#Charity",
+            "Marketplace": "#Shop",
+            "Entertainment": "#Entertainments",
+            "Shop": "#Shop",
+            "Other": "#Utilities",
+        };
+
+        return iconMap[category] || "#Subscription";
+    };
+
+    const getIconColor = (category: string | null | undefined) => {
+        if (!category) {
+            return "blue";
+        }
+
+        const colors: Record<string, string> = {
+            "Cafe": "sweet_corn",
+            "Transport": "blue",
+            "Transfer": "riptide",
+            "Utilities": "malibu",
+            "Healthcare": "magic_mint",
+            "Marketplace": "melrose",
+            "Entertainment": "golden",
+            "Shop": "periwinkle",
+            "Other": "pastel_pink",
+        };
+
+        return colors[category] || "blue";
+    };
+
     const getCategoryName = (category: string | null | undefined): string => {
         if (!category) {
             return "";
         }
 
         switch (category) {
-            case "Cafe": return "Кафе";
-            case "Transfer": return "Зарплата";
-            case "Transport": return "Транспорт";
-            case "Utilities": return "Коммунальные";
-            case "Healthcare": return "Здоровье";
-            case "Marketplace": return "Маркетплейсы";
-            case "Entertainment": return "Развлечения";
-            case "Shop": return "Магазины";
-            case "Other": return "Другое";
-            default: return category;
+        case "Cafe": return "Кафе";
+        case "Transfer": return "Зарплата";
+        case "Transport": return "Транспорт";
+        case "Utilities": return "Коммунальные";
+        case "Healthcare": return "Здоровье";
+        case "Marketplace": return "Маркетплейсы";
+        case "Entertainment": return "Развлечения";
+        case "Shop": return "Магазины";
+        case "Other": return "Другое";
+        default: return category;
         }
     };
 
@@ -196,14 +242,6 @@ export default function OperationsWidget() {
         }
     };
 
-    const getPriceClass = (category: string | null | undefined): string => {
-        if (category === "Transfer") {
-            return "positive";
-        } else {
-            return "negative";
-        }
-    };
-
     const categories = [
         {
             value: "Cafe",
@@ -211,7 +249,7 @@ export default function OperationsWidget() {
         },
         {
             value: "Transfer",
-            label: "Transfer",
+            label: "Зарплата",
         },
         {
             value: "Transport",
@@ -251,112 +289,95 @@ export default function OperationsWidget() {
                     <span className="addition_3">Сортировка, фильтры, и поиск по всем транзакциям</span>
                 </div>
                 <div className="oper_button_div">
-                    <input
-                        className="input"
-                        placeholder="Поиск по описанию / категории"
-                        value={ searchQuery }
-                        onChange={ (e) => setSearchQuery(e.target.value) }
-                    />
                     {selectedIds.length > 0 && (
                         <button
-                            className="Button oper delete"
-                            onClick={handleDeleteSelected}
-                            disabled={isDeleting}
-                            style={{
-                                backgroundColor: "#dc3545",
-                                marginLeft: "10px"
-                            }}
+                            className="Button delete"
+                            onClick={ handleDeleteSelected }
+                            disabled={ isDeleting }
                         >
                             {isDeleting ? "Удаление..." : `Удалить выбранные (${selectedIds.length})`}
                         </button>
                     )}
-                    <button
-                        className="Button oper"
-                        onClick={ handleResetFilters }
-                        style={{ marginLeft: "10px" }}
-                    >
-                        Сбросить фильтры
-                    </button>
                 </div>
             </div>
-            <div className="action_block_1 fd-r g-10 mb-15">
+            <div className="action_block_1 fd-r g-10 mb-15 ">
                 <div className="line_div">
                     <button
-                        className={ `line ${timeFilter === "all" ? "active" : ""}` }
+                        className={ classNames("line", { active: timeFilter === "all" }) }
                         onClick={ () => setTimeFilter("all") }
                     >
                         Все
                     </button>
                     <button
-                        className={ `line ${timeFilter === "day" ? "active" : ""}` }
+                        className={ classNames("line", { active: timeFilter === "day" }) }
                         onClick={ () => setTimeFilter("day") }
                     >
                         День
                     </button>
                     <button
-                        className={ `line ${timeFilter === "week" ? "active" : ""}` }
+                        className={ classNames("line", { active: timeFilter === "week" }) }
                         onClick={ () => setTimeFilter("week") }
                     >
                         Неделя
                     </button>
                     <button
-                        className={ `line ${timeFilter === "month" ? "active" : ""}` }
+                        className={ classNames("line", { active: timeFilter === "month" }) }
                         onClick={ () => setTimeFilter("month") }
                     >
                         Месяц
                     </button>
                     <button
-                        className={ `line ${timeFilter === "year" ? "active" : ""}` }
+                        className={ classNames("line", { active: timeFilter === "year" }) }
                         onClick={ () => setTimeFilter("year") }
                     >
                         Год
                     </button>
-                    <div className="period-selector fd-r g-5">
-                        <input
-                            type="date"
-                            className="input small"
-                            value={ startDate }
-                            onChange={ (e) => setStartDate(e.target.value) }
-                            placeholder="Начало"
-                        />
-                        <input
-                            type="date"
-                            className="input small"
-                            value={ endDate }
-                            onChange={ (e) => setEndDate(e.target.value) }
-                            placeholder="Конец"
-                        />
-                        <button
-                            className="Button small"
-                            onClick={ handleApplyPeriod }
-                            disabled={ !startDate || !endDate }
-                        >
-                            Применить
-                        </button>
-                    </div>
+                </div>
+                <div className="period-selector fd-r g-5">
+                    <input
+                        type="date"
+                        className="input small"
+                        value={ startDate }
+                        onChange={ (e) => setStartDate(e.target.value) }
+                        placeholder="Начало"
+                    />
+                    <input
+                        type="date"
+                        className="input small"
+                        value={ endDate }
+                        onChange={ (e) => setEndDate(e.target.value) }
+                        placeholder="Конец"
+                    />
+                    <button
+                        className="Button control"
+                        onClick={ handleApplyPeriod }
+                        disabled={ !startDate || !endDate }
+                    >
+                        Применить
+                    </button>
                 </div>
                 <div className="line_div">
                     <button
-                        className={ `line ${typeFilter === "all" ? "active" : ""}` }
+                        className={ classNames("line", { active: typeFilter === "all" }) }
                         onClick={ () => setTypeFilter("all") }
                     >
                         Все
                     </button>
                     <button
-                        className={ `line ${typeFilter === "expense" ? "active" : ""}` }
+                        className={ classNames("line", { active: typeFilter === "expense" }) }
                         onClick={ () => setTypeFilter("expense") }
                     >
                         Расход
                     </button>
                     <button
-                        className={ `line ${typeFilter === "income" ? "active" : ""}` }
+                        className={ classNames("line", { active: typeFilter === "income" }) }
                         onClick={ () => setTypeFilter("income") }
                     >
                         Доход
                     </button>
                 </div>
                 <select
-                    className="input"
+                    className="select"
                     value={ categoryFilter }
                     onChange={ (e) => setCategoryFilter(e.target.value) }
                 >
@@ -368,7 +389,7 @@ export default function OperationsWidget() {
                     ))}
                 </select>
                 <button
-                    className="Button oper"
+                    className="Button control"
                     onClick={ handleResetFilters }
                 >
                     Сбросить все
@@ -378,69 +399,73 @@ export default function OperationsWidget() {
                 <div className="table_scroll_wrapper">
                     <table className="sub_table">
                         <thead>
-                        <tr>
-                            <th className="cell_title" style={{ width: "40px" }}>
-                                <input
-                                    type="checkbox"
-                                    checked={filteredPaychecks.length > 0 && selectedIds.length === filteredPaychecks.length}
-                                    onChange={handleSelectAll}
-                                    disabled={filteredPaychecks.length === 0}
-                                />
-                            </th>
-                            <th className="cell_title">Описание</th>
-                            <th className="cell_title">Категории</th>
-                            <th className="cell_title">Дата</th>
-                            <th className="cell_title">Сумма</th>
-                            <th className="cell_title" style={{ width: "100px" }}>Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {filteredPaychecks.map((paycheck) => (
-                            <tr key={ paycheck.id }>
-                                <td className="cell_value">
+                            <tr>
+                                <th className="cell_title" style={ { width: "40px" } }>
                                     <input
                                         type="checkbox"
-                                        checked={selectedIds.includes(paycheck.id)}
-                                        onChange={() => handleSelectPaycheck(paycheck.id)}
+                                        checked={ filteredPaychecks.length > 0 && selectedIds.length === filteredPaychecks.length }
+                                        onChange={ handleSelectAll }
+                                        disabled={ filteredPaychecks.length === 0 }
                                     />
-                                </td>
-                                <td className="cell_value">{paycheck.name || "-"}</td>
-                                <td className="cell_value">
-                                    {getCategoryName(paycheck.category)}
-                                </td>
-                                <td className="cell_value">{formatDate(paycheck.pay_date)}</td>
-                                <td className={ `cell_value ${getPriceClass(paycheck.category)}` }>
-                                    {getPriceDisplay(paycheck.price, paycheck.category)}
-                                </td>
-                                <td className="cell_value">
-                                    <button
-                                        className="Button small delete"
-                                        onClick={async () => {
-                                            const confirmed = window.confirm("Вы уверены, что хотите удалить эту операцию?");
-                                            if (!confirmed) return;
-
-                                            try {
-                                                await paychecksApi.deletePaychecks({ id: [paycheck.id] });
-                                                await fetchPaychecks();
-                                            } catch (error) {
-                                                console.error("Ошибка при удалении операции:", error);
-                                            }
-                                        }}
-                                        style={{
-                                            padding: "5px 10px",
-                                            fontSize: "12px",
-                                            backgroundColor: "#dc3545",
-                                            color: "white",
-                                            border: "none",
-                                            borderRadius: "4px",
-                                            cursor: "pointer"
-                                        }}
-                                    >
-                                        Удалить
-                                    </button>
-                                </td>
+                                </th>
+                                <th className="cell_title">Описание</th>
+                                <th className="cell_title">Категории</th>
+                                <th className="cell_title">Дата</th>
+                                <th className="cell_title">Сумма</th>
+                                <th className="cell_title" style={ { width: "100px" } }>Действия</th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                            {filteredPaychecks.map((paycheck) => (
+                                <tr key={ paycheck.id }>
+                                    <td className="cell_value">
+                                        <input
+                                            type="checkbox"
+                                            checked={ selectedIds.includes(paycheck.id) }
+                                            onChange={ () => handleSelectPaycheck(paycheck.id) }
+                                        />
+                                    </td>
+                                    <td className="cell_value fd-r ai-c g-10">
+                                        <div className="d-f fd-r ai-c g-10">
+                                            <svg className={ `categoriaIcon ${getIconColor(paycheck.category)}` }>
+                                                <use href={ getIconForCategory(paycheck.category) } />
+                                            </svg>
+                                            {paycheck.name || "-"}
+                                        </div>
+                                    </td>
+                                    <td className="cell_value">
+                                        {getCategoryName(paycheck.category)}
+                                    </td>
+                                    <td className="cell_value">{formatDate(paycheck.pay_date)}</td>
+                                    <td className={ classNames("cell_value", {
+                                        "rm": paycheck.category === "Transfer",
+                                        "sm": paycheck.category !== "Transfer",
+                                    }) }>
+                                        {getPriceDisplay(paycheck.price, paycheck.category)}
+                                    </td>
+                                    <td className="cell_value">
+                                        <button
+                                            className="Button small delete"
+                                            onClick={ async() => {
+                                                const confirmed = window.confirm("Вы уверены, что хотите удалить эту операцию?");
+
+                                                if (!confirmed) {
+                                                    return;
+                                                }
+
+                                                try {
+                                                    await paychecksApi.deletePaychecks({ id: [ paycheck.id ] });
+                                                    await fetchPaychecks();
+                                                } catch (error) {
+                                                    console.error("Ошибка при удалении операции:", error);
+                                                }
+                                            } }
+                                        >
+                                            Удалить
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

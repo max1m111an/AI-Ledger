@@ -8,4 +8,8 @@
   right: 0;
   z-index: 100;
   border: $base_color_border;
+
+  & > div {
+    height: 100%;
+  }
 }

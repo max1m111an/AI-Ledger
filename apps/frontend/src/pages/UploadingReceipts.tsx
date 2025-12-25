@@ -17,8 +17,8 @@ export default function UploadingReceipts() {
     return (
         <div className="page fd-c">
             <UploadFile
-                onSuccess={handleSuccess}
-                onClose={handleClose}
+                onSuccess={ handleSuccess }
+                onClose={ handleClose }
             />
         </div>
     );

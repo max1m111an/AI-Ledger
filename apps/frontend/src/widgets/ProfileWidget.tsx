@@ -4,9 +4,9 @@ import React, {
 import "@assets/scss/index.scss";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/configs/RoutesConst.ts";
-import { userApi,
-} from "@/api/UsersApi.ts";
-import type {updateUserRequest} from "@interfaces/request/UserRequest.ts";
+import { userApi } from "@/api/UsersApi.ts";
+import type { updateUserRequest } from "@interfaces/request/UserRequest.ts";
+import { logout } from "@/services/AuthService.ts";
 
 interface SettingsProfileProps {
     className?: string;
@@ -106,6 +106,7 @@ export default function SettingsProfile({ className }: SettingsProfileProps) {
 
     const handleLogout = async() => {
         navigate(ROUTES.LOGIN);
+        logout();
     };
 
     if (isLoading && !userData.name) {

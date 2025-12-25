@@ -1,14 +1,17 @@
-import axios from "axios";
 import { API_ENDPOINTS } from "@/api/ApiConfig.ts";
-import type {addSubResponse, deleteSubsResponse, GetSubsResponse} from "@interfaces/response/SubResponse.ts";
-import type {addSubRequest, deleteSubsRequest} from "@interfaces/request/SubsRequest.ts";
-
+import type {
+    addSubResponse, deleteSubsResponse, GetSubsResponse,
+} from "@interfaces/response/SubResponse.ts";
+import type {
+    addSubRequest, deleteSubsRequest,
+} from "@interfaces/request/SubsRequest.ts";
+import api from "@/api/Axios.ts";
 
 
 export const subsApi = {
     async getSubs(): Promise<GetSubsResponse> {
         try {
-            const response = await axios.get<GetSubsResponse>(
+            const response = await api.get<GetSubsResponse>(
                 API_ENDPOINTS.SUBS.GET,
             );
 
@@ -21,7 +24,7 @@ export const subsApi = {
 
     async addSub(data: addSubRequest): Promise<addSubResponse> {
         try {
-            const response = await axios.post<addSubResponse>(
+            const response = await api.post<addSubResponse>(
                 API_ENDPOINTS.SUBS.ADD,
                 data,
                 {
@@ -39,11 +42,11 @@ export const subsApi = {
 
     async deleteSubs(data: deleteSubsRequest): Promise<deleteSubsResponse> {
         try {
-            const response = await axios.delete<deleteSubsResponse>(
+            const response = await api.delete<deleteSubsResponse>(
                 API_ENDPOINTS.SUBS.DELETE,
                 {
                     data: data,
-                    headers: {"Content-Type": "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 },
             );

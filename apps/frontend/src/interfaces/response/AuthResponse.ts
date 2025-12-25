@@ -3,20 +3,9 @@ export interface LoginResponse{
 }
 
 export interface MeResponse{
-    username: string;
+    user_data: string;
 }
 
-export interface LoginResponse {
-    status: number;
-    user: {
-        id: number;
-        name: string;
-        daily_limit: number | null;
-        email: string;
-        subs: any[];
-        paychecks: any[];
-    };
-}
 
 export interface RegisterResponse {
     status: number;

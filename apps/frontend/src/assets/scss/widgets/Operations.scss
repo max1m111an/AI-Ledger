@@ -18,6 +18,8 @@
   gap: 10px
 }
 .line_div{
+  display: flex;
+  flex-direction: row;
   border: $base_color_border;
   border-radius: 6.5px;
   padding: 2px;

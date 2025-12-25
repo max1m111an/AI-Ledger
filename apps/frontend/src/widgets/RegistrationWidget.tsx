@@ -5,8 +5,10 @@ import "@assets/scss/index.scss";
 import {
     NavLink, useNavigate,
 } from "react-router-dom";
-import { ROUTES } from "@/configs/RoutesConst.ts";
-import {registerApi} from "@/api/AuthApi.ts";
+import { ROUTES } from "@/configs/RoutesConst";
+import { registerApi } from "@/api/AuthApi";
+import { login } from "@/services/AuthService";
+import type { LoginRequest } from "@interfaces/request/AuthRequest";
 
 export default function RegistrationWidget() {
     const [ registrationData, setRegistrationData ] = useState({
@@ -35,41 +37,43 @@ export default function RegistrationWidget() {
         setError(null);
         setLoading(true);
 
-        // Валидация паролей
         if (registrationData.password !== registrationData.confirmPassword) {
             setError("Пароли не совпадают");
             setLoading(false);
+
             return;
         }
 
-        // Валидация длины пароля
         if (registrationData.password.length < 6) {
             setError("Пароль должен содержать минимум 6 символов");
             setLoading(false);
+
             return;
         }
 
         try {
-            // Вызов API регистрации
-            const response = await registerApi({
+            // Регистрация пользователя
+            await registerApi({
                 name: registrationData.name,
                 email: registrationData.email,
-                password: registrationData.password
+                password: registrationData.password,
             });
 
-            console.log("Registration successful:", response);
+            // Автоматический логин
+            const loginData: LoginRequest = {
+                enter_data: registrationData.email,
+                password: registrationData.password,
+            };
 
+            await login(loginData);
+
+            // Редирект на главную страницу
             navigate(ROUTES.MAIN);
-
         } catch (err: any) {
-            if (err.message === "User already exists") {
-                setError("Пользователь с таким email уже существует");
-            } else if (err.message === "Bad request: Invalid registration data") {
-                setError("Некорректные данные регистрации");
+            if (err.response?.status === 409) {
+                setError("Пользователь с таким email уже зарегистрирован");
             } else if (err.response?.status === 400) {
                 setError("Некорректные данные. Проверьте введённую информацию");
-            } else if (err.response?.status === 409) {
-                setError("Пользователь с таким email уже зарегистрирован");
             } else {
                 setError("Ошибка при регистрации. Попробуйте позже");
             }
@@ -84,7 +88,7 @@ export default function RegistrationWidget() {
             <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Имя пользователя</div>
             <input
                 type="text"
-                name="name" // Изменено с username на name
+                name="name"
                 value={ registrationData.name }
                 placeholder="Введите имя пользователя"
                 onChange={ handleChangeField }
@@ -112,7 +116,7 @@ export default function RegistrationWidget() {
                 onChange={ handleChangeField }
                 required
                 disabled={ loading }
-                minLength={6}
+                minLength={ 6 }
             />
 
             <div className="addition_2 fs-12 fw-500 mt-15 mb-5">Подтвердите пароль</div>
@@ -126,32 +130,34 @@ export default function RegistrationWidget() {
                 disabled={ loading }
             />
 
-            {/* Отображение ошибки */}
             {error && (
-                <div className="error-message" style={{
-                    color: "var(--red-text-color)",
-                    backgroundColor: "var(--red-background)",
-                    border: "var(--red-border)",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    margin: "10px 0",
-                    fontSize: "14px"
-                }}>
+                <div
+                    className="error-message"
+                    style={ {
+                        color: "var(--red-text-color)",
+                        backgroundColor: "var(--red-background)",
+                        border: "var(--red-border)",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        margin: "10px 0",
+                        fontSize: "14px",
+                    } }
+                >
                     {error}
                 </div>
             )}
 
             <div className="links">
-                <NavLink to={ ROUTES.LOGIN } className="links fs-12" style={{ pointerEvents: loading ? "none" : "auto" }}>
+                <NavLink
+                    to={ ROUTES.LOGIN }
+                    className="links fs-12"
+                    style={ { pointerEvents: loading ? "none" : "auto" } }
+                >
                     Уже есть аккаунт?
                 </NavLink>
             </div>
 
-            <button
-                className="Button auth"
-                disabled={ loading }
-                type="submit"
-            >
+            <button className="Button auth" disabled={ loading } type="submit">
                 {loading ? "Регистрация..." : "Зарегистрироваться"}
             </button>
         </form>

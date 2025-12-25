@@ -23,10 +23,13 @@ export function UploadFile() {
     const handleFile = useCallback((file: File) => {
         if (!allowedTypes.includes(file.type)) {
             setError("Неверный тип файла. Допустимы: png, jpeg, webp, gif, bmp");
+
             return;
         }
+
         if (file.size > 5 * 1024 * 1024) {
             setError("Файл слишком большой. Максимальный размер: 5MB");
+
             return;
         }
         setFile(file);
@@ -44,22 +47,27 @@ export function UploadFile() {
         };
 
         document.addEventListener("paste", handlePaste);
+
         return () => document.removeEventListener("paste", handlePaste);
     }, [ handleFile ]);
 
     const handleUpload = async() => {
-        if (!file) return;
+        if (!file) {
+            return;
+        }
 
         setUploading(true);
         setError(null);
 
         try {
             const progressInterval = setInterval(() => {
-                setProgress(prev => {
+                setProgress((prev) => {
                     if (prev >= 90) {
                         clearInterval(progressInterval);
+
                         return 90;
                     }
+
                     return prev + 10;
                 });
             }, 200);
@@ -138,12 +146,14 @@ export function UploadFile() {
             "Shop": "Магазин",
             "Other": "Другое",
         };
+
         return categories[category] || category;
     };
 
     const formatDate = (timestamp: number) => {
         const date = new Date(timestamp * 1000);
-        return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+
+        return `${date.getDate().toString().padStart(2, "0")}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getFullYear()}`;
     };
 
     if (showSuccess && uploadResult) {
@@ -178,7 +188,7 @@ export function UploadFile() {
 
                     <div className="success-actions">
                         <button
-                            onClick={handleNewUpload}
+                            onClick={ handleNewUpload }
                             className="Button new-upload"
                         >
                             Загрузить еще
@@ -212,7 +222,7 @@ export function UploadFile() {
                             <div className="progress-bar">
                                 <div
                                     className="progress-fill"
-                                    style={{ width: `${progress}%` }}
+                                    style={ { width: `${progress}%` } }
                                 />
                                 <span className="progress-text">{progress}%</span>
                             </div>
@@ -223,15 +233,15 @@ export function UploadFile() {
                                 <>
                                     <button
                                         onClick={ handleUpload }
-                                        className="control_btn accept"
-                                        disabled={uploading}
+                                        className="Button control confirm"
+                                        disabled={ uploading }
                                     >
                                         Отправить
                                     </button>
                                     <button
                                         onClick={ handleReset }
-                                        className="control_btn cancel"
-                                        disabled={uploading}
+                                        className="Button control delete"
+                                        disabled={ uploading }
                                     >
                                         Сбросить
                                     </button>

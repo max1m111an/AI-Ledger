@@ -1,13 +1,15 @@
-import axios from "axios";
 import { API_ENDPOINTS } from "@/api/ApiConfig.ts";
-import type {GetUserResponse, UpdateUserResponse} from "@interfaces/response/UserResponse.ts";
-import type {updateUserRequest} from "@interfaces/request/UserRequest.ts";
+import type {
+    GetUserResponse, UpdateUserResponse,
+} from "@interfaces/response/UserResponse.ts";
+import type { updateUserRequest } from "@interfaces/request/UserRequest.ts";
+import api from "@/api/Axios.ts";
 
 
 export const userApi = {
     async getUser(): Promise<GetUserResponse> {
         try {
-            const response = await axios.get<GetUserResponse>(
+            const response = await api.get<GetUserResponse>(
                 API_ENDPOINTS.USER.GET,
             );
 
@@ -19,7 +21,7 @@ export const userApi = {
     },
     async updateUser(data: updateUserRequest): Promise<UpdateUserResponse> {
         try {
-            const response = await axios.patch<UpdateUserResponse>(
+            const response = await api.patch<UpdateUserResponse>(
                 API_ENDPOINTS.USER.UPDATE,
                 data,
                 {

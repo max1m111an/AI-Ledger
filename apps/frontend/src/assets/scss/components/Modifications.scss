@@ -1,3 +1,5 @@
+@use "@assets/scss/consts" as *;
+
 .w-30{ width: 30%; }
 .w-70{ width: 70%; }
 
@@ -13,6 +15,7 @@
 .g-10{ gap: 10px; }
 
 .jc-c{justify-content: center}
+.jc-r{justify-content: right}
 .ai-c{align-items: center}
 .jc-sb{justify-content: space-between}
 
@@ -39,5 +42,8 @@
 .u-pl-15{ padding-left: calc(15% + 15px); }
 
 .tb-r{border: red 1px solid;}
+
+.sm {color: $expenses_color;}
+.rm {color: $revenue_color}
 
 

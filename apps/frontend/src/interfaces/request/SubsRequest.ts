@@ -9,4 +9,3 @@ export interface deleteSubsRequest {
     id: number[];
 }
 
-

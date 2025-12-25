@@ -1,16 +1,18 @@
 import type {
     addPaycheckResponse,
     deletePaychecksResponse,
-    GetPaychecksResponse
+    GetPaychecksResponse,
 } from "@interfaces/response/PaychecksResponse.ts";
-import axios from "axios";
+import api from "./Axios";
 import { API_ENDPOINTS } from "@/api/ApiConfig.ts";
-import type {addPaycheckRequest, deletePaychecksRequest} from "@interfaces/request/PaychecksRequest.ts";
+import type {
+    addPaycheckRequest, deletePaychecksRequest,
+} from "@interfaces/request/PaychecksRequest.ts";
 
 export const paychecksApi = {
     async getPaychecks(): Promise<GetPaychecksResponse> {
         try {
-            const response = await axios.get<GetPaychecksResponse>(
+            const response = await api.get<GetPaychecksResponse>(
                 API_ENDPOINTS.PAYCHECKS.GET,
             );
 
@@ -23,11 +25,11 @@ export const paychecksApi = {
 
     async addPaycheck(data: addPaycheckRequest): Promise<addPaycheckResponse> {
         try {
-            const response = await axios.post<addPaycheckResponse>(
+            const response = await api.post<addPaycheckResponse>(
                 API_ENDPOINTS.PAYCHECKS.ADD,
                 data,
                 {
-                    headers: {"Content-Type": "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 },
             );
@@ -41,11 +43,11 @@ export const paychecksApi = {
 
     async deletePaychecks(data: deletePaychecksRequest): Promise<deletePaychecksResponse> {
         try {
-            const response = await axios.delete<deletePaychecksResponse>(
+            const response = await api.delete<deletePaychecksResponse>(
                 API_ENDPOINTS.PAYCHECKS.DELETE,
                 {
                     data: data,
-                    headers: {"Content-Type": "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 },
             );
@@ -60,18 +62,18 @@ export const paychecksApi = {
     async uploadPaycheckPhoto(file: File): Promise<any> {
         try {
             const formData = new FormData();
-            formData.append('paycheck_photo', file, file.name);
+            formData.append("paycheck_photo", file, file.name);
 
-            const response = await axios.post(
+            const response = await api.post(
                 API_ENDPOINTS.PAYCHECKS.UPLOAD,
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'accept': 'application/json'
+                        "Content-Type": "multipart/form-data",
+                        "accept": "application/json",
                     },
                     withCredentials: true,
-                }
+                },
             );
 
             return response.data;
@@ -79,5 +81,5 @@ export const paychecksApi = {
             console.error("Error uploading paycheck photo:", error);
             throw error;
         }
-    }
+    },
 };

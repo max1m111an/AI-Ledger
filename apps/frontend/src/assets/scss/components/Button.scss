@@ -70,12 +70,20 @@
 
     }
   }
-  &.oper{
+  &.control{
     background-color: transparent;
     color: $base_color_text_1;
     border: $base_color_border;
     margin: 0;
-    padding: 8px 20px;
+    padding: 10px 20px;
+  }
+  &.delete {
+    background-color: $red_background;
+    border: $red_border;
+  }
+  &.confirm {
+    background-color: $green_background;
+    border: $green_border;
   }
 }
 .line{

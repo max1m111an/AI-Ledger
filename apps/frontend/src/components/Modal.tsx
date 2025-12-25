@@ -14,8 +14,9 @@ export const Modal = (
         children,
         className = "",
     }: ModalProps) => {
-    if (!isOpen)
+    if (!isOpen) {
         return null;
+    }
 
     return (
         <div className={ `modal-overlay ${className}` } onClick={ onClose }>

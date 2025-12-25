@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, {
+    useState, useEffect, useMemo,
+} from "react";
 import "@assets/scss/index.scss";
 import { paychecksApi } from "@/api/PaychecksApi.ts";
 import type { Paycheck } from "@interfaces/models/PaychecksModel.ts";
@@ -16,14 +18,14 @@ interface CategoryData {
 }
 
 export default function Analytics() {
-    const [paychecks, setPaychecks] = useState<Paycheck[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [ paychecks, setPaychecks ] = useState<Paycheck[]>([]);
+    const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
         fetchPaychecks();
     }, []);
 
-    const fetchPaychecks = async () => {
+    const fetchPaychecks = async() => {
         try {
             const res = await paychecksApi.getPaychecks();
             setPaychecks(res.paychecks);
@@ -36,10 +38,12 @@ export default function Analytics() {
 
     // Process data for income/expense trend chart (last 6 months)
     const incomeExpenseData = useMemo<MonthlyData[]>(() => {
-        if (!paychecks.length) return [];
+        if (!paychecks.length) {
+            return [];
+        }
 
         const months: { [key: string]: { income: number; expenses: number } } = {};
-        const monthNames = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
+        const monthNames = [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек" ];
 
         const now = new Date();
         const last6Months: Date[] = [];
@@ -49,13 +53,18 @@ export default function Analytics() {
             last6Months.push(date);
         }
 
-        last6Months.forEach(date => {
+        last6Months.forEach((date) => {
             const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
-            months[key] = { income: 0, expenses: 0 };
+            months[key] = {
+                income: 0,
+                expenses: 0,
+            };
         });
 
-        paychecks.forEach(paycheck => {
-            if (!paycheck.pay_date) return;
+        paychecks.forEach((paycheck) => {
+            if (!paycheck.pay_date) {
+                return;
+            }
 
             const date = new Date(paycheck.pay_date * 1000);
             const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -63,7 +72,7 @@ export default function Analytics() {
             if (months[key]) {
                 const price = paycheck.price || 0;
 
-                if (paycheck.category === 'Transfer') {
+                if (paycheck.category === "Transfer") {
                     months[key].income += price;
                 } else {
                     months[key].expenses += Math.abs(price);
@@ -71,7 +80,7 @@ export default function Analytics() {
             }
         });
 
-        return last6Months.map(date => {
+        return last6Months.map((date) => {
             const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
             const monthData = months[key];
             const monthName = monthNames[date.getMonth()];
@@ -80,14 +89,16 @@ export default function Analytics() {
             return {
                 month: `${monthName} '${year}`,
                 income: monthData.income,
-                expenses: monthData.expenses
+                expenses: monthData.expenses,
             };
         });
-    }, [paychecks]);
+    }, [ paychecks ]);
 
     // Process data for category breakdown chart (current month)
     const categoryData = useMemo<CategoryData[]>(() => {
-        if (!paychecks.length) return [];
+        if (!paychecks.length) {
+            return [];
+        }
 
         const now = new Date();
         const currentMonthKey = `${now.getFullYear()}-${now.getMonth() + 1}`;
@@ -102,7 +113,7 @@ export default function Analytics() {
             "Marketplace": "#7986CB",
             "Entertainment": "#FFD54F",
             "Shop": "#9575CD",
-            "Other": "#F48FB1"
+            "Other": "#F48FB1",
         };
 
         const categoryNames: Record<string, string> = {
@@ -114,11 +125,13 @@ export default function Analytics() {
             "Marketplace": "Маркетплейс",
             "Entertainment": "Развлечения",
             "Shop": "Магазин",
-            "Other": "Другое"
+            "Other": "Другое",
         };
 
-        paychecks.forEach(paycheck => {
-            if (!paycheck.pay_date || paycheck.category === 'Transfer') return;
+        paychecks.forEach((paycheck) => {
+            if (!paycheck.pay_date || paycheck.category === "Transfer") {
+                return;
+            }
 
             const date = new Date(paycheck.pay_date * 1000);
             const paycheckMonthKey = `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -132,36 +145,38 @@ export default function Analytics() {
         });
 
         return Object.entries(categories)
-            .map(([category, amount]) => ({
+            .map(([ category, amount ]) => ({
                 category,
                 amount,
-                color: colorMap[paychecks.find(p => categoryNames[p.category] === category)?.category || 'Other'] || "#78909C"
+                color: colorMap[paychecks.find((p) => categoryNames[p.category] === category)?.category || "Other"] || "#78909C",
             }))
             .sort((a, b) => b.amount - a.amount)
             .slice(0, 6);
-    }, [paychecks]);
+    }, [ paychecks ]);
 
     const formatMoney = (value: number) => {
         if (value >= 1000000) {
             return `${(value / 1000000).toFixed(1)}M ₽`;
         }
+
         if (value >= 1000) {
             return `${(value / 1000).toFixed(0)}k ₽`;
         }
+
         return `${value} ₽`;
     };
 
     // Find max values for scaling
     const maxIncomeExpense = useMemo(() => {
         return Math.max(
-            ...incomeExpenseData.map(d => d.income),
-            ...incomeExpenseData.map(d => d.expenses)
+            ...incomeExpenseData.map((d) => d.income),
+            ...incomeExpenseData.map((d) => d.expenses),
         );
-    }, [incomeExpenseData]);
+    }, [ incomeExpenseData ]);
 
     const maxCategoryAmount = useMemo(() => {
-        return Math.max(...categoryData.map(d => d.amount));
-    }, [categoryData]);
+        return Math.max(...categoryData.map((d) => d.amount));
+    }, [ categoryData ]);
 
     if (loading) {
         return (
@@ -182,7 +197,7 @@ export default function Analytics() {
                     <span className="addition_3 fg-1">Последние 6 месяцев</span>
                 </div>
 
-                <div className="simple-chart-container" style={{ padding: "20px" }}>
+                <div className="simple-chart-container" style={ { padding: "20px" } }>
                     <div className="chart-y-axis">
                         <div className="y-label">{formatMoney(maxIncomeExpense)}</div>
                         <div className="y-label">{formatMoney(maxIncomeExpense * 0.75)}</div>
@@ -194,13 +209,13 @@ export default function Analytics() {
                     <div className="chart-content">
                         <div className="chart-bars">
                             {incomeExpenseData.map((data, index) => (
-                                <div key={index} className="chart-column-group">
+                                <div key={ index } className="chart-column-group">
                                     <div className="chart-column income-column"
-                                         style={{ height: `${(data.income / maxIncomeExpense) * 80}%` }}>
+                                        style={ { height: `${(data.income / maxIncomeExpense) * 80}%` } }>
                                         <div className="column-value">{formatMoney(data.income)}</div>
                                     </div>
                                     <div className="chart-column expenses-column"
-                                         style={{ height: `${(data.expenses / maxIncomeExpense) * 80}%` }}>
+                                        style={ { height: `${(data.expenses / maxIncomeExpense) * 80}%` } }>
                                         <div className="column-value">{formatMoney(data.expenses)}</div>
                                     </div>
                                     <div className="month-label">{data.month}</div>
@@ -229,20 +244,20 @@ export default function Analytics() {
                     <span className="addition_3 fg-1">Текущий месяц</span>
                 </div>
 
-                <div className="simple-chart-container" style={{ padding: "20px" }}>
+                <div className="simple-chart-container" style={ { padding: "20px" } }>
                     {categoryData.length > 0 ? (
                         <>
                             <div className="chart-horizontal">
                                 {categoryData.map((item, index) => (
-                                    <div key={index} className="category-row">
+                                    <div key={ index } className="category-row">
                                         <span className="category-name addition_2">{item.category}</span>
                                         <div className="category-bar-container">
                                             <div
                                                 className="category-bar"
-                                                style={{
+                                                style={ {
                                                     width: `${(item.amount / maxCategoryAmount) * 90}%`,
-                                                    backgroundColor: item.color
-                                                }}
+                                                    backgroundColor: item.color,
+                                                } }
                                             >
                                                 <span className="bar-value addition_1">{formatMoney(item.amount)}</span>
                                             </div>
