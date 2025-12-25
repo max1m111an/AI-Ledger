@@ -13,12 +13,13 @@ COPY ./apps/frontend/package*.json ./
 
 RUN rm -rf node_modules package-lock.json
 
-RUN npm install --no-cache
+RUN npm install --no-cache --legacy-peer-deps esbuild@0.25.10
+RUN npm install --no-cache --legacy-peer-deps
 
 COPY ./apps/frontend ./
 
-FROM nginx:alpine as reverseproxy
+FROM nginx:alpine AS reverseproxy
 
-FROM mariadb:latest as database
+FROM mariadb:latest AS database
 
-FROM phpmyadmin:latest as dbadmin
+FROM adminer:latest AS dbadmin
