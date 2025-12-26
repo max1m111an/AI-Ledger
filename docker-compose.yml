@@ -6,6 +6,7 @@ services:
       ollama:
         condition: service_healthy
     build:
+      context: .
       dockerfile: "Dockerfile"
       target: "ledger"
     env_file:
@@ -30,6 +31,7 @@ services:
       database:
         condition: service_healthy
     build:
+      context: .
       dockerfile: "Dockerfile"
       target: "ledger"
     env_file:
@@ -50,6 +52,7 @@ services:
       - "--reload"
   database:
     build:
+      context: .
       dockerfile: "Dockerfile"
       target: "database"
     environment:
@@ -75,6 +78,7 @@ services:
       database:
         condition: service_healthy
     build:
+      context: .
       dockerfile: "Dockerfile"
       target: "dbadmin"
     expose:
@@ -88,6 +92,7 @@ services:
       database:
         condition: service_healthy
     build:
+      context: .
       dockerfile: "Dockerfile"
       target: "reverseproxy"
     env_file:
