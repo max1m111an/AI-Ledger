@@ -128,3 +128,29 @@
 > }
 
 ---
+# add_paycheck_by_photo
+1. **Endpoint description**
+
+> __add_paycheck_by_photo__ - method to read paycheck info from photo and add it to DB 
+>
+> ***POST***
+>
+> ***/paychecks/photo***
+2. **Request body**
+
+> \<photo\>
+3. **Test request**
+
+> \<"image.\[png|jpg]"\>
+4. **Response body**
+
+> {
+> "status": 200,
+> "data": \[
+> "\<some data\>",
+> "\<some data 2\>",
+> "etc."
+> \]
+> }
+
+---

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from auth.main import get_current_user
@@ -6,7 +6,8 @@ from shared.models.paycheck import PaycheckCreate, PaycheckModel
 from shared.database import get_session
 from shared.models.request.paycheck import EditPaycheckRequest
 from shared.models.request.user import IDRequest
-from fastapi import UploadFile, File
+
+from .ocr.service import process_paycheck_photo
 
 router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 
@@ -72,26 +73,21 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
 
 
 @router.post("/photo")
-async def add_paycheck_by_photo_stub(
-        paycheck_photo: UploadFile = File(...),  # type: ignore
-        session: AsyncSession = Depends(get_session),
-        current_user: dict = Depends(get_current_user),
+async def add_paycheck_by_photo(
+    paycheck_photo: UploadFile = File(...),
+    session: AsyncSession = Depends(get_session),
+    current_user: dict = Depends(get_current_user),
 ):
-    fake_result = {
-        "metadata": {
-            "name": "Папаша",
-            "price": 566,
-            "pay_date": "1766407500",
-        },
-        "category": "Cafe",
-    }
+    contents = await paycheck_photo.read()
+
+    result = await process_paycheck_photo(contents)
 
     new_paycheck = PaycheckModel(
-        name=fake_result["metadata"]["name"],  # type: ignore
-        price=fake_result["metadata"]["price"],  # type: ignore
-        pay_date=fake_result["metadata"]["pay_date"],  # type: ignore
-        category=fake_result["category"],
-        user_id=current_user["id"],
+        name=result["metadata"].get("name"),
+        price=result["metadata"].get("price"),
+        pay_date=result["metadata"].get("pay_date"),
+        category=result["category"],
+        user_id=current_user["id"]
     )
 
     session.add(new_paycheck)
