@@ -35,6 +35,7 @@ imutils = "^0.5.4"
 rapidfuzz = "^3.14.3"
 regex = "^2025.11.3"
 rich = "^14.2.0"
+ollama = "^0.6.1"
 numpy = ">=2,<2.3"
 scipy = "^1.16.3"
 

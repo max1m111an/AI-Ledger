@@ -3,6 +3,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
+      ollama:
+        condition: service_healthy
     build:
       dockerfile: "Dockerfile"
       target: "ledger"
@@ -15,7 +17,7 @@ services:
     expose:
       - ${APP_PORT}
     networks:
-      local:
+      - local
     command:
       - "backend.main:app"
       - "--host"
@@ -38,7 +40,7 @@ services:
     expose:
       - 8081
     networks:
-      local:
+      - local
     command:
       - "auth.main:app"
       - "--host"
@@ -67,7 +69,7 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      local:
+      - local
   dbadmin:
     depends_on:
       database:
@@ -80,7 +82,7 @@ services:
     ports:
       - "${ADMINER_PORT}:8080"
     networks:
-      local:
+      - local
   reverseproxy:
     depends_on:
       database:
@@ -95,9 +97,28 @@ services:
       - "./config/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
       - "./config/nginx/mime.types:/etc/nginx/mime.types:ro"
     networks:
-      local:
+      - local
     ports:
       - "${APP_PORT}:80"
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    environment:
+      - LISTEN_ADDRESS=0.0.0.0
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - local
+
+volumes:
+  ollama:
 
 networks:
   local:
+    driver: bridge
