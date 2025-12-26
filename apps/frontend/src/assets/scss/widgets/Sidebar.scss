@@ -1,0 +1,39 @@
+@use "@assets/scss/consts" as *;
+.sidebar {
+  width: 15dvw;
+  height: 100vh;
+  background: $block_background_1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  border: $base_color_border;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_logo_div{
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-bottom: $base_color_border;
+    margin-bottom: 5px;
+  }
+
+  &_nav_div{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+  }
+  &_user_div{
+    display: flex;
+    width: 100%;
+    height: auto;
+    border-top: $base_color_border;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

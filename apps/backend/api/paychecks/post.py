@@ -15,7 +15,7 @@ router = APIRouter(prefix="/paychecks", tags=["paychecks"])
 @router.post("/add")
 async def create_paycheck(paycheck_data: PaycheckCreate,
                           session: AsyncSession = Depends(get_session),
-                          current_user: dict = Depends(get_current_user)):
+                          current_user = Depends(get_current_user)):
     new_db_paycheck = PaycheckModel(**paycheck_data.model_dump())
     new_db_paycheck.user_id = current_user["id"]
     session.add(new_db_paycheck)
@@ -56,7 +56,7 @@ async def update_paycheck(edit_check_data: EditPaycheckRequest, session: AsyncSe
             detail=f"No paycheck found by id={edit_check_data.id}"
         )
 
-    fields_to_check = ["price", "pay_date", "category"]
+    fields_to_check = ["price", "pay_date", "category", "name"]
 
     for field in fields_to_check:
         value = getattr(edit_check_data, field, None)

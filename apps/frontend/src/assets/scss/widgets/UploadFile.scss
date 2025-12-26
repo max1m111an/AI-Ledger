@@ -1,0 +1,81 @@
+@use "@assets/scss/consts" as *;
+
+.upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  height: 20%;
+  border: $base_color_border;
+  background: $action_background;
+  color: $base_color_text_1;
+  border-radius: 15px;
+  padding: 32px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+  }
+
+  .file-label {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #007bff;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #0056b3;
+    }
+  }
+
+  .file-info {
+    p {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .upload-btn {
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #28a745;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #218838;
+      }
+    }
+  }
+
+  .error {
+    margin-top: 12px;
+    color: #d9534f;
+    font-size: 14px;
+  }
+
+  &.active {
+    border-color: #007bff;
+    background: #f0f8ff;
+  }
+}
+.file-info {
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+}

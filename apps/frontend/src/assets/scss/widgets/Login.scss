@@ -1,0 +1,67 @@
+@use "@assets/scss/consts" as *;
+
+
+.login_div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: auto;
+  min-width: auto;
+  padding: 2rem;
+  background-color: $action_background;
+  border: $base_color_border;
+  box-sizing: border-box;
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+
+.form {
+  width: 100vw;
+  max-width: 305px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px 10px;
+  border: $base_color_border;
+  background: $block_background_2;
+  border-radius: 6px;
+  font-size: 13px;
+  color: $base_color_text_1;
+  box-sizing: border-box;
+}
+
+.form input::placeholder {
+  color: $base_color_text_3;
+}
+
+.form input:focus {
+  outline: rgba(99, 102, 241, 0.3) solid 3px;
+}
+
+.form input:-webkit-autofill {
+  -webkit-text-fill-color: $base_color_text_1;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.links{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text_login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_logo_div{
+  width: 100%;
+}
+

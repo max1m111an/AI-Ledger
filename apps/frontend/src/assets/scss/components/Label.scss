@@ -1,0 +1,90 @@
+@use "@assets/scss/consts" as *;
+
+.label{
+  box-sizing: border-box;
+  display: inline-flex;
+  width: auto;
+  padding: 4px 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border-radius: 6px;
+  gap: 10px;
+  font-family: $base_font_family;
+
+  &.yellow{
+    background-color: $yellow_background;
+    border: $yellow_border;
+    color: $yellow_text_color;
+  }
+  &.red{
+    background-color: $red_background;
+    border: $red_border;
+    color: $red_text_color;
+  }
+  &.green{
+    background-color: $green_background;
+    border: $green_border;
+    color: $green_text_color;
+  }
+  &.blue{
+    background-color: $blue_background;
+    border: $blue_border;
+    color: $blue_text_color;
+  }
+  &.periwinkle{
+    background-color: rgba($periwinkle_color_icon, 0.3);
+    border: 1px solid $periwinkle_color_icon;
+    color: $periwinkle_color_icon;
+  }
+  &.mustard{
+    background-color: rgba($mustard_color_icon, 0.3);
+    border: 1px solid $mustard_color_icon;
+    color: $mustard_color_icon;
+  }
+  &.melrose{
+    background-color: rgba($melrose_color_icon, 0.1);
+    border: 1px solid $melrose_color_icon;
+    color: $melrose_color_icon;
+  }
+  &.orange{
+    background-color: rgba($orange_color_icon, 0.1);
+    border: 1px solid $orange_color_icon;
+    color: $orange_color_icon;
+  }
+  &.magic_mint{
+    background-color: rgba($magic_mint_color_icon, 0.1);
+    border: 1px solid $magic_mint_color_icon;
+    color: $magic_mint_color_icon;
+  }
+  &.pastel_pink{
+    background-color: rgba($pastel_pink_color_icon, 0.3);
+    border: 1px solid $pastel_pink_color_icon;
+    color: $pastel_pink_color_icon;
+  }
+  &.sweet_pink{
+    background-color: rgba($sweet_pink_color_icon, 0.3);
+    border: 1px solid $sweet_pink_color_icon;
+    color: $sweet_pink_color_icon;
+  }
+  &.riptide{
+    background-color: rgba($riptide_color_icon, 0.3);
+    border: 1px solid $riptide_color_icon;
+    color: $riptide_color_icon;
+  }
+  &.malibu{
+    background-color: rgba($malibu_color_icon, 0.3);
+    border: 1px solid $malibu_color_icon;
+    color: $malibu_color_icon;
+  }
+  &.sweet_corn{
+    background-color: rgba($sweet_corn_color_icon, 0.3);
+    border: 1px solid $sweet_corn_color_icon;
+    color: $sweet_corn_color_icon;
+  }
+  &.golden{
+    background-color: rgba($golden_color_icon, 0.3);
+    border: 1px solid $golden_color_icon;
+    color: $golden_color_icon;
+  }
+}

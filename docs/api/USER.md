@@ -28,30 +28,27 @@
 
 ---
 
-# get_users
+# get_user
 1. **Endpoint description**
 
-> __get_users__ - method to get users from DB by _list of ids_
+> __get_user__ - method to get current user
 >
 > ***POST***
 >
 > ***/users/***
 2. **Request body**
 
-> {
-> "id": \[0\]
-> }
+> \<empty\>
 3. **Test request**
 
-> {
-> "id": \[1\]
-> }
+> \<empty\>
 4. **Response body**
 > {
 > "status": 200,
 > "users": \[{
 > "name": "Gantz",
-> "email": "gantzzer@gmail.com"
+> "email": "gantzzer@gmail.com",
+> "daily_limit": 5000
 > }\]
 > }
 
@@ -96,7 +93,8 @@
 > {
 > "name": "string",
 > "email": "string",
-> "password": "string",  | those conditions are still effect
+> "password": "string",  | those conditions are still effect,
+> "daily_limit": 0,
 > "id": 0
 > }
 3. **Test request**
@@ -104,7 +102,8 @@
 > {
 > "name": "Gantz",
 > "email": "gantzzer@gmail.com",
-> "password": "qwerty.1"
+> "password": "qwerty.1",
+> "daily_limit": 5000,
 > "id": 1
 > }
 4. **Response body**
@@ -113,7 +112,8 @@
 > "status": 200,
 > "user": {
 > "name": "Gantz",
-> "email": "gantzzer@gmail.com"
+> "email": "gantzzer@gmail.com",
+> "daily_limit": 5000
 > }
 > }
 

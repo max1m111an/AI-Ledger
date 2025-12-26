@@ -1,0 +1,26 @@
+@use "@assets/scss/consts" as *;
+
+.action_block_1{
+  display: flex;
+  flex-direction: column;
+  border: $base_color_border;
+  background-color: $action_background;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 20px;
+
+  &.w_g70{ width: calc(70% - 15px); }
+  &.w_g30{ width: calc(30% - 15px); }
+}
+
+.action_block_2{
+  display: flex;
+  box-sizing: border-box;
+  background-color: $block_background_1;
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  border: $base_color_border;
+  padding: 10px;
+  justify-content: flex-start;
+}

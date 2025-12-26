@@ -21,7 +21,7 @@ class PaycheckCategory(Enum):
 
 class PaycheckCreate(SQLModel):
     name: str | None = None
-    price: int | None = None
+    price: float | None = None
     pay_date: float | None = datetime.datetime.now(datetime.UTC).timestamp()
     category: PaycheckCategory | None = None
 
